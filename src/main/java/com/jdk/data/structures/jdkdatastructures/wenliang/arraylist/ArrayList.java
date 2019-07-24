@@ -62,8 +62,83 @@ public class ArrayList <E> {
      */
     public boolean isEmpty(){
         return this.size == 0;
+    }
+
+
+    /**
+     * 是否包含某个元素
+     * @param element
+     * @return
+     */
+    public boolean contains(E element){
+        return this.indexOf(element) != -1;
 
     }
+
+
+    /**
+     * 查看元素的索引
+     * @param element
+     * @return
+     */
+    public int indexOf(E element){
+        if (element == null){
+            for (int i = 0; i < this.size; i++)
+                if (this.datas[i] == null) return i;
+        }
+        for (int i = 0; i < this.size; i++) {
+            if (element.equals(this.datas[i])) return i;
+        }
+
+        return -1;
+    }
+
+
+    /**
+     * 添加元素到尾部
+     * @param element
+     */
+    public void add(E element){
+
+
+    }
+
+
+    /**
+     * 根据索引在指定位置插入一个元素
+     * @param index
+     * @param element
+     */
+    public void add(int index,E element){
+
+
+    }
+
+
+
+
+
+    private void rangeCheck(int index){
+        if (index >0 || index >= this.size)
+            this.outOfBounds(index);
+    }
+
+
+
+
+    private void rangeCheckForAdd(int index){
+        if (index > 0 || index >this.size)
+            this.outOfBounds(index);
+    }
+
+
+    private void outOfBounds(int index){
+        throw new IndexOutOfBoundsException("Index:" + index + ", Size:" + size);
+    }
+
+
+
+
 
 
 
