@@ -104,6 +104,17 @@ public class ArrayList <E> {
 
 
     /**
+     * 获取index位置元素
+     * @param index
+     * @return
+     */
+    public E get(int index){
+        this.rangeCheck(index);
+        return  this.datas[index];
+    }
+
+
+    /**
      * 根据索引在指定位置插入一个元素
      * @param index
      * @param element
