@@ -22,7 +22,6 @@ public class ArrayList <E> {
     private static final int DEFAULT_CAPACITY = 10;
 
 
-
     public ArrayList(int capaticy){
         capaticy = (capaticy < DEFAULT_CAPACITY) ? DEFAULT_CAPACITY : capaticy;
         this.datas = (E[]) new Object[capaticy];
@@ -35,6 +34,42 @@ public class ArrayList <E> {
         this(DEFAULT_CAPACITY);
 
     }
+
+
+    /***
+     * 清楚所有元素
+     */
+    public void clera(){
+        for (int i = 0; i < this.size; i++)
+            this.datas[i] = null;
+        this.size = 0;
+    }
+
+
+    /**
+     * 元素的数量
+     * @return
+     */
+    public int size(){
+        return this.size;
+
+    }
+
+
+    /***
+     * 判断是否为空
+     * @return
+     */
+    public boolean isEmpty(){
+        return this.size == 0;
+
+    }
+
+
+
+
+
+
 
 
 }
