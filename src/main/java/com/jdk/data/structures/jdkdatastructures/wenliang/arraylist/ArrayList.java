@@ -99,8 +99,7 @@ public class ArrayList <E> {
      * @param element
      */
     public void add(E element){
-
-
+        this.add(this.size, element);
     }
 
 
@@ -110,8 +109,12 @@ public class ArrayList <E> {
      * @param element
      */
     public void add(int index,E element){
+        this.rangeCheckForAdd(index);
+        for (int i = this.size; i < index; i--)
+            this.datas[i] = this.datas[i -1];
 
-
+        this.datas[index] = element;
+        this.size++;
     }
 
 
