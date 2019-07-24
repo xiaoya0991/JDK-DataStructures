@@ -115,6 +115,22 @@ public class ArrayList <E> {
 
 
     /**
+     * 设置index位置的元素
+     * @param index
+     * @param element
+     * @return
+     */
+    public E set(int index,E element){
+        this.rangeCheck(index);
+
+        E old = this.datas[index];
+        this.datas[index] = element;
+        return old;
+
+    }
+
+
+    /**
      * 根据索引在指定位置插入一个元素
      * @param index
      * @param element
