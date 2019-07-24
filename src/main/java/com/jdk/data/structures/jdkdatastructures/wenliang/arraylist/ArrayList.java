@@ -145,6 +145,24 @@ public class ArrayList <E> {
     }
 
 
+    /**
+     * 删除index位置的元素
+     * @param index
+     * @return
+     */
+    public E remove(int index){
+        this.rangeCheck(index);
+
+        E old = this.datas[index];
+        for (int i = index+1; i <this.size ; i++) {
+            this.datas[i - 1] = this.datas[i];
+        }
+        this.datas[--this.size] = null;
+        return old;
+
+    }
+
+
 
 
 
