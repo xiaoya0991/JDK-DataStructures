@@ -1,5 +1,4 @@
 package com.jdk.data.structures.jdkdatastructures;
-
 /**
  * @author wenliang
  */
