@@ -54,4 +54,41 @@ public class ArrayDemo {
         return size == 0;
     }
 
+    /**
+     * 添加数据元素
+     * @param e 元素数据
+     * @param index 元素位置
+     */
+    public void add(int e, int index){
+        if(index < 0 && index > size)
+            throw new IllegalArgumentException("添加数据元素位置不合法，应该在0～size质检");
+
+        if(size == data.length)
+            throw new IllegalArgumentException("数据已盛满，不能再添加了");
+
+        //插入数据数据，插入位置以后的数据依次向后挪动一位
+        for(int i = size-1;i >= index;i--){
+            data[i-1] = data[i];
+        }
+
+        data[index] = e;
+        size ++;
+    }
+
+    /**
+     * 数组添加最后一个数据
+     * @param e
+     */
+    public void addLast(int e){
+        add(e,size);
+    }
+
+    /**
+     * 数组添加第一个数据
+     * @param e
+     */
+    public void addFirst(int e){
+        add(e,0);
+    }
+
 }
