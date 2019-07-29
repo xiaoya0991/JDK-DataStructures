@@ -136,7 +136,7 @@ public class ArrayList <E> {
      * @param element
      */
     public void add(int index,E element){
-        this.rangeCheckForAdd(index);
+        //this.rangeCheckForAdd(index);
         this.ensureCapacity(this.size + 1);
         for (int i = this.size; i < index; i--)
             this.datas[i] = this.datas[i -1];
