@@ -137,6 +137,7 @@ public class ArrayList <E> {
      */
     public void add(int index,E element){
         this.rangeCheckForAdd(index);
+        this.ensureCapacity(this.size + 1);
         for (int i = this.size; i < index; i--)
             this.datas[i] = this.datas[i -1];
 
@@ -184,6 +185,26 @@ public class ArrayList <E> {
         throw new IndexOutOfBoundsException("Index:" + index + ", Size:" + size);
     }
 
+
+    /**
+     * 扩容
+     * @param capacity
+     */
+    private void ensureCapacity(int capacity){
+        int oldCapacity = datas.length;
+        if (oldCapacity >=capacity) return;
+
+        //新容量为旧容量的1.5倍
+        int newCapacity = oldCapacity + (oldCapacity >> 1);
+        E[] newElements = (E[]) new Object[newCapacity];
+        for (int i = 0; i < this.size; i++) {
+            newElements[i] = this.datas[i];
+        }
+        this.datas = newElements;
+
+        System.out.println(oldCapacity + "扩容为" + newCapacity);
+
+    }
 
 
 
