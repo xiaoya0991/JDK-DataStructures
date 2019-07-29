@@ -4,23 +4,23 @@ package com.jdk.data.structures.jdkdatastructures.shengjie.array;
  * 数组底层自己封装
  * @author shengjie
  */
-public class ArrayDemo {
+public class ArrayDemo<E> {
     /**
      * 数组
      */
-    int[] data;
+    private int[] data;
     /**
      * 数组大小
      */
-    int size;
+    private int size;
 
     /**
      * 含参数的构造
      * @param capacity 数组容量
      */
     public ArrayDemo(int capacity){
-        data = new int[capacity];
-        size = 0;
+        this.data = new int[capacity];
+        this.size = 0;
     }
 
     /**
@@ -35,7 +35,7 @@ public class ArrayDemo {
      * @return
      */
     public int getSize(){
-        return size;
+        return this.size;
     }
 
     /**
@@ -43,7 +43,7 @@ public class ArrayDemo {
      * @return
      */
     public int getCapacity(){
-        return data.length;
+        return this.data.length;
     }
 
     /**
@@ -51,7 +51,7 @@ public class ArrayDemo {
      * @return
      */
     public boolean isEmpty(){
-        return size == 0;
+        return this.size == 0;
     }
 
     /**
@@ -60,19 +60,19 @@ public class ArrayDemo {
      * @param index 元素位置
      */
     public void add(int e, int index){
-        if(index < 0 && index > size)
+        if(index < 0 && index > this.size)
             throw new IllegalArgumentException("添加数据元素位置不合法，应该在0～size质检");
 
-        if(size == data.length)
+        if(size == this.data.length)
             throw new IllegalArgumentException("数据已盛满，不能再添加了");
 
         //插入数据数据，插入位置以后的数据依次向后挪动一位
-        for(int i = size-1;i >= index;i--){
-            data[i-1] = data[i];
+        for(int i = this.size-1;i >= index;i--){
+            this.data[i-1] = this.data[i];
         }
 
-        data[index] = e;
-        size ++;
+        this.data[index] = e;
+        this.size ++;
     }
 
     /**
