@@ -1,6 +1,5 @@
 package com.jdk.data.structures.jdkdatastructures.wenliang.arraylist;
 
-import com.jdk.data.structures.jdkdatastructures.wlimax.LiArrayList;
 
 import java.util.ArrayList;
 /**
