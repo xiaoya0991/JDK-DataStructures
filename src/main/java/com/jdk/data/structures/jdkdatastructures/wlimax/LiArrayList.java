@@ -1,6 +1,9 @@
 package com.jdk.data.structures.jdkdatastructures.wlimax;
 
-
+/**
+ * 动态数组
+ * @param <E>
+ */
 public class LiArrayList<E> {
     private E[] data;
     private int size;
@@ -16,6 +19,7 @@ public class LiArrayList<E> {
        data =  (E[]) new Object[s];
        size = 0;
     }
+    //初始值为数组大小为10
     public LiArrayList(){ this(10); }
 
     /**
@@ -28,7 +32,6 @@ public class LiArrayList<E> {
 
     public boolean isEmpty(){  return size ==0; }
 
-    public boolean isEmpaty( ){ return  false; }
 
     public void addList(E e){ add(size,e); }
     public void addFirst(E e){ add(0,e); }
@@ -93,6 +96,8 @@ public class LiArrayList<E> {
       if(index<0|| index>=size){ throw new IllegalArgumentException("set index error"); }
       data[index] = e;
    }
+   public E getLast(){ return get(size -1); }
+   public E getFirst(){ return get(0); }
 
     @Override
     public String toString(){
