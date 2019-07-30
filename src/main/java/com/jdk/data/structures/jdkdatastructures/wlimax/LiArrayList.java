@@ -1,9 +1,6 @@
 package com.jdk.data.structures.jdkdatastructures.wlimax;
 
-/**
- * 自定义数组类
- * @param <E>
- */
+
 public class LiArrayList<E> {
     private E[] data;
     private int size;
