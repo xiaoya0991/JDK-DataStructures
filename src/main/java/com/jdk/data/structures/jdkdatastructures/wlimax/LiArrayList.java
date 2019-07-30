@@ -46,6 +46,14 @@ public class LiArrayList<E> {
     public void addList(E e){ add(this.size,e); }
 
     /**
+     * 从尾部取出一个元素
+     * @return
+     */
+    public E getLast(){
+        return get(this.size);
+    }
+
+    /**
      * 头部追加元素
      * @param e
      */
