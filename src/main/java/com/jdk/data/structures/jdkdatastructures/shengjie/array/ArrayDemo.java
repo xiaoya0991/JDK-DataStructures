@@ -8,7 +8,7 @@ public class ArrayDemo<E> {
     /**
      * 数组
      */
-    private int[] data;
+    private E[] data;
     /**
      * 数组大小
      */
@@ -19,7 +19,7 @@ public class ArrayDemo<E> {
      * @param capacity 数组容量
      */
     public ArrayDemo(int capacity){
-        this.data = new int[capacity];
+        this.data = (E[]) new Object[capacity];
         this.size = 0;
     }
 
@@ -59,7 +59,7 @@ public class ArrayDemo<E> {
      * @param e 元素数据
      * @param index 元素位置
      */
-    public void add(int e, int index){
+    public void add(E e, int index){
         if(index < 0 && index > this.size)
             throw new IllegalArgumentException("添加数据元素位置不合法，应该在0～size质检");
 
@@ -79,7 +79,7 @@ public class ArrayDemo<E> {
      * 数组添加最后一个数据
      * @param e
      */
-    public void addLast(int e){
+    public void addLast(E e){
         add(e,size);
     }
 
@@ -87,8 +87,111 @@ public class ArrayDemo<E> {
      * 数组添加第一个数据
      * @param e
      */
-    public void addFirst(int e){
+    public void addFirst(E e){
         add(e,0);
+    }
+
+    /**
+     * 获取元素
+     * @param index 索引
+     * @return 元素值
+     */
+    public E get(int index){
+        if(index < 0 || index >= size)
+            throw new IllegalArgumentException("传入的参数非法");
+        return data[index];
+    }
+
+    /**
+     * 设置元素
+     * @param index 索引
+     * @param e 元素值
+     */
+    public void set(int index, E e){
+        if(index < 0 || index >= size)
+            throw new IllegalArgumentException("传入的参数非法");
+        data[index] = e;
+    }
+
+    /**
+     * 是否包含该元素值
+     * @param e 元素值
+     * @return
+     */
+    public boolean contains(E e){
+        for(int i = 0; i < size; i ++){
+            if(data[i] == e)
+                return true;
+        }
+        return false;
+    }
+
+    /**
+     * 查找数组中元素e所在的索引，如果不存在就返回-1
+     * @param e
+     * @return
+     */
+    public int find(E e){
+        for(int i = 0; i < size; i ++){
+            if(data[i] == e)
+                return i;
+        }
+        return -1;
+    }
+
+//    public int findAll(E e){
+//
+//    }
+
+    /**
+     * 删除某位置的元素
+     * @param index 索引
+     */
+    public void remove(int index){
+        if(index < 0 || index >= size)
+            throw new IllegalArgumentException("传入的参数非法");
+
+        for(int i = index+1; i < size; i++){
+            data[index-1] = data[i];
+        }
+    }
+
+    /**
+     * 删除某元素，返回索引，如果不存在返回-1
+     * @param e
+     * @return
+     */
+    public int remove(E e){
+        for(int i = 0; i < size; i++){
+            if(data[i] == e){
+                data[i] = data[i+1];
+                size --;
+                return i;
+            }
+        }
+        return -1;
+    }
+
+//    public int removeAll(E e){
+//
+//    }
+
+    /**
+     * 重写toString方法
+     * @return
+     */
+    @Override
+    public String toString(){
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(String.format("Array: size = %d, capacity = %d\n",size,data));
+        stringBuilder.append("[");
+        for (int i = 0; i < size; i ++){
+            stringBuilder.append(data[i]);
+            if(i != size-1)
+                stringBuilder.append(",");
+        }
+        stringBuilder.append("]");
+        return null;
     }
 
 }
