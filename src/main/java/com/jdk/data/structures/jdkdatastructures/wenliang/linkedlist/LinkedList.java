@@ -54,14 +54,30 @@ public class LinkedList<E> extends AbstractList<E> {
         this.last = null;
     }
 
+
+    /***
+     * 获取值
+     * @param index
+     * @return
+     */
     @Override
     public E get(int index) {
-        return null;
+        return this.node(index).element;
     }
 
+
+    /***
+     *
+     * @param index
+     * @param element
+     * @return
+     */
     @Override
     public E set(int index, E element) {
-        return null;
+        Node<E> node = this.node(index);
+        E old = node.element;
+        node.element = element;
+        return old;
     }
 
 
@@ -99,15 +115,51 @@ public class LinkedList<E> extends AbstractList<E> {
 
     @Override
     public E remove(int index) {
-        return null;
+        Node<E> node = this.node(index);
+        Node<E> prev = node.prev;
+        Node<E> next = node.next;
+
+        if (prev == null){
+            this.first = next;
+        }else {
+            prev.next = next;
+        }
+
+        if (next == null){
+            this.last = prev;
+
+        }else {
+            next.prev = prev;
+        }
+        this.size--;
+        return node.element;
     }
 
+
+    /**
+     *
+     * @param element
+     * @return
+     */
     @Override
     public int indexOf(E element) {
-        return 0;
+        if (element == null){
+            Node node = this.first;
+
+            for (int i = 0; i < this.size; i++)
+                if (node.element == null) return i;
+                node = node.next;
+
+        }else {
+            Node node = this.first;
+            for (int i = 0; i < this.size; i++)
+                if (element.equals(node.element)) return i;
+                node = node.next;
+
+        }
+        return ELEMENT_NOT_FOUND;
+
     }
-
-
 
 
 
