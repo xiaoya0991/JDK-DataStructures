@@ -139,42 +139,72 @@ public class ArrayDemo<E> {
         return -1;
     }
 
-//    public int findAll(E e){
-//
+//    public int[] findAll(E e){
+//        ArrayDemo<Integer> results = new ArrayDemo<>(size);
+//        for(int i = 0; i < size; i ++){
+//            if(data[i] == e){
+//                results.add(i,e);
+//            }
+//        }
 //    }
 
     /**
      * 删除某位置的元素
      * @param index 索引
+     * @return 删除前，索引位置的数据
      */
-    public void remove(int index){
+    public E remove(int index){
         if(index < 0 || index >= size)
             throw new IllegalArgumentException("传入的参数非法");
+
+        Object result = data[index];
 
         for(int i = index+1; i < size; i++){
             data[index-1] = data[i];
         }
+        size --;//维护size
+
+        return (E) result;
+    }
+
+    /**
+     * 删除第一个
+     * @return 删除前，第一个的数据
+     */
+    public E removeFirst(){
+        return data[0];
+    }
+
+    /**
+     * 删除最后一个
+     * @return 删除前，最后一个的数据
+     */
+    public E removeLast(){
+        return data[size-1];
     }
 
     /**
      * 删除某元素，返回索引，如果不存在返回-1
+     * @param e 元素值
+     * @return
+     */
+    public boolean removeElement(E e){
+        int index = find(e);
+        if(index != -1) {
+            remove(index);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 删除所有该重复元素
      * @param e
      * @return
      */
-    public int remove(E e){
-        for(int i = 0; i < size; i++){
-            if(data[i] == e){
-                data[i] = data[i+1];
-                size --;
-                return i;
-            }
-        }
-        return -1;
-    }
+    public boolean removeAllElement(E e){
 
-//    public int removeAll(E e){
-//
-//    }
+    }
 
     /**
      * 重写toString方法
