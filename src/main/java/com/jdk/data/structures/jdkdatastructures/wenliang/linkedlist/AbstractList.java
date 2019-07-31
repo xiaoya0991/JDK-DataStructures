@@ -2,6 +2,7 @@ package com.jdk.data.structures.jdkdatastructures.wenliang.linkedlist;
 
 /***
  * 集合抽象类
+ * @author wenliang
  * @param <E>
  */
 public abstract  class AbstractList <E> implements List<E> {
