@@ -4,7 +4,7 @@ package com.jdk.data.structures.jdkdatastructures.wenliang.arraylist;
  *  手写ArrayList
  * @author wenliang
  */
-public class ArrayList <E> {
+public class ArrayList <E>  {
 
     /**
      * 元素的数量
