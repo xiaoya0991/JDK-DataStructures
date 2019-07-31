@@ -87,6 +87,27 @@ public class LinkList<E> {
         add(size,e);
     }
 
+    /**
+     * 根据索引删除
+     * @param index
+     */
+    public void remove(int index){
+        Node ro = get(index);
+        Node po = ro.prev;
+        Node no = ro.next;
+        po.next = no;
+        no.prev  =po;
+        this.size--;
+    }
+
+    /**
+     * 根据元素删除
+     * @param e
+     */
+    public void  removeE(E e){
+        remove(find(e));
+    }
+
 
     /**
      * 获取元素方法
