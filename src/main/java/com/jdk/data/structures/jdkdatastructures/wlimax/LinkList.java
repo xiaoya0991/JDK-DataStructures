@@ -98,6 +98,7 @@ public class LinkList<E> {
         po.next = no;
         no.prev  =po;
         this.size--;
+        this.last = get(this.size);
     }
 
     /**
