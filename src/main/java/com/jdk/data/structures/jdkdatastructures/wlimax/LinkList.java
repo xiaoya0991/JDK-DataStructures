@@ -109,7 +109,14 @@ public class LinkList<E> {
         remove(find(e));
     }
 
-
+    /**
+     * 更新数据
+     * @param index
+     * @param e
+     */
+     public void save(int index,E e){
+        get(index).item =e;
+     }
     /**
      * 获取元素方法
      * @param index
