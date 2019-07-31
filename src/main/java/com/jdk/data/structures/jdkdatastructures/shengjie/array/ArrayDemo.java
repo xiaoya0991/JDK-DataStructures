@@ -197,14 +197,14 @@ public class ArrayDemo<E> {
         return false;
     }
 
-    /**
-     * 删除所有该重复元素
-     * @param e
-     * @return
-     */
-    public boolean removeAllElement(E e){
-
-    }
+//    /**
+//     * 删除所有该重复元素
+//     * @param e
+//     * @return
+//     */
+//    public boolean removeAllElement(E e){
+//
+//    }
 
     /**
      * 重写toString方法
