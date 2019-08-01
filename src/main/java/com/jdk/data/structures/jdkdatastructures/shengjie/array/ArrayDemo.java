@@ -1,21 +1,21 @@
 package com.jdk.data.structures.jdkdatastructures.shengjie.array;
 
 /**
- * 数组底层自己封装
+ * Array underlying package
  * @author shengjie
  */
 public class ArrayDemo<E> {
     /**
-     * 数组
+     * define an array
      */
     private E[] data;
     /**
-     * 数组大小
+     * size of array
      */
     private int size;
 
     /**
-     * 含参数的构造
+     * Construction with parameters
      * @param capacity 数组容量
      */
     public ArrayDemo(int capacity){
@@ -24,30 +24,30 @@ public class ArrayDemo<E> {
     }
 
     /**
-     * 不含参数的构造，默认数组容量为10
+     * construction without parameters
      */
     public ArrayDemo(){
         this(10);
     }
 
     /**
-     * 获取实际数组大小
-     * @return
+     * get the size
+     * @return the size value
      */
     public int getSize(){
         return this.size;
     }
 
     /**
-     * 获取容量
-     * @return
+     * get the capacity
+     * @return the capacity value
      */
     public int getCapacity(){
         return this.data.length;
     }
 
     /**
-     * 数组为空处理
+     * empty handle
      * @return
      */
     public boolean isEmpty(){
@@ -55,9 +55,9 @@ public class ArrayDemo<E> {
     }
 
     /**
-     * 添加数据元素
-     * @param e 元素数据
-     * @param index 元素位置
+     * add an element
+     * @param e an element value
+     * @param index index
      */
     public void add(E e, int index){
         if(index < 0 && index > this.size)
@@ -76,25 +76,25 @@ public class ArrayDemo<E> {
     }
 
     /**
-     * 数组添加最后一个数据
-     * @param e
+     * add the last element
+     * @param e an element value
      */
     public void addLast(E e){
         add(e,size);
     }
 
     /**
-     * 数组添加第一个数据
-     * @param e
+     * add the first element
+     * @param e an element value
      */
     public void addFirst(E e){
         add(e,0);
     }
 
     /**
-     * 获取元素
-     * @param index 索引
-     * @return 元素值
+     * get an element
+     * @param index index
+     * @return an element value
      */
     public E get(int index){
         if(index < 0 || index >= size)
@@ -103,9 +103,9 @@ public class ArrayDemo<E> {
     }
 
     /**
-     * 设置元素
-     * @param index 索引
-     * @param e 元素值
+     * set an element
+     * @param index index
+     * @param e an element value
      */
     public void set(int index, E e){
         if(index < 0 || index >= size)
@@ -114,9 +114,9 @@ public class ArrayDemo<E> {
     }
 
     /**
-     * 是否包含该元素值
-     * @param e 元素值
-     * @return
+     * if contains an element
+     * @param e an element value
+     * @return boolean value
      */
     public boolean contains(E e){
         for(int i = 0; i < size; i ++){
@@ -127,9 +127,9 @@ public class ArrayDemo<E> {
     }
 
     /**
-     * 查找数组中元素e所在的索引，如果不存在就返回-1
-     * @param e
-     * @return
+     * find index of an element,if not existed,return -1
+     * @param e an element value
+     * @return the index of the element
      */
     public int find(E e){
         for(int i = 0; i < size; i ++){
@@ -149,9 +149,9 @@ public class ArrayDemo<E> {
 //    }
 
     /**
-     * 删除某位置的元素
-     * @param index 索引
-     * @return 删除前，索引位置的数据
+     * remove an element at a location
+     * @param index index
+     * @return removed element value
      */
     public E remove(int index){
         if(index < 0 || index >= size)
@@ -162,30 +162,31 @@ public class ArrayDemo<E> {
         for(int i = index+1; i < size; i++){
             data[index-1] = data[i];
         }
-        size --;//维护size
+        size --;//defend size
 
+        data[size] = null;//loitering objects != memory leak
         return (E) result;
     }
 
     /**
-     * 删除第一个
-     * @return 删除前，第一个的数据
+     * remove the first element
+     * @return removed element value
      */
     public E removeFirst(){
         return data[0];
     }
 
     /**
-     * 删除最后一个
-     * @return 删除前，最后一个的数据
+     * remove the last element
+     * @return removed element value
      */
     public E removeLast(){
         return data[size-1];
     }
 
     /**
-     * 删除某元素，返回索引，如果不存在返回-1
-     * @param e 元素值
+     * remove this element,return index,or else return -1
+     * @param e element value
      * @return
      */
     public boolean removeElement(E e){
@@ -198,7 +199,7 @@ public class ArrayDemo<E> {
     }
 
 //    /**
-//     * 删除所有该重复元素
+//     * remove all repeated element
 //     * @param e
 //     * @return
 //     */
@@ -207,7 +208,7 @@ public class ArrayDemo<E> {
 //    }
 
     /**
-     * 重写toString方法
+     * override method of toString
      * @return
      */
     @Override
@@ -221,7 +222,7 @@ public class ArrayDemo<E> {
                 stringBuilder.append(",");
         }
         stringBuilder.append("]");
-        return null;
+        return stringBuilder.toString();
     }
 
 }
