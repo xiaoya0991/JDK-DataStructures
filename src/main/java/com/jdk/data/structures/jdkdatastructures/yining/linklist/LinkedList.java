@@ -4,7 +4,7 @@ package com.jdk.data.structures.jdkdatastructures.yining.linklist;
  * @author: huyining
  * @since :    2019-07-31
  */
-public class LinkList<E> {
+public class LinkedList<E> {
 
     private class Node {
 
@@ -30,7 +30,7 @@ public class LinkList<E> {
 
     private int size;
 
-    public LinkList() {
+    public LinkedList() {
         head = new Node();
         size = 0;
     }
