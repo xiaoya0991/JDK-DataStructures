@@ -4,7 +4,7 @@ package com.jdk.data.structures.jdkdatastructures.wenliang.arraylist;
  *  手写ArrayList
  * @author wenliang
  */
-public class ArrayList <E> {
+public class ArrayList <E>  {
 
     /**
      * 元素的数量
@@ -136,7 +136,6 @@ public class ArrayList <E> {
      * @param element
      */
     public void add(int index,E element){
-        //this.rangeCheckForAdd(index);
         this.ensureCapacity(this.size + 1);
         for (int i = this.size; i < index; i--)
             this.datas[i] = this.datas[i -1];

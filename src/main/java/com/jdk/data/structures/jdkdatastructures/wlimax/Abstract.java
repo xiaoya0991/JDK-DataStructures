@@ -1,12 +1,6 @@
-package com.jdk.data.structures.jdkdatastructures.wenliang.linkedlist;
+package com.jdk.data.structures.jdkdatastructures.wlimax;
 
-/***
- * 集合抽象类
- * @author wenliang
- * @param <E>
- */
-public abstract  class AbstractList <E> implements List<E> {
-
+public abstract class Abstract<E> implements Base<E> {
 
     /**
      * 元素的数量
@@ -28,16 +22,15 @@ public abstract  class AbstractList <E> implements List<E> {
 
 
     @Override
-    public void add(E element){
+    public void addLast(E element){
         add(size, element);
     }
+    public void addFirst(E element){ add(0, element); }
 
 
     @Override
     public boolean contains(E element){
-        return indexOf(element) != ELEMENT_NOT_FOUND;
+        return size == 0;
 
     }
-
-
 }
