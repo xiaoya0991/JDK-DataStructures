@@ -233,9 +233,10 @@ public class LinkedList<E> extends AbstractList<E> {
 
     }
 
-
-
-
+    public boolean offer(E e) {
+       add(e);
+        return true;
+    }
 
 
     /**
