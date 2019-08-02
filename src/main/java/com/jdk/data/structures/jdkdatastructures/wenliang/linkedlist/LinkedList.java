@@ -144,11 +144,20 @@ public class LinkedList<E> extends AbstractList<E> {
         size++;
     }
 
+
+
+    /**
+     * Removes the element at the specified position in this list.  Shifts any
+     * subsequent elements to the left (subtracts one from their indices).
+     * Returns the element that was removed from the list.
+     *
+     *
+     *
+     */
     @Override
     public E remove(int index) {
-
-        return null;
-
+        checkElementIndex(index);
+        return unlink(node(index));
     }
 
 
@@ -233,6 +242,25 @@ public class LinkedList<E> extends AbstractList<E> {
 
         }
         return ELEMENT_NOT_FOUND;
+
+    }
+
+
+
+    private void checkElementIndex(int index){
+        if (!isElementIndex(index)){
+            return;
+        }
+
+    }
+
+
+
+    /**
+     * Tells if the argument is the index of an existing element.
+     */
+    private boolean isElementIndex(int index){
+     return   index >= 0 && index < size;
 
     }
 
