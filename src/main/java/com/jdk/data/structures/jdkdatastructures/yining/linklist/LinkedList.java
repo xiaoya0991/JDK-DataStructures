@@ -24,6 +24,13 @@ public class LinkedList<E> {
         public Node() {
             this(null, null);
         }
+
+        @Override
+        public String toString() {
+            return "Node{" +
+                    "e=" + e +
+                    '}';
+        }
     }
 
     private Node head;
@@ -113,6 +120,31 @@ public class LinkedList<E> {
      */
     public E getLast() {
         return get(size - 1);
+    }
+
+    /**
+     * 获取头结点
+     *
+     * @return
+     */
+    public Node getFirstNode() {
+        if (isEmpty()) {
+            return null;
+        }
+        return head;
+    }
+
+
+    /**
+     * 获取链表中最后的一个元素
+     */
+    public E getLastNode() {
+        Node curNode = head.next;
+
+        while (curNode.next != null) {
+            curNode = curNode.next;
+        }
+        return curNode.e;
     }
 
     /**
@@ -216,4 +248,43 @@ public class LinkedList<E> {
         return res.toString();
     }
 
+
+    /**
+     * 求链表的长度
+     */
+    public int getLinkedListSize() {
+        Node cur = head;
+        int count = 0;
+        while (cur.next != null) {
+            cur = cur.next;
+            count++;
+        }
+        return count;
+    }
+
+
+    /**
+     * 单向链表反转
+     */
+    public void reversetList(Node node) {
+
+        // 链表只有一个结点的话就不需要反转
+        if (node.next == null || node.next.next == null) {
+            return;
+        }
+
+        // 定义辅助结点
+        Node cur = head.next;
+        Node next = null;
+        Node reverseHead = new Node();
+
+        while (cur != null) {
+            // 保存下一个结点
+            next = cur.next;
+            cur.next = reverseHead.next;
+            reverseHead.next = cur;
+            cur = next;
+        }
+        head.next = reverseHead.next;
+    }
 }
