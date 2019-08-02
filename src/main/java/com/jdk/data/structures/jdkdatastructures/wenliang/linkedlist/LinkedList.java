@@ -188,6 +188,44 @@ public class LinkedList<E> extends AbstractList<E> {
     }
 
 
+
+    /**
+     * Removes and returns the first element from this list.
+     *
+     * @return the first element from this list
+     *
+     */
+    public E removeFirst(){
+        final Node<E> f = first;
+        if (f == null)
+            return null;
+        return unlinkFirst(f);
+
+    }
+
+
+    /**
+     *
+     * @param f
+     * @return
+     */
+    private E unlinkFirst(Node<E> f){
+      final  E element = f.element;
+        Node<E> next = f.next;
+        f.element = null;
+        f.next = null;
+
+        first = next;
+        if (next ==null)
+            last = null;
+
+        next.prev = null;
+        size--;
+        return element;
+
+    }
+
+
     /**
      *
      * @param x
