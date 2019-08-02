@@ -1,6 +1,8 @@
 package com.jdk.data.structures.jdkdatastructures.wenliang.tree;
 
 
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class BinarySearchTree <E> {
 
@@ -51,7 +53,7 @@ public class BinarySearchTree <E> {
             } else if (cmp < 0) {
                 node = node.left;
             } else { //相等
-                return;
+                node.element = element;
             }
 
         } while (node != null);
@@ -64,6 +66,47 @@ public class BinarySearchTree <E> {
             parent.left = newNode;
         }
         this.size++;
+
+    }
+
+
+    /***
+     *
+     * @param
+     */
+    public void levelOrder(Visitor<E> visitor){
+
+        if (this.root == null) return;
+
+        Queue<Node<E>> queue  = new LinkedList<>();
+        queue.offer(this.root);
+
+        while (!queue.isEmpty()){
+            Node<E> root = queue.poll();
+            if (visitor.visit(this.root.element)) return;
+
+
+            if (root.left != null){
+                queue.offer(root.left);
+            }
+
+            if (root.right != null ){
+                queue.offer(root.right);
+            }
+
+
+        }
+    }
+
+
+    public int height(){
+        return this.height(this.root);
+
+    }
+
+    private int height(Node<E> node){
+        if (node == null) return 0;
+        return 1 + Math.max(this.height(node.left), this.height(node.right));
 
     }
 
@@ -94,6 +137,16 @@ public class BinarySearchTree <E> {
             throw new IllegalArgumentException("element must not be null");
         }
         return;
+    }
+
+
+    /***
+     *
+     * @param <E>
+     */
+    public static interface Visitor<E> {
+
+        boolean visit(E element);
     }
 
 
