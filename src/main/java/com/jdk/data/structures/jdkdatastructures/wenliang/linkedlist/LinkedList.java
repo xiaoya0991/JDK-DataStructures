@@ -203,6 +203,26 @@ public class LinkedList<E> extends AbstractList<E> {
 
     }
 
+    public E pop() {
+        return removeFirst();
+    }
+
+
+
+    /**
+     * Retrieves, but does not remove, the last element of this list,
+     * or returns {@code null} if this list is empty.
+     *
+     * @return the last element of this list, or {@code null}
+     *         if this list is empty
+     * @since 1.6
+     */
+    public E peekLast(){
+       final Node<E> l = this.last;
+        return (l == null) ? null : l.element;
+    }
+
+
 
 
     /**
