@@ -1,8 +1,8 @@
 package com.jdk.data.structures.jdkdatastructures.wenliang.tree;
 
-import com.jdk.data.structures.jdkdatastructures.wenliang.tree.printer.BinaryTreeInfo;
 
-public class BinarySearchTree <E> implements BinaryTreeInfo {
+
+public class BinarySearchTree <E> {
 
 
     private int size;
@@ -115,51 +115,5 @@ public class BinarySearchTree <E> implements BinaryTreeInfo {
     }
 
 
-    /**
-     *
-     * @return
-     */
-    @Override
-    public Object root() {
-        return this.root;
-    }
-
-
-    /***
-     *
-     * @param node
-     * @return
-     */
-    @Override
-    public Object left(Object node) {
-        return ((Node<E>)node).left;
-    }
-
-
-    /***
-     *
-     * @param node
-     * @return
-     */
-    @Override
-    public Object right(Object node) {
-        return ((Node<E>)node).right;
-    }
-
-
-    /***
-     *
-     * @param node
-     * @return
-     */
-    @Override
-    public Object string(Object node) {
-        Node<E> myNode = (Node<E>)node;
-        String parentString = "null";
-        if (myNode.parent != null) {
-            parentString = myNode.parent.element.toString();
-        }
-        return myNode.element + "_p(" + parentString + ")";
-    }
 
 }
