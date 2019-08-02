@@ -204,6 +204,22 @@ public class LinkedList<E> extends AbstractList<E> {
     }
 
 
+
+    /**
+     * Returns the last element in this list.
+     *
+     * @return the last element in this list
+     *
+     */
+    public E getLast(){
+       final Node<E> l = this.last;
+       if (l == null)
+           return null;
+        return l.element;
+
+    }
+
+
     /**
      *
      * @param f
