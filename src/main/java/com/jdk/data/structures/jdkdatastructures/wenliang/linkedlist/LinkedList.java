@@ -224,6 +224,19 @@ public class LinkedList<E> extends AbstractList<E> {
 
 
 
+    /**
+     * Retrieves and removes the first element of this list,
+     *
+     */
+    public E pollFirst(){
+        return (first == null) ? null : unlinkFirst(first);
+
+    }
+
+
+
+
+
 
     /**
      * Returns the last element in this list.
