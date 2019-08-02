@@ -61,6 +61,39 @@ public class ArrayListLc<E> {
     }
 
     /**
+     * 删除元素
+     * @param element
+     * @return
+     */
+    public boolean remove(E element){
+        //获取元素位置
+        int index = indexOf(element);
+        if(index < 0){
+            return false;
+        }
+
+        for (int i = index + 1; i < size ; i++) {
+            this.elementData[i - 1] = this.elementData[i];
+        }
+        this.elementData[size - 1] = null;
+        --size;
+        return true;
+    }
+
+    /**
+     * 判断元素是否存在
+     * @param element
+     * @return
+     */
+    public boolean contains(E element){
+        for(int i = 0; i < size; i++){
+            if(this.elementData[i] == element){
+                return true;
+            }
+        }
+        return false;
+    }
+    /**
      * 扩容数组
      */
     void ensureCapacity(){
@@ -77,8 +110,19 @@ public class ArrayListLc<E> {
      * @return
      */
     public E get(int index){
+//        if(index > size ){
+//
+//        }
         return elementData[index];
     }
 
 
+    public int indexOf(E element){
+        for(int i = 0; i < size; i++){
+            if(this.elementData[i] == element){
+                return i;
+            }
+        }
+        return  -1;
+    }
 }

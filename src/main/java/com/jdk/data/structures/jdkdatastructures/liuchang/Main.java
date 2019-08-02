@@ -1,5 +1,7 @@
 package com.jdk.data.structures.jdkdatastructures.liuchang;
 
+import java.util.ArrayList;
+
 /**
  * @author liuchang
  */
@@ -11,8 +13,9 @@ public class Main {
            arrayListLc.add(i);
            System.out.println("size==" + arrayListLc.getSize());
        }
-        for(int i = 0 ; i < 15; i++){
-            System.out.println("element==" + arrayListLc.get(i));
-        }
+        System.out.println("wwwwwsize==" + arrayListLc.getSize());
+
+        arrayListLc.remove(6);
+        System.out.println("wwwwwsize==" + arrayListLc.getSize());
     }
 }
