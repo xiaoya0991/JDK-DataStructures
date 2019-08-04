@@ -1,6 +1,7 @@
 package com.jdk.data.structures.jdkdatastructures.wenliang.arraylist;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  *  手写ArrayList
@@ -170,6 +171,25 @@ public class ArrayList <E>  implements Serializable {
         }
         this.elementData[--this.size] = null;
         return old;
+
+    }
+
+
+    /**
+     *收缩内部数组，提高空间利用用
+     */
+    public void trimToSize(){
+        if (this.size < DEFAULT_CAPACITY){
+            E[] newElement =(E[]) new Object[this.size];
+
+            for (int i = 0; i < newElement.length; i++) {
+                newElement[i] = elementData[i];
+            }
+
+            elementData = newElement;
+
+
+        }
 
     }
 
