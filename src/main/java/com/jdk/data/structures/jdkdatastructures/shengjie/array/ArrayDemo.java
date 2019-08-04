@@ -2,6 +2,11 @@ package com.jdk.data.structures.jdkdatastructures.shengjie.array;
 
 /**
  * Array underlying package
+ * time complexity:
+ * add--O(n)
+ * delete--O(n)
+ * update--known:O(1);unknown:O(n)
+ * find--known:O(1);unknown:O(n)
  * @author shengjie
  */
 public class ArrayDemo<E> {
@@ -178,7 +183,7 @@ public class ArrayDemo<E> {
 
         data[size] = null;//loitering objects != memory leak
 
-        if(size == data.length / 2)
+        if(size == data.length / 2 && data.length / 2 != 0)//prevent shake of data
             resize(data.length / 2);
 
         return (E) result;
