@@ -64,15 +64,26 @@ public class ArrayDemo<E> {
             throw new IllegalArgumentException("添加数据元素位置不合法，应该在0～size质检");
 
         if(size == this.data.length)
-            throw new IllegalArgumentException("数据已盛满，不能再添加了");
+            resize(2 * data.length);
 
         //插入数据数据，插入位置以后的数据依次向后挪动一位
         for(int i = this.size-1;i >= index;i--){
-            this.data[i-1] = this.data[i];
+            this.data[i+1] = this.data[i];
         }
 
         this.data[index] = e;
         this.size ++;
+    }
+
+    /**
+     * expand automatic
+     * @param newCapacity new capacity
+     */
+    private void resize(int newCapacity) {
+        E[] newData = (E[])new Object[newCapacity];
+        for(int i = 0; i < size; i++)
+            newData[i] = data[i];
+        data = newData;
     }
 
     /**
@@ -135,6 +146,7 @@ public class ArrayDemo<E> {
         for(int i = 0; i < size; i ++){
             if(data[i] == e)
                 return i;
+            continue;
         }
         return -1;
     }
@@ -160,11 +172,15 @@ public class ArrayDemo<E> {
         Object result = data[index];
 
         for(int i = index+1; i < size; i++){
-            data[index-1] = data[i];
+            data[i-1] = data[i];
         }
         size --;//defend size
 
         data[size] = null;//loitering objects != memory leak
+
+        if(size == data.length / 2)
+            resize(data.length / 2);
+
         return (E) result;
     }
 
@@ -173,7 +189,7 @@ public class ArrayDemo<E> {
      * @return removed element value
      */
     public E removeFirst(){
-        return data[0];
+        return remove(0);
     }
 
     /**
@@ -181,7 +197,7 @@ public class ArrayDemo<E> {
      * @return removed element value
      */
     public E removeLast(){
-        return data[size-1];
+        return remove(size - 1);
     }
 
     /**

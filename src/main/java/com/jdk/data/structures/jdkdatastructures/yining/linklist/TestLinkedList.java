@@ -16,9 +16,9 @@ public class TestLinkedList {
 
         System.out.println(linkedList.toString());
 
-        System.out.println(linkedList.getLinkedListSize());
-        // 反转链表
-        linkedList.reversetList(linkedList.getFirstNode());
+//        System.out.println(linkedList.getLinkedListSize());
+//        // 反转链表
+//        linkedList.reversetList(linkedList.getFirstNode());
 
         System.out.println(linkedList.toString());
     }
