@@ -75,4 +75,23 @@ public class ArrayStackDemo<E> implements StackDemo<E> {
     public E peek() {
         return array.getLast();
     }
+
+    /**
+     * override toString method
+     * @return
+     */
+    @Override
+    public String toString(){
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("stack: [");
+        for(int i = 0; i < array.getSize(); i++){
+            stringBuilder.append(array.get(i));
+            if(i != array.getSize() - 1){
+                stringBuilder.append(", ");
+            }
+        }
+        stringBuilder.append("] top");
+
+        return stringBuilder.toString();
+    }
 }
