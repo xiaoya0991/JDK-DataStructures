@@ -119,6 +119,22 @@ public class ArrayDemo<E> {
     }
 
     /**
+     * get last element of array
+     * @return
+     */
+    public E getLast(){
+        return get(size - 1);
+    }
+
+    /**
+     * get first element of array
+     * @return
+     */
+    public E getFirst(){
+        return get(0);
+    }
+
+    /**
      * set an element
      * @param index index
      * @param e an element value
