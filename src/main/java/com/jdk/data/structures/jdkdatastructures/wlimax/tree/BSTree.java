@@ -148,7 +148,66 @@ public class BSTree<E extends Comparable<E>>  {
        preOrder(node.left);
    }
 
+   public void   remove(E e ){
+        remove(root,e);
+   }
+   private Node remove(Node node,E e){
+       if(node == null)return  null;
+       if(e.compareTo((E) node.e) <0){
+           node.left = remove(node.left,e);
+           return node;
+       }else if(e.compareTo((E)node.e) > 0){
+           node.right = remove(node.right,e);
+          return node;
+       }else{
+           if(node.left == null){
+               Node rightNode = node.right;
+               node.right = null;
+               size--;
+               return rightNode;
+           }
+           if(node.right == null){
+               Node leftNode = node.left;
+               node.left = null;
+               size--;
+               return leftNode;
+           }
+           Node successor = minimum(node.right);
+           successor.right = removeMin(node.right);
+           successor.left =node.left;
+           node.left = node.right =null;
+           return  successor;
+       }
+   }
 
+   public E minimum(){
+       if(size ==0){ throw  new IllegalArgumentException("size ==0"); }
+       return (E) minimum(root).e;
+   }
+    public Node minimum(Node node){
+        if(node.left ==null){ return node; }
+      return   minimum(root.left);
+    }
+
+    /**
+     * 删除最小节点
+     * @return
+     */
+    public E removeMin(){
+        E ret = minimum();
+        removeMin(root);
+        return  ret;
+    }
+   public Node removeMin(Node node){
+       if(node.left == null){
+           Node rightNode = node.right;
+           node.right = null;
+           size--;
+           return rightNode;
+       }
+       node.left = removeMin(node.left);
+       return node;
+   }
 
 
     @Override
