@@ -30,6 +30,7 @@ public class BSTree<E extends Comparable<E>>  {
    }
    public int getSize(){ return this.size;}
    public boolean isEmpany(){ return this.size ==0;}
+
    public void add(E e){
         if(this.root==null){
             this.root = new  Node(e);
@@ -63,6 +64,14 @@ public class BSTree<E extends Comparable<E>>  {
      * @param e
      */
    private void addNR(Node node,E e){
+       //空时添加节点
+       if(node ==null){
+           size++;
+           this.root = new Node(e);
+       }
+       //
+
+
 
    }
    public   boolean contains(E e){
