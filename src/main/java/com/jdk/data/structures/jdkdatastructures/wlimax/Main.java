@@ -32,10 +32,11 @@ public class Main {
 //                System.out.println(str.split(",")[4]);
 //                bstMap.add(str.split(",")[3],str.split(",")[4]);
             }
-//            System.out.println(bstMap.getSize());
-            System.out.println(bstMap.get("The"));
-//            System.out.println(bstMap.contains(1));
             System.out.println("end ===");
+            bstMap.remove("The");
+            System.out.println("The :" + bstMap.get("The"));
+            System.out.println(bstMap.isBalanced());
+
 //            System.out.println(bstMap);
         } catch (IOException e) {
              System.out.println(e.getMessage());
