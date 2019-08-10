@@ -7,7 +7,7 @@ import com.jdk.data.structures.jdkdatastructures.shengjie.array.ArrayDemo;
  *
  * @author Holy
  */
-public class ArrayQueueDemo<E> implements QueueDemo{
+public class ArrayQueueDemo<E> implements QueueDemo<E>{
     /**
      * define an array
      */
@@ -60,7 +60,7 @@ public class ArrayQueueDemo<E> implements QueueDemo{
      * @return an object
      */
     @Override
-    public Object dequeue() {
+    public E dequeue() {
         return this.array.removeFirst();
     }
 
@@ -69,7 +69,7 @@ public class ArrayQueueDemo<E> implements QueueDemo{
      * @return
      */
     @Override
-    public Object getFront() {
+    public E getFront() {
         return this.array.getFirst();
     }
 
