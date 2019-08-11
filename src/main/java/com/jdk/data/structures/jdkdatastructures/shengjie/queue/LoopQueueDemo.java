@@ -6,7 +6,7 @@ package com.jdk.data.structures.jdkdatastructures.shengjie.queue;
  */
 public class LoopQueueDemo<E> implements QueueDemo<E>{
     /**
-     * define a array
+     * define a arrayList
      */
     private E[] data;
     /**

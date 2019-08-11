@@ -1,4 +1,4 @@
-package com.jdk.data.structures.jdkdatastructures.shengjie.array;
+package com.jdk.data.structures.jdkdatastructures.shengjie.arrayList;
 
 public class Main {
     public static void main(String[] args) {

@@ -1,10 +1,10 @@
 package com.jdk.data.structures.jdkdatastructures.shengjie.stack;
 
-import com.jdk.data.structures.jdkdatastructures.shengjie.array.ArrayDemo;
+import com.jdk.data.structures.jdkdatastructures.shengjie.arrayList.ArrayDemo;
 
 public class ArrayStackDemo<E> implements StackDemo<E> {
     /**
-     * define an array
+     * define an arrayList
      */
     ArrayDemo<E> array;
 

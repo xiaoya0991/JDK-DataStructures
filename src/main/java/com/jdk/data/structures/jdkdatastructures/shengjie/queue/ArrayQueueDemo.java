@@ -1,6 +1,6 @@
 package com.jdk.data.structures.jdkdatastructures.shengjie.queue;
 
-import com.jdk.data.structures.jdkdatastructures.shengjie.array.ArrayDemo;
+import com.jdk.data.structures.jdkdatastructures.shengjie.arrayList.ArrayDemo;
 
 /**
  * write a queue class
@@ -9,7 +9,7 @@ import com.jdk.data.structures.jdkdatastructures.shengjie.array.ArrayDemo;
  */
 public class ArrayQueueDemo<E> implements QueueDemo<E>{
     /**
-     * define an array
+     * define an arrayList
      */
     ArrayDemo<E> array;
 

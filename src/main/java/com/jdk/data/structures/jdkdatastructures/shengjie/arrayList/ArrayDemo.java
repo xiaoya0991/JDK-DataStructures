@@ -1,4 +1,4 @@
-package com.jdk.data.structures.jdkdatastructures.shengjie.array;
+package com.jdk.data.structures.jdkdatastructures.shengjie.arrayList;
 
 /**
  * Array underlying package
@@ -11,11 +11,11 @@ package com.jdk.data.structures.jdkdatastructures.shengjie.array;
  */
 public class ArrayDemo<E> {
     /**
-     * define an array
+     * define an arrayList
      */
     private E[] data;
     /**
-     * size of array
+     * size of arrayList
      */
     private int size;
 
@@ -119,7 +119,7 @@ public class ArrayDemo<E> {
     }
 
     /**
-     * get last element of array
+     * get last element of arrayList
      * @return
      */
     public E getLast(){
@@ -127,7 +127,7 @@ public class ArrayDemo<E> {
     }
 
     /**
-     * get first element of array
+     * get first element of arrayList
      * @return
      */
     public E getFirst(){
