@@ -212,6 +212,61 @@ public class LinkedList <E>{
     }
 
     /**
+     * remove repeated element in LinkedList
+     */
+    public void removeSameElement(){
+        if(isEmpty())
+            throw new IllegalArgumentException("remove failed from empty LinkedList");
+
+        for(int i = 0; i < size; i ++){
+            if(get(i+1) == get(i))
+                remove(i+1);
+        }
+    }
+
+    /**
+     * return a positive element of a node
+     * @param index
+     * @return
+     */
+    public E findPositiveNode(int index){
+        if(index < 0 || index > size)
+            throw new IllegalArgumentException("get failed, illegal index");
+
+        Node current = dummyHead.next;
+        for(int i = 0; i < index; i ++)
+            current = current.next;
+        return current.e;
+    }
+
+    /**
+     * Return to the countdown to a node
+     * @param index
+     * @return
+     */
+    public E findCountdownNode(int index){
+        if(index < 0 || index > size)
+            throw new IllegalArgumentException("get failed, illegal index");
+
+        Node current = dummyHead.next;
+        for(int i = 0; i < size - index; i ++)
+            current = current.next;
+        return current.e;
+    }
+
+    /**
+     * return the medium node
+     * @return
+     */
+//    public List<E> findMediumNode(){
+//        if(size % 2 == 1)
+//            return get((size - 1)/2);
+//        else{
+//            return get(size / 2);
+//        }
+//    }
+
+    /**
      * remove the last element
      * @return
      */
@@ -240,4 +295,5 @@ public class LinkedList <E>{
         linkedList.removeLast();
         System.out.println(linkedList);
     }
+
 }

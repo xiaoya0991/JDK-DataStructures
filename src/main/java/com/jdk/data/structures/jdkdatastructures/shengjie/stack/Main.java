@@ -47,5 +47,4 @@ public class Main {
 
         return (endTime - startTime) / 1000000000.0;
     }
-
 }

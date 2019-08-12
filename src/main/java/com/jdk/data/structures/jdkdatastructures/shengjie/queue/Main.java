@@ -1,5 +1,7 @@
 package com.jdk.data.structures.jdkdatastructures.shengjie.queue;
 
+import com.jdk.data.structures.jdkdatastructures.shengjie.linkedList.LinkedListQueue;
+
 import java.util.Random;
 
 /**
@@ -29,6 +31,10 @@ public class Main {
         LoopQueueDemo<Integer> loopQueueDemo = new LoopQueueDemo<>();
         double time2 = testQueue(loopQueueDemo, count);
         System.out.println("LoopQueue, time:" + time2 + "s");
+
+        LinkedListQueue<Integer> linkedListQueue = new LinkedListQueue<>();
+        double time3 = testQueue(linkedListQueue, count);
+        System.out.println("LinkedListQueue, time:" + time3 +"s");
     }
 
     private static double testQueue(QueueDemo<Integer> q, int count){
