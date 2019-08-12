@@ -159,7 +159,7 @@ public class AVLTree<K extends Comparable<K>,V> {
      * @return
      */
     private Node getNode (Node node ,K key){
-        if(node == null) return  null;
+        if(node == null) {return  null;}
         if(key.compareTo(node.key) == 0){
             return  node;
         }else if(key.compareTo(node.key) <0){

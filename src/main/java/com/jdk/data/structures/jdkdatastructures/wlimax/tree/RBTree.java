@@ -216,8 +216,8 @@ public class RBTree<K extends Comparable<K> ,V>
             res.append(generateBSTSting(depth) + "null\n");
             return;
         }
-        res.append(generateBSTSting(depth) + node.value + "\n");
         generateBSTSting(node.left,depth+1,res);
+        res.append(generateBSTSting(depth) +node.key + ":"+ node.value + "\n");
         generateBSTSting(node.right,depth+1,res);
     }
     private String generateBSTSting(int depth){

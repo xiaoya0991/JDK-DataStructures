@@ -37,7 +37,7 @@ public class Main {
 //            System.out.println("The :" + bstMap.get("The"));
 //            System.out.println(bstMap);
 
-//            System.out.println(bstMap);
+            System.out.println(bstMap);
         } catch (IOException e) {
              System.out.println(e.getMessage());
         }
