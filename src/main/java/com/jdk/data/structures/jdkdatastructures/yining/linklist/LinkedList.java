@@ -6,7 +6,7 @@ package com.jdk.data.structures.jdkdatastructures.yining.linklist;
  */
 public class LinkedList<E> {
 
-    private  static class Node<E> {
+    private static class Node<E> {
 
         public E e;
 
@@ -185,12 +185,12 @@ public class LinkedList<E> {
             throw new IllegalArgumentException("Remove  failed, Illegal Index");
         }
 
-       Node<E> pre = head.next;
+        Node<E> pre = head.next;
         for (int i = 0; i < index; i++) {
             pre = pre.next;
         }
 
-       Node<E> delNode = pre.next;
+        Node<E> delNode = pre.next;
         pre.next = delNode.next;
         delNode.next = null;
         size--;
@@ -215,7 +215,7 @@ public class LinkedList<E> {
      * 从链表中删除元数E
      */
     public void removeElement(E e) {
-       Node<E> pre = head;
+        Node<E> pre = head;
         while (pre != null) {
             if (pre.next.e.equals(e)) {
                 break;
@@ -224,7 +224,7 @@ public class LinkedList<E> {
         }
 
         if (pre.next != null) {
-           Node<E> deleNode = pre.next;
+            Node<E> deleNode = pre.next;
             pre.next = deleNode.next;
             deleNode.next = null;
         }
@@ -238,7 +238,7 @@ public class LinkedList<E> {
     public String toString() {
         StringBuilder res = new StringBuilder();
 
-       Node<E> cur = head.next;
+        Node<E> cur = head.next;
         while (cur != null) {
             res.append(cur + "->");
             cur = cur.next;
@@ -247,5 +247,5 @@ public class LinkedList<E> {
 
         return res.toString();
     }
-    
+
 }
