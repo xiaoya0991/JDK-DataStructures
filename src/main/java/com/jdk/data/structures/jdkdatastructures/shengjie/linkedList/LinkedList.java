@@ -258,13 +258,48 @@ public class LinkedList <E>{
      * return the medium node
      * @return
      */
-//    public List<E> findMediumNode(){
-//        if(size % 2 == 1)
-//            return get((size - 1)/2);
-//        else{
-//            return get(size / 2);
-//        }
-//    }
+    public String getMediumNode(){
+        if(size / 2 == 1)
+            return get((size + 1) / 2).toString();
+        else
+            return get((size - 1) / 2).toString()+","+get((size + 1) / 2).toString();
+    }
+
+    /**
+     * return the smallest head node from sorted LinkedList(ASC)
+     * @return
+     */
+    public E getHeadFromSorted(){
+        E e = null;
+        for(int i = 0; i < size - 1; i ++) {
+            if (get(i).toString().compareTo(get(i + 1).toString()) > 0)
+                e = get(i + 1);
+            else
+                e = get(i);
+        }
+        return e;
+    }
+
+    /**
+     * define two pointer
+     */
+    private Node slow,fast;
+
+    /**
+     * judge LinkedList has loop
+     * @return
+     */
+    public boolean isLoopLinkedList(){
+        slow = fast = dummyHead;
+        for (int i = 0; i < size - 1; i ++){
+            slow = slow.next;
+            fast = fast.next.next;
+
+            if(slow == fast)
+                return true;
+        }
+        return false;
+    }
 
     /**
      * remove the last element
