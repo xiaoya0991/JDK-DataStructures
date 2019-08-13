@@ -211,17 +211,42 @@ public class LinkedList <E>{
         return remove(0);
     }
 
+    private Node head;
     /**
      * remove repeated element in LinkedList
      */
-    public void removeSameElement(){
-        if(isEmpty())
-            throw new IllegalArgumentException("remove failed from empty LinkedList");
+    public Node removeSameElement(Node node,E e){
 
-        for(int i = 0; i < size; i ++){
-            if(get(i+1) == get(i))
-                remove(i+1);
+        //method1
+        if(node == null)
+            return null;
+        while (node != null && node.e == e){
+            Node delNode = head;
+            node = node.next;
+            delNode = null;
         }
+
+        Node prev = node;
+        while(prev.next != null){
+            if(prev.next.e == e){
+                Node delNode = prev;
+                prev.next = node.next;
+                delNode = null;
+            }else
+                prev = prev.next;
+        }
+        return node;
+
+//        //method 2
+//        dummyHead.next = node;
+//        Node prev = dummyHead;
+//        while(prev.next != null){
+//            if(prev.next.e == e){
+//                prev.next = prev.next.next;
+//            }else
+//                prev = prev.next;
+//        }
+//        return dummyHead.next;
     }
 
     /**
@@ -316,18 +341,7 @@ public class LinkedList <E>{
             System.out.println(linkedList);
         }
 
-        linkedList.add(3,888);
-        System.out.println(linkedList);
-
-        System.out.println("===================");
-
-        linkedList.remove(3);
-        System.out.println(linkedList);
-
-        linkedList.removeFirst();
-        System.out.println(linkedList);
-
-        linkedList.removeLast();
+        linkedList.add(3,2);
         System.out.println(linkedList);
     }
 
