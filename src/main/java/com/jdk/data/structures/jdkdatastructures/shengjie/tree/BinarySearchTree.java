@@ -86,7 +86,7 @@ public class BinarySearchTree<E extends Comparable<E>>{
      * judge an element that is an element of the binary search tree by recursion method
      */
     public boolean contains(E e){
-        contains(root, e);
+        return contains(root, e);
     }
     private boolean contains(Node node, E e){
         if(node == null)
@@ -98,5 +98,7 @@ public class BinarySearchTree<E extends Comparable<E>>{
             return contains(node.left, e);
         else if(e.compareTo(node.e) > 0)
             return contains(node.right, e);
+
+        return false;
     }
 }
