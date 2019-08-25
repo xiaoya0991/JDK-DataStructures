@@ -1,5 +1,8 @@
 package com.jdk.data.structures.jdkdatastructures.wenliang.tree;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 /**
  * @author wenliang
  */
@@ -25,6 +28,165 @@ public class BinaryTree<E> {
     }
 
 
+
+
+    public void preorder(Visitor<E> visitor){
+        if (visitor == null) return;
+        this.preorder(root, visitor);
+    }
+
+
+    private void preorder(Node<E> node,Visitor<E> visitor){
+        if (node == null || visitor.stop) return;
+
+        visitor.stop  =visitor.visit(node.element);
+        preorder(node.left,visitor);
+        preorder(node,visitor);
+    }
+
+
+    public void inorder(Visitor<E> visitor){
+        if (visitor == null) return;
+
+        inorder(root, visitor);
+    }
+
+    private void inorder(Node<E> node,Visitor visitor){
+        if (node == null || visitor.stop) return;
+
+        inorder(node.left,visitor);
+        if (visitor.stop) return;
+       visitor.stop =  visitor.visit(node.element);
+       inorder(node.right,visitor);
+    }
+
+
+    public void postorder(Visitor<E> visitor){
+        if (visitor==null) return;
+        this.postorder(root, visitor);
+    }
+
+
+    private void postorder(Node<E> node,Visitor<E> visitor){
+        postorder(node.left,visitor);
+        postorder(node.right,visitor);
+        if (visitor.stop) return;
+
+        visitor.stop = visitor.visit(node.element);
+    }
+
+
+    public void leveOrder(Visitor<E> visitor){
+        if (root == null || visitor == null) return;
+
+        Queue<Node<E>> queue = new LinkedList<>();
+        queue.offer(root);
+
+        while (!queue.isEmpty()){
+            Node<E> node = queue.poll();
+            if (visitor.visit(node.element)) return;
+
+            if (node.left !=null){
+                queue.offer(node.left);
+            }
+            if (node.right !=null){
+                queue.offer(node.right);
+            }
+        }
+    }
+
+
+    /**
+     *
+     * @return
+     */
+    public boolean isComplete(){
+        if (root == null) return false;
+        Queue<Node<E>> queue = new LinkedList<>();
+        queue.offer(root);
+
+        boolean leaf = false;
+        while (!queue.isEmpty()){
+            Node<E> node = queue.poll();
+            if (leaf && !node.isLeaf()) return false;
+
+            if (node.left !=null){
+                queue.offer(node.left);
+
+            }else if (node.right !=null){
+                return false;
+            }
+
+            if (node.right != null){
+                queue.offer(node.right);
+            }
+
+            leaf = true;
+        }
+
+        return true;
+    }
+
+
+    /***
+     *
+     * @return
+     */
+    public int hetght(){
+        if (root == null) return 0;
+
+        int height = 0;
+
+        int levelSize = 1;
+
+        Queue<Node<E>> queue = new LinkedList<>();
+        queue.offer(root);
+
+        while (!queue.isEmpty()){
+            Node<E> node = queue.poll();
+            levelSize--;
+
+            if (node.left != null) {
+                queue.offer(node.left);
+            }
+
+            if (node.right !=null) {
+                queue.offer(node.right);
+            }
+
+            if (levelSize == 0 ){
+                levelSize = queue.size();
+                height++;
+            }
+
+        }
+        return height;
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public static abstract class Visitor<E> {
+        boolean stop;
+
+
+        /**
+         *
+         * @param element
+         * @return
+         */
+       public abstract boolean visit(E element);
+    }
 
     protected static class Node<E>{
         E element;
