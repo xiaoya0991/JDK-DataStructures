@@ -51,8 +51,22 @@ public class BST<E> extends BinaryTree<E>{
     protected void afterRemove(Node<E> node){}
 
 
+    /***
+     *
+     * @param element
+     */
     public void remove(E element){
 
+    }
+
+    private void remove(Node<E> node){
+        if (node == null) return;
+
+        size--;
+
+        if (node.hasTwoChildren()){
+
+        }
     }
 
 

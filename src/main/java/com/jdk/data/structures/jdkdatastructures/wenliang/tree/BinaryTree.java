@@ -184,6 +184,56 @@ public class BinaryTree<E> {
        public abstract boolean visit(E element);
     }
 
+
+    /***
+     *
+     * @param node
+     * @return
+     */
+    protected Node preecessor(Node<E> node){
+        if (node == null) return null;
+
+        Node<E> p = node.left;
+        if (p != null ){
+            while (p.left != null){
+                p = p.right;
+            }
+            return p;
+        }
+
+        while (node.parent !=null && node == node.parent.left ) {
+            node = node.parent;
+        }
+
+        return node.parent;
+    }
+
+
+    /***
+     *
+     * @param node
+     * @return
+     */
+    protected Node<E> successor(Node<E> node) {
+        if (node == null) return null;
+
+        Node<E> p = node.right;
+        if (p != null ){
+            while (p.left !=null){
+                p = p.left;
+
+            }
+            return p;
+        }
+
+        while (node.parent !=null && node == node.parent.right){
+            node = node.parent;
+        }
+
+        return node.parent;
+
+    }
+
     protected static class Node<E>{
         E element;
         Node<E> left;
