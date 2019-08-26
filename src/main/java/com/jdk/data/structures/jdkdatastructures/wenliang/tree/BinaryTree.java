@@ -165,6 +165,11 @@ public class BinaryTree<E> {
     }
 
 
+    protected Node<E> createNode(E element,Node<E> parent){
+        return new Node<>(element, parent);
+    }
+
+
 
 
     public static abstract class Visitor<E> {

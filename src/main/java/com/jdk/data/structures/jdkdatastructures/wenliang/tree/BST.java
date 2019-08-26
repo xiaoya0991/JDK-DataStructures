@@ -3,7 +3,7 @@ package com.jdk.data.structures.jdkdatastructures.wenliang.tree;
 /**
  * @author wenliang
  */
-public class BST<E> {
+public class BST<E> extends BinaryTree<E>{
 
     private Comparable<E> comparable;
 
@@ -26,9 +26,76 @@ public class BST<E> {
         elementNotNullCheck(element);
 
         //添加第一个节点
+        if (root == null) {
+            root = super.createNode(element, null);
+            size++;
+
+
+        }
 
 
     }
+
+
+    /**
+     *删除node之后的调整
+     * @param node
+     */
+    protected void afterAdd(Node<E> node){}
+
+
+    /**
+     *
+     * @param node
+     */
+    protected void afterRemove(Node<E> node){}
+
+
+    public void remove(E element){
+
+    }
+
+
+    /**
+     *
+     * @param element
+     */
+    public boolean contains(E element){
+       return node(element) != null;
+    }
+
+
+    /***
+     *
+     * @param element
+     * @return
+     */
+    private Node<E> node(E element){
+        Node<E> node = this.root;
+        while (node != null ){
+            int cmp = compare(element, node.element);
+            if (cmp == 0) return node;
+            if (cmp > 0){
+                node = node.right;
+
+            }else {
+                node = node.left;
+            }
+        }
+
+        return null;
+    }
+
+
+
+
+    /**
+     * @return 返回值等于0，代表e1和e2相等；返回值大于0，代表e1大于e2；返回值小于于0，代表e1小于e2
+     */
+    private int compare(E e1, E e2) {
+        return ((Comparable<E>)e1).compareTo(e2);
+    }
+
 
 
     private void elementNotNullCheck(E element){
