@@ -65,7 +65,34 @@ public class BST<E> extends BinaryTree<E>{
         size--;
 
         if (node.hasTwoChildren()){
+            Node<E> s = super.successor(node);
+            node.element = s.element;
+            node = s;
+        }
 
+        Node<E> replacement = node.left != null ? node.left : node.right;
+
+        if (replacement !=null){
+            replacement.parent = node.parent;
+
+            if (node.parent == null){
+                root = replacement;
+            }else if (node == node.parent.left){
+                node.parent.left = replacement;
+            }else {
+                node.parent.right = replacement;
+            }
+
+        }else if (node.parent == null){
+            root = null;
+
+        }else {
+            if (node == node.parent.left){
+                node.parent.left = null;
+
+            }else {
+                node.parent.right = null;
+            }
         }
     }
 
