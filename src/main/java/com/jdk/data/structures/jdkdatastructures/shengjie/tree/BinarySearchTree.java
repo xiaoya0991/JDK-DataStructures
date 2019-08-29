@@ -101,4 +101,62 @@ public class BinarySearchTree<E extends Comparable<E>>{
 
         return false;
     }
+
+    /**
+     * preorder travalsal--前序遍历
+     */
+    public void preOrder() {
+        preOrder(root);
+    }
+
+    private void preOrder(Node node){
+        if(node == null)
+            return;
+
+        System.out.println(node.e);
+        preOrder(node.left);
+        preOrder(node.right);
+    }
+
+    @Override
+    public String toString(){
+        StringBuilder stringBuilder = new StringBuilder();
+        generateBSTToString(root, 0, stringBuilder);
+        return stringBuilder.toString();
+    }
+
+    //generate a binary search tree that has depth of the depth with the root node named root
+    private void generateBSTToString(Node node, int depth, StringBuilder stringBuilder){
+        if(node == null){
+            stringBuilder.append(generateDepthBSTToString(depth) + "null\n");
+            return;
+        }
+
+        stringBuilder.append(generateDepthBSTToString(depth) + node.e + "\n");
+        generateBSTToString(node.left, depth + 1, stringBuilder);
+        generateBSTToString(node.right, depth + 1, stringBuilder);
+    }
+
+    private String generateDepthBSTToString(int depth){
+        StringBuilder stringBuilder = new StringBuilder();
+        for(int i = 0; i < depth; i ++)
+            stringBuilder.append("_");
+
+        return stringBuilder.toString();
+    }
+
+    public static void main(String[] args) {
+        BinarySearchTree<Integer> bst = new BinarySearchTree();
+        int[] nums = {4,2,5,1,3,7};
+        for (int num: nums)
+            bst.add(num);
+
+        //          4
+        //      2       5
+        //1         3       7
+
+        bst.preOrder();
+        System.out.println();
+        System.out.println(bst);
+    }
 }
