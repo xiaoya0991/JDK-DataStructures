@@ -1,5 +1,8 @@
 package com.jdk.data.structures.jdkdatastructures.shengjie.tree;
 
+import com.jdk.data.structures.jdkdatastructures.shengjie.queue.ArrayQueueDemo;
+import com.jdk.data.structures.jdkdatastructures.shengjie.stack.ArrayStackDemo;
+
 /**
  * binary search tree without same element
  */
@@ -66,7 +69,7 @@ public class BinarySearchTree<E extends Comparable<E>>{
      * add new element to the binary search tree that the root node with root by recursion method
      */
     public void add(E e){
-        add(root,e);
+        root = add(root,e);
     }
     private Node add(Node node, E e){
         if(node == null){
@@ -103,7 +106,7 @@ public class BinarySearchTree<E extends Comparable<E>>{
     }
 
     /**
-     * preorder travalsal--前序遍历
+     * preorder travalsal--前序遍历(根左右)
      */
     public void preOrder() {
         preOrder(root);
@@ -116,6 +119,77 @@ public class BinarySearchTree<E extends Comparable<E>>{
         System.out.println(node.e);
         preOrder(node.left);
         preOrder(node.right);
+    }
+
+    /**
+     * preorder travalsal by stack method
+     */
+    public void preOrderByStack(){
+        ArrayStackDemo<Node> stack = new ArrayStackDemo<>();
+        stack.push(root);
+        while (!stack.isEmpty()){
+            Node current = stack.pop();
+            System.out.println(current.e);
+
+            if(current.right != null)
+                stack.push(current.right);
+            if(current.left != null)
+                stack.push(current.left);
+        }
+    }
+
+    /**
+     * inorder travalsal--中序遍历(左根右)
+     */
+    public void inOrder(){
+        inOrder(root);
+    }
+
+    private void inOrder(Node node){
+        if(node == null)
+            return;
+
+        inOrder(node.left);
+        System.out.println(node.e);
+        inOrder(node.right);
+    }
+
+//    /**
+//     * inorder travalsal by stack method(未完成，难，暂时放弃)
+//     */
+//    public void inOrderByStack(){
+//        ArrayStackDemo<Node> stack = new ArrayStackDemo<>();
+//        Node node = root.left;
+//        if(node != null)
+//            node = node.left;
+//
+//        stack.push(node);
+//
+//        while (!stack.isEmpty()){
+//            Node current = stack.pop();
+//
+//
+//            System.out.println(current.e);
+//
+//            stack.push(rootNode.e);
+//
+//        }
+//    }
+
+    /**
+     * postorder travalsal--后序遍历(左右根)
+     */
+    public void postOrder(){
+        postOrder(root);
+    }
+
+    private void postOrder(Node node){
+        if(node == null)
+            return;
+
+        postOrder(node.left);
+        postOrder(node.right);
+        System.out.println(node.e);
     }
 
     @Override
@@ -145,17 +219,113 @@ public class BinarySearchTree<E extends Comparable<E>>{
         return stringBuilder.toString();
     }
 
+    /**
+     * levelorder tarvalsal -- 层序遍历
+     */
+    public void levelOrder(){
+        ArrayQueueDemo<Node> queue = new ArrayQueueDemo<>();
+        queue.enqueue(root);
+        while (!queue.isEmpty()){
+            Node current = queue.dequeue();
+            System.out.println(current.e);
+
+            if(current.left != null)
+                queue.enqueue(current.left);
+            if(current.right != null)
+                queue.enqueue(current.right);
+        }
+    }
+
+    /**
+     * obtain the min number of a binary search tree by recursion
+     * @return
+     */
+    public E min(){
+        if(size == 0)
+            throw new IllegalArgumentException("BST is empty");
+        return min(root).e;
+    }
+
+    private Node min(Node node){
+        if(node.left == null)
+            return node;
+        return min(node.left);
+    }
+
+    /**
+     * remove the min number of a binary search tree by recursion
+     * @return
+     */
+    public E removeMin(){
+        E result = min();
+        root = removeMin(root);
+        return result;
+    }
+
+    private Node removeMin(Node node){
+        if(node.left == null){
+            Node rightNode = node.right;
+            node.right = null;
+            size --;
+            return rightNode;
+        }
+
+        node.left = removeMin(node.left);
+        return node;
+    }
+
+    /**
+     * the max number of a binary search tree by recursion
+     * @return
+     */
+    public E max(){
+        if(size == 0)
+            throw new IllegalArgumentException("BST is empty");
+        return max(root).e;
+    }
+
+    private Node max(Node node){
+        if(node.right == null)
+            return node;
+        return max(node.right);
+    }
+
+    /**
+     * remove the max number of a binary search tree by recursion
+     * @return
+     */
+    public E removeMax(){
+        E result = max();
+        root = removeMax(root);
+        return result;
+    }
+
+    private Node removeMax(Node node){
+        if(root.right == null){
+            Node leftNode = node.left;
+            node.left = null;
+            size --;
+            return leftNode;
+        }
+
+        node.right = removeMax(node.right);
+        return node;
+    }
+
     public static void main(String[] args) {
         BinarySearchTree<Integer> bst = new BinarySearchTree();
         int[] nums = {4,2,5,1,3,7};
-        for (int num: nums)
+        for (int num : nums)
             bst.add(num);
 
         //          4
         //      2       5
         //1         3       7
 
-        bst.preOrder();
+        bst.removeMin();
+        bst.removeMax();
+        System.out.println(bst.min() + "========");
+        System.out.println(bst.max() + "--------");
         System.out.println();
         System.out.println(bst);
     }
