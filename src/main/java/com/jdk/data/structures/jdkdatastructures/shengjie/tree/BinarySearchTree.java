@@ -1,7 +1,10 @@
 package com.jdk.data.structures.jdkdatastructures.shengjie.tree;
 
+import com.jdk.data.structures.jdkdatastructures.shengjie.arrayList.ArrayDemo;
 import com.jdk.data.structures.jdkdatastructures.shengjie.queue.ArrayQueueDemo;
 import com.jdk.data.structures.jdkdatastructures.shengjie.stack.ArrayStackDemo;
+
+import java.util.Random;
 
 /**
  * binary search tree without same element
@@ -20,15 +23,19 @@ public class BinarySearchTree<E extends Comparable<E>>{
 
     private Node root;
     private int size;
+    private int depth;//深度
 
     public BinarySearchTree(){
         this.root = null;
         this.size = 0;
+        this.depth = 0;
     }
 
     public int getSize(){
         return size;
     }
+
+    public int getDepth() { return depth; }
 
     public boolean isEmpty(){
         return size == 0;
@@ -155,24 +162,21 @@ public class BinarySearchTree<E extends Comparable<E>>{
     }
 
 //    /**
-//     * inorder travalsal by stack method(未完成，难，暂时放弃)
+//     * inorder travalsal by stack method(仅做练习，暂时还未解决)
 //     */
 //    public void inOrderByStack(){
 //        ArrayStackDemo<Node> stack = new ArrayStackDemo<>();
-//        Node node = root.left;
-//        if(node != null)
-//            node = node.left;
-//
-//        stack.push(node);
+//        if(size == 0)
+//            throw new IllegalArgumentException("BST is empty");
+//        stack.push(removeMin(root));
 //
 //        while (!stack.isEmpty()){
 //            Node current = stack.pop();
+//            System.out.println(current);
 //
-//
-//            System.out.println(current.e);
-//
-//            stack.push(rootNode.e);
-//
+//            if(current.right == null)
+//                stack.push(removeMin(root));
+//            stack.push(current.right);
 //        }
 //    }
 
@@ -312,8 +316,120 @@ public class BinarySearchTree<E extends Comparable<E>>{
         return node;
     }
 
+    /**
+     * remove an element
+     * @param e
+     */
+    public void remove(E e){
+        root = remove(root, e);
+    }
+
+    private Node remove(Node node, E e){
+        if(node == null)
+            return null;
+        if(e.compareTo(node.e) < 0){
+            node.left = remove(node.left, e);
+            return node;
+        }else if(e.compareTo(node.e) > 0){
+            node.right = remove(node.right, e);
+            return node;
+        }else {
+            //the situation that the remove node has children node and the left children node are null
+            if(node.left == null){
+                Node rightNode = node.right;
+                node.right = null;
+                size --;
+                return rightNode;
+            }
+            //the situation that the remove node has children node and the right children node are null
+            if(node.right == null){
+                Node leftNode = node.left;
+                node.left = null;
+                size --;
+                return leftNode;
+            }
+            //the situation that the remove node has children nodes , the left children nodes and the right children nodes all are not null
+//            //solution1 : find the min node of the right children nodes to replace the remove node
+//            Node successor = min(node.right);
+//            successor.right = removeMin(node.right);
+//            successor.left = node.left;
+//            node.left = node.right = null;
+
+            //solution2 : find the max node of the right children nodes to replace the remove node
+            Node successor = max(node.left);
+            successor.left = removeMin(node.left);
+            successor.right = node.right;
+            node.left = node.right = null;
+
+            return successor;
+        }
+    }
+
+    /**
+     * the neighbor node smaller than an element
+     * @param e
+     * @return
+     */
+    public E floor(E e){
+        return floor(root, e).e;
+    }
+
+    private Node floor(Node node, E e){
+        if(node == null)
+            return null;
+
+        //an element is the node of the binary search tree
+        if(node.e.compareTo(e) == 0) {
+            if(node.left == null)//this is the min node now
+                return node;
+            return node.left;
+        }
+        //an element is not at this binary search tree
+        else if(node.e.compareTo(e) < 0){
+            if(node.left == null)
+                return node;
+            node.right = floor(node.right, e);
+        }else if(node.e.compareTo(e) > 0){
+            node.left = floor(node.left,e);
+        }
+        return node;
+
+    }
+
+    /**
+     * the neighbor node larger than an element
+     * @param e
+     * @return
+     */
+    public E ceil(E e){
+        return ceil(root, e).e;
+    }
+
+    private Node ceil(Node node, E e){
+        if(node == null)
+            return null;
+
+        //an element is the node of the binary search tree
+        if(node.e == e) {
+            if(node.right == null)//this is the max node now
+                return node;
+            return node.right;
+        }
+        //an element is not at this binary search tree
+        else if(node.e.compareTo(e) < 0){
+            node.right = ceil(node.right, e);
+        }else if(node.e.compareTo(e) > 0){
+            if(node.right == null)
+                return node;
+            node.left = ceil(node.left, e);
+        }
+        return node;
+    }
+
+
     public static void main(String[] args) {
         BinarySearchTree<Integer> bst = new BinarySearchTree();
+
         int[] nums = {4,2,5,1,3,7};
         for (int num : nums)
             bst.add(num);
@@ -322,11 +438,24 @@ public class BinarySearchTree<E extends Comparable<E>>{
         //      2       5
         //1         3       7
 
-        bst.removeMin();
-        bst.removeMax();
-        System.out.println(bst.min() + "========");
-        System.out.println(bst.max() + "--------");
-        System.out.println();
-        System.out.println(bst);
+//        bst.preOrder();
+        System.out.println("\n" + bst.ceil(6));
+        System.out.println("\n" + bst);
+
+
+//        Random random = new Random();
+//        int n = 1000;
+//        for(int i = 0; i < n; i ++)
+//            bst.add(random.nextInt(10000));
+//
+//        ArrayDemo<Integer> nums = new ArrayDemo<>();
+//        while (!bst.isEmpty())
+//            nums.addLast(bst.removeMin());
+//
+//        System.out.println(nums);
+//        for(int i = 1; i < nums.getSize(); i ++)
+//            if(nums.get(i-1) > nums.get(i))
+//                throw new IllegalArgumentException("Error");
+//        System.out.println("removeMin test completed");
     }
 }
