@@ -34,10 +34,6 @@ import java.util.Stack;
  * = (0 + 17) + 5
  * = 17 + 5
  * = 22
- *
- * 来源：力扣（LeetCode）
- * 链接：https://leetcode-cn.com/problems/evaluate-reverse-polish-notation
- * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 public class Solution150 {
     /**
@@ -49,12 +45,12 @@ public class Solution150 {
     }
     //计算
     private int caculate(Integer right, Integer left, String operator){//运算的前后数字位置很重要
-        switch (operator){
-            case "+" :
+        switch (operator) {
+            case "+":
                 return left + right;
-            case "-" :
+            case "-":
                 return left - right;
-            case "*" :
+            case "*":
                 return left * right;
             default:
                 return left / right;
@@ -93,9 +89,10 @@ public class Solution150 {
 
 
 
-    /**
-     * solution three:
-     */
+//    /**
+//     * solution three:
+//     * 有点问题，遇到第一个符号，执行完，后边的都不再执行了。。。
+//     */
 //    public int evalRPN(String[] tokens) {
 //        Stack<Integer> stack = new Stack<>();
 //        for (String token : tokens) {
@@ -115,4 +112,13 @@ public class Solution150 {
 //        }
 //        return stack.pop();
 //    }
+
+
+
+    public static void main(String[] args) {
+        String[] tokens = {"2","1","+","3","*"};
+        Solution150 solution150 = new Solution150();
+
+        System.out.println(solution150.evalRPN(tokens));
+    }
 }
