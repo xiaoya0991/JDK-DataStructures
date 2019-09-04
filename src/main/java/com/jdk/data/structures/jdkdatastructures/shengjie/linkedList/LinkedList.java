@@ -250,6 +250,17 @@ public class LinkedList <E>{
     }
 
     /**
+     * remove an element
+     * @param e
+     */
+    public void remove(E e){
+        if(!contains(e))
+            throw new IllegalArgumentException("the element is not existed!!!");
+
+        dummyHead = removeSameElement(dummyHead,e);
+    }
+
+    /**
      * return a positive element of a node
      * @param index
      * @return
