@@ -1,15 +1,13 @@
 package com.jdk.data.structures.jdkdatastructures.shengjie.tree;
 
-import com.jdk.data.structures.jdkdatastructures.shengjie.arrayList.ArrayDemo;
+import com.jdk.data.structures.jdkdatastructures.shengjie.AbstractImpl;
 import com.jdk.data.structures.jdkdatastructures.shengjie.queue.ArrayQueueDemo;
 import com.jdk.data.structures.jdkdatastructures.shengjie.stack.ArrayStackDemo;
-
-import java.util.Random;
 
 /**
  * binary search tree without same element
  */
-public class BinarySearchTree<E extends Comparable<E>>{
+public class BinarySearchTree<E extends Comparable<E>>  extends AbstractImpl<E> {
     private class Node{
         public E e;
         public Node left,right;

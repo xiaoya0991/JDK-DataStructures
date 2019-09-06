@@ -1,9 +1,11 @@
 package com.jdk.data.structures.jdkdatastructures.shengjie.linkedList;
 
+import com.jdk.data.structures.jdkdatastructures.shengjie.AbstractImpl;
+
 /**
  * write a LinkedList
  */
-public class LinkedList <E>{
+public class LinkedList<E> extends AbstractImpl<E> {
     private class Node{
         /**
          * define an element

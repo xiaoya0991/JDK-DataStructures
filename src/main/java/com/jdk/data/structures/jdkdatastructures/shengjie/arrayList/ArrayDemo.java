@@ -1,5 +1,7 @@
 package com.jdk.data.structures.jdkdatastructures.shengjie.arrayList;
 
+import com.jdk.data.structures.jdkdatastructures.shengjie.AbstractImpl;
+
 /**
  * Array underlying package
  * time complexity:
@@ -9,7 +11,7 @@ package com.jdk.data.structures.jdkdatastructures.shengjie.arrayList;
  * find--known:O(1);unknown:O(n)
  * @author shengjie
  */
-public class ArrayDemo<E> {
+public class ArrayDemo<E> extends AbstractImpl<E> {
     /**
      * define an arrayList
      */
