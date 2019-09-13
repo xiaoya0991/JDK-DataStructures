@@ -10,6 +10,19 @@ public class BinarySearchTree <E> {
 
     private int size;
     private Node<E> root;
+    private Comparator<E> comparator;
+
+
+
+
+    public BinarySearchTree(){
+        this(null);
+    }
+
+
+    public BinarySearchTree(Comparator<E> comparator){
+        this.comparator = comparator;
+    }
 
 
     /***
@@ -68,6 +81,7 @@ public class BinarySearchTree <E> {
                 return;
             }
         }
+
 
         Node<E> newNode = new Node<>(element, parent);
         if (cmp >0){
