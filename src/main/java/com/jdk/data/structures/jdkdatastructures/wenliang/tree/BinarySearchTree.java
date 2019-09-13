@@ -8,13 +8,15 @@ package com.jdk.data.structures.jdkdatastructures.wenliang.tree;
  */
 public class BinarySearchTree <E> {
 
+    private int size;
+
 
     /***
      *
      * @return
      */
     public int size(){
-        return 0;
+        return size;
     }
 
 
@@ -23,7 +25,7 @@ public class BinarySearchTree <E> {
      * @return
      */
     public boolean isEmpty(){
-        return false;
+        return size==0;
     }
 
 
