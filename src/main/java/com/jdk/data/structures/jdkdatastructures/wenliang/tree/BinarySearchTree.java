@@ -95,8 +95,22 @@ public class BinarySearchTree <E> {
 
     }
 
-    private int compare(E element, E element1) {
-        return 0;
+
+
+    /***
+     * 比较器
+     * @param e1
+     *
+     * @param e2
+     *
+     * @return
+     */
+    private int compare(E e1, E e2) {
+        if (this.comparator != null){
+            return comparator.compare(e1, e2);
+        }
+
+        return ((Comparable<E>) e1).compareTo(e2);
     }
 
 
