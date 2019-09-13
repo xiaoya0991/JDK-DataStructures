@@ -1,5 +1,5 @@
 package com.jdk.data.structures.jdkdatastructures.wenliang.tree;
-
+import java.util.Comparator;
 
 /***
  *
@@ -52,10 +52,12 @@ public class BinarySearchTree <E> {
 
 
     /**
+     *add is element
      *
      * @param element
      */
     public void add(E element){
+
         elementNotNullCheck(element);
 
 
@@ -106,6 +108,7 @@ public class BinarySearchTree <E> {
      * @return
      */
     private int compare(E e1, E e2) {
+
         if (this.comparator != null){
             return comparator.compare(e1, e2);
         }
@@ -127,6 +130,7 @@ public class BinarySearchTree <E> {
      * @param element
      */
     private void elementNotNullCheck(E element){
+
         if (element == null){
             throw new IllegalArgumentException("element must not be null");
         }
