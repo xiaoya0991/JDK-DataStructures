@@ -136,6 +136,52 @@ public class BinarySearchTree <E> {
 
 
     /**
+     *
+     * @param visitor
+     */
+    public void levelOrder(Visitor<E> visitor){
+        if (root == null || visitor == null) return;
+
+
+        Queue<Node<E>> queue = new LinkedList<>();
+        queue.offer(root);
+
+        while (!queue.isEmpty()){
+            Node<E> node = queue.poll();
+           visitor.visit(node.element);
+
+            if (node.left != null){
+                queue.offer(node.left);
+            }
+
+            if (node.right != null) {
+                queue.offer(node.right);
+            }
+        }
+
+    }
+
+
+    public void preOrder(Visitor<E> visitor){
+        this.preOrder(visitor,root);
+
+    }
+
+    private void preOrder(Visitor<E> visitor,Node<E> node){
+
+        visitor.visit(node.element);
+        preOrder(visitor,node.left);
+        preOrder(visitor,node.right);
+
+    }
+
+
+    public static interface Visitor<E> {
+        void visit(E element);
+    }
+
+
+    /**
      *add is element
      *
      * @param element
