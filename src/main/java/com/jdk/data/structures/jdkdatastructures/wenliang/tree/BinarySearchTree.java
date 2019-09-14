@@ -52,6 +52,62 @@ public class BinarySearchTree <E> {
 
 
     /**
+     * 前序遍历
+     */
+    public void preorderTraversal(){
+
+    }
+
+    private void preorderTraversal(Node<E> node){
+
+        if (node == null) return;
+
+
+        System.out.println(node.element);
+        preorderTraversal(node.left);
+        preorderTraversal(node.right);
+    }
+
+
+    /***
+     * 中序遍历
+     */
+    public void inorderTraversal(){
+        inorderTraversal(root);
+    }
+
+    private void inorderTraversal(Node<E>  node){
+
+        if (node == null) return;
+
+
+        inorderTraversal(node.left);
+        System.out.println(node.element);
+        inorderTraversal(node.right);
+
+    }
+
+
+    /***
+     * 中序遍历
+     */
+    public void postorderTraversal(){
+        inorderTraversal(root);
+    }
+
+    private void postorderTraversal(Node<E>  node){
+
+        if (node == null) return;
+
+
+        inorderTraversal(node.left);
+        inorderTraversal(node.right);
+        System.out.println(node.element);
+
+    }
+
+
+    /**
      *add is element
      *
      * @param element
@@ -80,6 +136,7 @@ public class BinarySearchTree <E> {
             }else if (cmp < 0){
                 node = node.left;
             }else {
+                node.element = element;
                 return;
             }
         }
