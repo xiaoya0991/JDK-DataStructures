@@ -6,6 +6,7 @@ import java.util.Queue;
 /***
  *
  * @author wenliang
+ *
  * @param <E>
  */
 public class BinarySearchTree <E> {
@@ -176,9 +177,50 @@ public class BinarySearchTree <E> {
     }
 
 
+    public boolean isComplete(){
+
+        if (root == null) return false;
+
+
+        Queue<Node<E>> queue = new LinkedList<>();
+        queue.offer(root);
+
+
+        boolean leaf = false;
+        while (!queue.isEmpty()){
+            Node<E> node = queue.poll();
+            if (leaf && !node.isLeaf()) return false;
+
+
+            if (node.hasTwoChildren()){
+                queue.offer(node.left);
+                queue.offer(node.right);
+            }else if (node.left == null && node.right != null){
+                return false;
+            }else {
+                leaf = true;
+
+            }
+        }
+
+        return true;
+    }
+
+
     public static interface Visitor<E> {
         void visit(E element);
     }
+
+
+    public int height(){
+        return height(root);
+    }
+
+    private int height(Node<E> node){
+
+        return 1 + Math.max(height(node.left), height(node.right));
+    }
+
 
 
     /**
@@ -292,6 +334,16 @@ public class BinarySearchTree <E> {
         public Node(E element,Node parent){
             this.element = element;
             this.parent = parent;
+        }
+
+
+        public boolean isLeaf(){
+            return left == null && right == null;
+        }
+
+
+        public boolean hasTwoChildren(){
+            return left != null && right != null;
         }
 
     }
