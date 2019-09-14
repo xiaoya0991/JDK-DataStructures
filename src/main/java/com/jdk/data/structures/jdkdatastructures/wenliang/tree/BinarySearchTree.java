@@ -1,5 +1,7 @@
 package com.jdk.data.structures.jdkdatastructures.wenliang.tree;
 import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /***
  *
@@ -104,6 +106,32 @@ public class BinarySearchTree <E> {
         inorderTraversal(node.right);
         System.out.println(node.element);
 
+    }
+
+
+    /**
+     * 层序遍历
+     */
+    public void levelOrderTraversal(){
+
+        if (root == null) return;
+
+
+        Queue<Node<E>> queue = new LinkedList<>();
+        queue.offer(root);
+
+        while (!queue.isEmpty()){
+            Node<E> node = queue.poll();
+            System.out.println(node.element);
+
+            if (node.left != null){
+                queue.offer(node.left);
+            }
+
+            if (node.right != null) {
+                queue.offer(node.right);
+            }
+        }
     }
 
 
