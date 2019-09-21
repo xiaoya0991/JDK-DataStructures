@@ -347,10 +347,98 @@ public class BinarySearchTree <E> {
 
 
     /***
-     *
+     * remove is a node
+     * @param element
      */
-    public void remove(){
+    public void remove(E element){
+        Node<E> node = node(element);
+        if (node == null) return;
 
+        remove(node);
+
+
+    }
+
+
+    private void remove(Node<E> node){
+        if (node == null) return;
+
+        size++;
+
+        //度为2的节点
+        if (node.hasTwoChildren()){
+
+            //找到后继节点
+            Node<E> s = successor(node);
+
+            //用后继节点的值覆盖度为2的节点的值
+            node.element = s.element;
+
+            //删除后继节点
+            node = s;
+
+        }
+
+
+
+        Node<E> replacement = node.left != null ? node.left : node.right;
+
+        if (replacement != null){
+
+            //更改parent
+            replacement.parent = node.parent;
+
+            if (node.parent == null){
+                root = replacement;
+            } else if (node == node.parent.left){
+                node.parent.left = replacement;
+
+            }else if (node == node.parent.right){
+                node.parent.right = replacement;
+            }
+
+
+            //node是叶子节点或者是根节点
+        }else if (node.parent == null){
+            root =  null;
+
+        }else {
+            if (node == node.parent.right){
+                node.parent.right = null;
+
+            }else {
+                node.parent.left = null;
+            }
+
+        }
+
+    }
+
+
+
+    /**
+     *
+     * @param element
+     *
+     * @return
+     */
+    private Node<E> node(E element){
+        Node<E> node = root;
+        while (node != null){
+            int cmp = compare(element, node.element);
+            if (cmp == 0) return node;
+
+            if (cmp > 0){
+                node = node.right;
+
+            }else {
+                node = node.left;
+
+            }
+            return node;
+        }
+
+        return null;
     }
 
 
