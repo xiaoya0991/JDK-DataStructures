@@ -271,6 +271,62 @@ public class BinarySearchTree <E> {
     }
 
 
+    /**
+     *
+     * @param node
+     *
+     * @return
+     */
+    private Node<E> predesessor(Node<E> node){
+        if (node.left == null) return node;
+
+
+        Node<E> p = node.left;
+        if (p != null) {
+            while (p.right != null) {
+                p = p.right;
+            }
+            return p;
+        }
+
+
+        while (node.parent !=null && node== node.parent){
+            node = node.parent;
+        }
+
+        return node.parent;
+
+    }
+
+
+    /**
+     *
+     * @param node
+     *
+     * @return
+     */
+    private Node<E> successor(Node<E> node){
+        if (node == null) return node;
+
+
+        Node<E> p =node.right;
+        if (p != null){
+            while (p.left != null){
+                p = p.left;
+            }
+            return p;
+        }
+
+
+        while (node.parent != null && node == node.parent.right){
+            node = node.parent;
+        }
+
+        return node.parent;
+
+    }
+
+
 
     /***
      * 比较器
