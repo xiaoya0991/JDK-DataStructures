@@ -463,7 +463,7 @@ public class BinarySearchTree <E> {
      * @return
      */
     public boolean contains(E element){
-        return false;
+        return node(element) != null;
     }
 
 
