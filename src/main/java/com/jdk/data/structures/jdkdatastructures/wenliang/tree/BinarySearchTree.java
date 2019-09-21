@@ -50,6 +50,9 @@ public class BinarySearchTree <E> {
      *
      */
     public void clera(){
+        root = null;
+        size = 0;
+
 
     }
 
