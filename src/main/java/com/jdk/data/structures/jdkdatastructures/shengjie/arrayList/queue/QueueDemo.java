@@ -1,4 +1,4 @@
-package com.jdk.data.structures.jdkdatastructures.shengjie.queue;
+package com.jdk.data.structures.jdkdatastructures.shengjie.arrayList.queue;
 
 /**
  * queue interface

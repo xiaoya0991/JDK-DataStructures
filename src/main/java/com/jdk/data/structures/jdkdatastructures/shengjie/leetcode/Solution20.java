@@ -1,6 +1,6 @@
 package com.jdk.data.structures.jdkdatastructures.shengjie.leetcode;
 
-import com.jdk.data.structures.jdkdatastructures.shengjie.stack.ArrayStackDemo;
+import com.jdk.data.structures.jdkdatastructures.shengjie.arrayList.stack.ArrayStackDemo;
 
 /**
  * 20. 有效的括号

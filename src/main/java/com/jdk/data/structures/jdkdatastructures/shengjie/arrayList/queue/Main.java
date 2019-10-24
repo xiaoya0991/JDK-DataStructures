@@ -1,6 +1,6 @@
-package com.jdk.data.structures.jdkdatastructures.shengjie.queue;
+package com.jdk.data.structures.jdkdatastructures.shengjie.arrayList.queue;
 
-import com.jdk.data.structures.jdkdatastructures.shengjie.linkedList.LinkedListQueue;
+import com.jdk.data.structures.jdkdatastructures.shengjie.linkedList.queue.LinkedListQueue;
 
 import java.util.Random;
 

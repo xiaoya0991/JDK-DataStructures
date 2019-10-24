@@ -1,6 +1,6 @@
-package com.jdk.data.structures.jdkdatastructures.shengjie.stack;
+package com.jdk.data.structures.jdkdatastructures.shengjie.arrayList.stack;
 
-import com.jdk.data.structures.jdkdatastructures.shengjie.linkedList.LinkedListStack;
+import com.jdk.data.structures.jdkdatastructures.shengjie.linkedList.stack.LinkedListStack;
 
 import java.util.Random;
 

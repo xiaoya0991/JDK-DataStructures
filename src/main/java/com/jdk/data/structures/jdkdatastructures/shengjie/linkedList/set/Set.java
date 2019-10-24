@@ -1,4 +1,4 @@
-package com.jdk.data.structures.jdkdatastructures.shengjie.set;
+package com.jdk.data.structures.jdkdatastructures.shengjie.linkedList.set;
 
 public interface Set<E> {
     int getSize();

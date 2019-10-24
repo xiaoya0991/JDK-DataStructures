@@ -1,6 +1,7 @@
-package com.jdk.data.structures.jdkdatastructures.shengjie.linkedList;
+package com.jdk.data.structures.jdkdatastructures.shengjie.linkedList.stack;
 
-import com.jdk.data.structures.jdkdatastructures.shengjie.stack.StackDemo;
+import com.jdk.data.structures.jdkdatastructures.shengjie.arrayList.stack.StackDemo;
+import com.jdk.data.structures.jdkdatastructures.shengjie.linkedList.LinkedList;
 
 /**
  * use LinkedList to implement stack

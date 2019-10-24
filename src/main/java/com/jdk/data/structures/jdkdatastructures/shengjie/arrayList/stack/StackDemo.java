@@ -1,4 +1,4 @@
-package com.jdk.data.structures.jdkdatastructures.shengjie.stack;
+package com.jdk.data.structures.jdkdatastructures.shengjie.arrayList.stack;
 
 /**
  * stack interface defined by self

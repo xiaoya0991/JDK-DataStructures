@@ -1,4 +1,4 @@
-package com.jdk.data.structures.jdkdatastructures.shengjie.linkedList;
+package com.jdk.data.structures.jdkdatastructures.shengjie.leetcode;
 
 /**
  * compute sum of arr[1,...,n)

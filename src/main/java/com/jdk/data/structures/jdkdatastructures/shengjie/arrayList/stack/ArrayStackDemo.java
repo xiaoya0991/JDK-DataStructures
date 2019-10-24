@@ -1,31 +1,26 @@
-package com.jdk.data.structures.jdkdatastructures.shengjie.queue;
+package com.jdk.data.structures.jdkdatastructures.shengjie.arrayList.stack;
 
 import com.jdk.data.structures.jdkdatastructures.shengjie.arrayList.ArrayDemo;
 
-/**
- * write a queue class
- *
- * @author Holy
- */
-public class ArrayQueueDemo<E> implements QueueDemo<E>{
+public class ArrayStackDemo<E> implements StackDemo<E> {
     /**
      * define an arrayList
      */
     ArrayDemo<E> array;
 
     /**
-     * construction without parameters
-     */
-    public ArrayQueueDemo(){
-        this.array = new ArrayDemo<>();
-    }
-
-    /**
      * construction with parameters
      * @param capacity
      */
-    public ArrayQueueDemo(int capacity){
+    public ArrayStackDemo(int capacity){
         this.array = new ArrayDemo<>(capacity);
+    }
+
+    /**
+     * construction without parameters
+     */
+    public ArrayStackDemo(){
+        this.array = new ArrayDemo<>();
     }
 
     /**
@@ -33,7 +28,7 @@ public class ArrayQueueDemo<E> implements QueueDemo<E>{
      * @return the size value
      */
     @Override
-    public int getSize() {
+    public int getSize(){
         return this.array.getSize();
     }
 
@@ -47,30 +42,38 @@ public class ArrayQueueDemo<E> implements QueueDemo<E>{
     }
 
     /**
-     * enter the queue
-     * @param o an object
+     * get the capacity
+     * @return the capacity value
      */
-    @Override
-    public void enqueue(Object o) {
-        this.array.addLast((E) o);
+    public int getCapacity(){
+        return this.array.getCapacity();
     }
 
     /**
-     * out of the queue
-     * @return an object
+     * add an element to the stack
+     * @param e
      */
     @Override
-    public E dequeue() {
-        return this.array.removeFirst();
+    public void push(E e) {
+        this.array.addLast(e);
     }
 
     /**
-     * get the head object of the queue
+     * get an element of stack
      * @return
      */
     @Override
-    public E getFront() {
-        return this.array.getFirst();
+    public E pop() {
+        return this.array.removeLast();
+    }
+
+    /**
+     * get the top element of stack
+     * @return
+     */
+    @Override
+    public E peek() {
+        return this.array.getLast();
     }
 
     /**
@@ -80,14 +83,14 @@ public class ArrayQueueDemo<E> implements QueueDemo<E>{
     @Override
     public String toString(){
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("queue head : [");
+        stringBuilder.append("stack: [");
         for(int i = 0; i < this.array.getSize(); i++){
             stringBuilder.append(this.array.get(i));
             if(i != this.array.getSize() - 1){
                 stringBuilder.append(", ");
             }
         }
-        stringBuilder.append("] tail");
+        stringBuilder.append("] top");
 
         return stringBuilder.toString();
     }

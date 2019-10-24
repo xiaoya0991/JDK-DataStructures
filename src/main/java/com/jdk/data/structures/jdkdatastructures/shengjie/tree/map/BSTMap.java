@@ -1,4 +1,6 @@
-package com.jdk.data.structures.jdkdatastructures.shengjie.map;
+package com.jdk.data.structures.jdkdatastructures.shengjie.tree.map;
+
+import com.jdk.data.structures.jdkdatastructures.shengjie.linkedList.map.Map;
 
 public class BSTMap<K extends Comparable<K>, V> implements Map<K, V> {
     private class Node{

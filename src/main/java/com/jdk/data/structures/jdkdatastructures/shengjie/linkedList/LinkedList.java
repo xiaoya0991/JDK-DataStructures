@@ -1,11 +1,9 @@
 package com.jdk.data.structures.jdkdatastructures.shengjie.linkedList;
 
-import com.jdk.data.structures.jdkdatastructures.shengjie.AbstractImpl;
-
 /**
  * write a LinkedList
  */
-public class LinkedList<E> extends AbstractImpl<E> {
+public class LinkedList<E> extends AbstractList<E> {
     private class Node{
         /**
          * define an element
@@ -68,14 +66,6 @@ public class LinkedList<E> extends AbstractImpl<E> {
     public int getSize(){return this.size; }
 
     /**
-     * empty handle
-     * @return
-     */
-    public boolean isEmpty(){
-        return size == 0;
-    }
-
-    /**
      * add an element at a position
      * @param e
      * @param index
@@ -127,7 +117,9 @@ public class LinkedList<E> extends AbstractImpl<E> {
      * get the first element
      * @return
      */
-    public E getFirst(){ return get(0); }
+    public E getFirst(){
+
+        return get(0); }
 
     /**
      * get the last element
@@ -140,7 +132,7 @@ public class LinkedList<E> extends AbstractImpl<E> {
      * @param index
      * @param e
      */
-    public void set(int index, E e){
+    public E set(int index, E e){
         if(index < 0 || index > 0)
             throw new IllegalArgumentException("set failed, illegal index");
 
@@ -149,6 +141,8 @@ public class LinkedList<E> extends AbstractImpl<E> {
             current = current.next;
 
         current.e = e;
+
+        return get(index);
     }
 
     /**
@@ -164,6 +158,11 @@ public class LinkedList<E> extends AbstractImpl<E> {
             current = current.next;
         }
         return false;
+    }
+
+    @Override
+    public void add(E element) {
+
     }
 
     @Override

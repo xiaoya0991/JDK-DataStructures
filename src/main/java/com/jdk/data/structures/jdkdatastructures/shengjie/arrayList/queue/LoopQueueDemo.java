@@ -1,4 +1,4 @@
-package com.jdk.data.structures.jdkdatastructures.shengjie.queue;
+package com.jdk.data.structures.jdkdatastructures.shengjie.arrayList.queue;
 
 /**
  * write a loop queue
@@ -137,7 +137,7 @@ public class LoopQueueDemo<E> implements QueueDemo<E>{
     }
 
     public static void main(String[] args) {
-        LoopQueueDemo<Integer> queue = new LoopQueueDemo<>(10);
+        LoopQueueDemo<Integer> queue = new LoopQueueDemo<Integer>(10);
         for(int i = 0; i < 10; i ++){
             queue.enqueue(i);
             System.out.println(queue);

@@ -1,6 +1,6 @@
-package com.jdk.data.structures.jdkdatastructures.shengjie.linkedList;
+package com.jdk.data.structures.jdkdatastructures.shengjie.linkedList.queue;
 
-import com.jdk.data.structures.jdkdatastructures.shengjie.queue.QueueDemo;
+import com.jdk.data.structures.jdkdatastructures.shengjie.arrayList.queue.QueueDemo;
 
 /**
  * use LinkedList without dummyHead implements queue

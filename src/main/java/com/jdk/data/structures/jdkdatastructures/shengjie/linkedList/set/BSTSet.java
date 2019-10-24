@@ -1,4 +1,4 @@
-package com.jdk.data.structures.jdkdatastructures.shengjie.set;
+package com.jdk.data.structures.jdkdatastructures.shengjie.linkedList.set;
 
 import com.jdk.data.structures.jdkdatastructures.wenliang.tree.BST;
 
