@@ -6,7 +6,7 @@ package com.jdk.data.structures.jdkdatastructures.yining.linklist;
  */
 public class LinkedList<E> {
 
-    private class Node {
+    private static class Node<E> {
 
         public E e;
 
@@ -24,6 +24,13 @@ public class LinkedList<E> {
         public Node() {
             this(null, null);
         }
+
+        @Override
+        public String toString() {
+            return "Node{" +
+                    "e=" + e +
+                    '}';
+        }
     }
 
     private Node head;
@@ -31,8 +38,8 @@ public class LinkedList<E> {
     private int size;
 
     public LinkedList() {
-        head = new Node();
-        size = 0;
+        this.head = new Node();
+        this.size = 0;
     }
 
 
@@ -91,7 +98,7 @@ public class LinkedList<E> {
             throw new IllegalArgumentException("Get failed, Illegal Index");
         }
 
-        Node pre = head.next;
+        Node<E> pre = head.next;
         for (int i = 0; i < index; i++) {
             pre = pre.next;
         }
@@ -116,6 +123,31 @@ public class LinkedList<E> {
     }
 
     /**
+     * 获取头结点
+     *
+     * @return
+     */
+    public Node getFirstNode() {
+        if (isEmpty()) {
+            return null;
+        }
+        return head;
+    }
+
+
+    /**
+     * 获取链表中最后的一个元素
+     */
+    public E getLastNode() {
+        Node<E> curNode = head.next;
+
+        while (curNode.next != null) {
+            curNode = curNode.next;
+        }
+        return curNode.e;
+    }
+
+    /**
      * 修改链表中第index位置为E
      */
     public void set(int index, E e) {
@@ -135,7 +167,7 @@ public class LinkedList<E> {
      * 查找链表中是否有元素e
      */
     public boolean contains(E e) {
-        Node cur = head.next;
+        Node<E> cur = head.next;
         while (cur != null) {
             if (cur.e.equals(e)) {
                 return true;
@@ -153,12 +185,12 @@ public class LinkedList<E> {
             throw new IllegalArgumentException("Remove  failed, Illegal Index");
         }
 
-        Node pre = head.next;
+        Node<E> pre = head.next;
         for (int i = 0; i < index; i++) {
             pre = pre.next;
         }
 
-        Node delNode = pre.next;
+        Node<E> delNode = pre.next;
         pre.next = delNode.next;
         delNode.next = null;
         size--;
@@ -183,7 +215,7 @@ public class LinkedList<E> {
      * 从链表中删除元数E
      */
     public void removeElement(E e) {
-        Node pre = head;
+        Node<E> pre = head;
         while (pre != null) {
             if (pre.next.e.equals(e)) {
                 break;
@@ -192,7 +224,7 @@ public class LinkedList<E> {
         }
 
         if (pre.next != null) {
-            Node deleNode = pre.next;
+            Node<E> deleNode = pre.next;
             pre.next = deleNode.next;
             deleNode.next = null;
         }
@@ -206,7 +238,7 @@ public class LinkedList<E> {
     public String toString() {
         StringBuilder res = new StringBuilder();
 
-        Node cur = head.next;
+        Node<E> cur = head.next;
         while (cur != null) {
             res.append(cur + "->");
             cur = cur.next;

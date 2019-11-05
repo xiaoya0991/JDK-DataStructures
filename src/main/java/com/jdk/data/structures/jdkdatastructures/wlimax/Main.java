@@ -1,23 +1,48 @@
 package com.jdk.data.structures.jdkdatastructures.wlimax;
 
 
+import com.jdk.data.structures.jdkdatastructures.wlimax.tree.RBTree;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class Main {
 
     public static void main(String[] args) {
-        LinkList arr = new LinkList();
-//        arr.addFirse(1);
-//        arr.addFirse(2);
-        arr.addFirse(1);
-        arr.addFirse(2);
-        arr.addFirse(3);
-        arr.addFirse(4);
-        arr.addFirse(5);
-        arr.addLast(6);
-        System.out.println(arr);
-        System.out.println(arr.get(4));
+        RBTree bstMap = new RBTree();
+        String filePath= "E:\\www\\fs2\\yield\\jianai.txt";
+         File file =  new File(filePath);
+         if(!file.exists()){ throw  new IllegalArgumentException("file is not null"); }
+        try {
+            BufferedReader in = new BufferedReader(new FileReader(filePath));
+            String str;
 
-    }
+            while ((str = in.readLine()) != null) {
+                str = str.trim();
+                for(String item:str.split(" ")){
+                    if(bstMap.contains(item.trim())){
+                        bstMap.set(item.trim(),(Integer) bstMap.get(item.trim()) + 1);
+                    }else{
+                        bstMap.add(item.trim(), 1);
+                    }
+
+                }
+//                System.out.println(str.split(",")[4]);
+//                bstMap.add(str.split(",")[3],str.split(",")[4]);
+            }
+            System.out.println("end ===");
+            bstMap.remove(bstMap.getSize());
+//            System.out.println("The :" + bstMap.get("The"));
+//            System.out.println(bstMap);
+
+            System.out.println(bstMap);
+        } catch (IOException e) {
+             System.out.println(e.getMessage());
+        }
+
+  }
     private void liArrayTest(){
         LiArrayList arr = new LiArrayList(10);
         for(int i= 0;i<20;i++){

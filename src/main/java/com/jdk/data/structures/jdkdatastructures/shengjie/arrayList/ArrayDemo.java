@@ -1,16 +1,21 @@
-package com.jdk.data.structures.jdkdatastructures.shengjie.array;
+package com.jdk.data.structures.jdkdatastructures.shengjie.arrayList;
 
 /**
  * Array underlying package
+ * time complexity:
+ * add--O(n)
+ * delete--O(n)
+ * update--known:O(1);unknown:O(n)
+ * find--known:O(1);unknown:O(n)
  * @author shengjie
  */
-public class ArrayDemo<E> {
+public class ArrayDemo<E>{
     /**
-     * define an array
+     * define an arrayList
      */
     private E[] data;
     /**
-     * size of array
+     * size of arrayList
      */
     private int size;
 
@@ -64,15 +69,26 @@ public class ArrayDemo<E> {
             throw new IllegalArgumentException("添加数据元素位置不合法，应该在0～size质检");
 
         if(size == this.data.length)
-            throw new IllegalArgumentException("数据已盛满，不能再添加了");
+            resize(2 * data.length);
 
         //插入数据数据，插入位置以后的数据依次向后挪动一位
         for(int i = this.size-1;i >= index;i--){
-            this.data[i-1] = this.data[i];
+            this.data[i+1] = this.data[i];
         }
 
         this.data[index] = e;
         this.size ++;
+    }
+
+    /**
+     * expand automatic
+     * @param newCapacity new capacity
+     */
+    private void resize(int newCapacity) {
+        E[] newData = (E[])new Object[newCapacity];
+        for(int i = 0; i < size; i++)
+            newData[i] = data[i];
+        data = newData;
     }
 
     /**
@@ -100,6 +116,22 @@ public class ArrayDemo<E> {
         if(index < 0 || index >= size)
             throw new IllegalArgumentException("传入的参数非法");
         return data[index];
+    }
+
+    /**
+     * get last element of arrayList
+     * @return
+     */
+    public E getLast(){
+        return get(size - 1);
+    }
+
+    /**
+     * get first element of arrayList
+     * @return
+     */
+    public E getFirst(){
+        return get(0);
     }
 
     /**
@@ -135,6 +167,7 @@ public class ArrayDemo<E> {
         for(int i = 0; i < size; i ++){
             if(data[i] == e)
                 return i;
+            continue;
         }
         return -1;
     }
@@ -160,11 +193,15 @@ public class ArrayDemo<E> {
         Object result = data[index];
 
         for(int i = index+1; i < size; i++){
-            data[index-1] = data[i];
+            data[i-1] = data[i];
         }
         size --;//defend size
 
         data[size] = null;//loitering objects != memory leak
+
+        if(size == data.length / 2 && data.length / 2 != 0)//prevent shake of data
+            resize(data.length / 2);
+
         return (E) result;
     }
 
@@ -173,7 +210,7 @@ public class ArrayDemo<E> {
      * @return removed element value
      */
     public E removeFirst(){
-        return data[0];
+        return remove(0);
     }
 
     /**
@@ -181,7 +218,7 @@ public class ArrayDemo<E> {
      * @return removed element value
      */
     public E removeLast(){
-        return data[size-1];
+        return remove(size - 1);
     }
 
     /**
@@ -214,7 +251,7 @@ public class ArrayDemo<E> {
     @Override
     public String toString(){
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(String.format("Array: size = %d, capacity = %d\n",size,data));
+//        stringBuilder.append(String.format("Array: size = %d, capacity = %d\n",size,data));
         stringBuilder.append("[");
         for (int i = 0; i < size; i ++){
             stringBuilder.append(data[i]);
