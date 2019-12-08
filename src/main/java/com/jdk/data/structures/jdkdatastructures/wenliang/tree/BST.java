@@ -30,10 +30,39 @@ public class BST<E> extends BinaryTree<E>{
             root = super.createNode(element, null);
             size++;
 
-
+            //添加新元素的之后的处理
+            afterAdd(root);
+            return;
         }
 
+        //添加不是第一个节点
+        //找到父节点
+        Node<E> parent = root;
+        Node<E> node = root;
+        int cmp = 0;
+        do {
+            cmp = compare(element, node.element);
+            parent = node;
+            if (cmp > 0) {
+                node = node.right;
+            } else if (cmp < 0) {
+                node = node.left;
+            } else {
+                node.element = element;
+            }
 
+        } while (node != null);
+
+        Node<E> newNode = createNode(element, parent);
+        if (cmp > 0){
+            parent.right = newNode;
+        }else {
+            parent.left = newNode;
+        }
+        size++;
+
+        //新添加元素之后的处理
+        afterAdd(newNode);
     }
 
 

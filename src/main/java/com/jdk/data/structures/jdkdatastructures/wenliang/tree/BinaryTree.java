@@ -53,8 +53,6 @@ public abstract class BinaryTree<E> {
 
         if (node == null) return;
 
-
-        System.out.println(node.element);
         preorderTraversal(node.left);
         preorderTraversal(node.right);
     }
@@ -71,11 +69,9 @@ public abstract class BinaryTree<E> {
 
         if (node == null) return;
 
-
         inorderTraversal(node.left);
         System.out.println(node.element);
         inorderTraversal(node.right);
-
     }
 
 
@@ -89,7 +85,6 @@ public abstract class BinaryTree<E> {
     private void postorderTraversal(Node<E>  node){
 
         if (node == null) return;
-
 
         inorderTraversal(node.left);
         inorderTraversal(node.right);
@@ -182,15 +177,25 @@ public abstract class BinaryTree<E> {
     }
 
 
-
-
     public int height(){
         return height(root);
     }
 
     public int height(Node<E> node){
-
         return 1 + Math.max(height(node.left), height(node.right));
+    }
+
+
+    /**
+     *
+     * @param element
+     *
+     * @param parent
+     *
+     * @return
+     */
+    protected Node<E> createNode(E element,Node<E> parent){
+        return new Node<>(element, parent);
     }
 
 
