@@ -1,25 +1,20 @@
 package com.jdk.data.structures.jdkdatastructures.wenliang.tree.avl;
-
-
 import com.jdk.data.structures.jdkdatastructures.wenliang.tree.BST;
 import com.jdk.data.structures.jdkdatastructures.wenliang.tree.Comparator;
 
 /**
  * @author wenliang
  */
-public class AVLTree<E> extends BST<E> {
+public class AvlTree<E> extends BST<E> {
 
 
-    public AVLTree(){
+    public AvlTree(){
         this(null);
     }
 
-    public AVLTree(Comparator<E> comparator){
+    public AvlTree(Comparator<E> comparator){
         super((Comparable<E>) comparator);
     }
-
-
-
 
 
     @Override
@@ -33,18 +28,20 @@ public class AVLTree<E> extends BST<E> {
 
     @Override
     protected Node<E> createNode(E element,Node<E> parent){
-        return new AVLNode<E>(element, parent);
+        return new AvlNode<E>(element, parent);
     }
 
 
-
-    private static class AVLNode<E> extends Node<E> {
+    private static class AvlNode<E> extends Node<E> {
         int height;
-        public AVLNode(E element, Node parent) {
+        public AvlNode(E element, Node parent) {
             super(element, parent);
         }
 
 
+        public int banlanceFactor(){
+
+        }
     }
 
 
