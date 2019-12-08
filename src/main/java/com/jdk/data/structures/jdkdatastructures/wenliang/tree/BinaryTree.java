@@ -262,9 +262,9 @@ public abstract class BinaryTree<E> {
      */
   protected static  class Node<E> {
         E element;
-        Node<E> left;
-        Node<E> right;
-       public Node<E> parent;
+        public Node<E> left;
+        public Node<E> right;
+        public Node<E> parent;
         public Node(E element, Node parent) {
             this.element = element;
             this.parent = parent;
