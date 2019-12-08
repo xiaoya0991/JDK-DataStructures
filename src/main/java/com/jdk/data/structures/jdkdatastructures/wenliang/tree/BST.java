@@ -87,6 +87,7 @@ public class BST<E> extends BinaryTree<E>{
      * @param element
      */
     public void remove(E element){
+        remove(node(element));
 
     }
 
