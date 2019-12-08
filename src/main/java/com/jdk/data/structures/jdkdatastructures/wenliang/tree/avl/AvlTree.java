@@ -51,6 +51,26 @@ public class AvlTree<E> extends BST<E> {
     }
 
 
+    /**
+     * 恢复平衡
+     *
+     * @param grand 高度最低的那个不平衡的节点
+     */
+    private void rebalance(Node<E> grand){
+        Node<E> parent = ((AvlNode) grand).tallerChild();
+        Node<E> node = ((AvlNode) parent).tallerChild();
+        // L
+        if (parent.isLeftChild()){
+
+
+            //R
+        }else {
+
+        }
+
+    }
+
+
     private static class AvlNode<E> extends Node<E> {
 
         int height = 1;
@@ -70,6 +90,16 @@ public class AvlTree<E> extends BST<E> {
             int leftHeight = left == null ? 0:((AvlNode) left).height;
             int rightHeight = right == null ? 0 : ((AvlNode) right).height;
             height = 1 + Math.max(leftHeight, rightHeight);
+        }
+
+
+        public Node<E> tallerChild(){
+            int leftHeight = left == null ? 0:((AvlNode) left).height;
+            int rightHeight = right == null ? 0 : ((AvlNode) right).height;
+            if (leftHeight > rightHeight) return left;
+            if (leftHeight < rightHeight) return right;
+            return isLeftChild() ? left : right;
+
         }
     }
 

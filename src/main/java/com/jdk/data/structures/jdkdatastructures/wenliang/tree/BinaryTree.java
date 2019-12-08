@@ -280,5 +280,15 @@ public abstract class BinaryTree<E> {
             return left != null && right != null;
         }
 
+
+        public boolean isLeftChild(){
+            return parent != null && this == parent.left;
+        }
+
+
+        public boolean isRightChild(){
+            return parent != null && this == parent.right;
+        }
+
     }
 }
