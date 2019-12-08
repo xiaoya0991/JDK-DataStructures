@@ -264,9 +264,7 @@ public abstract class BinaryTree<E> {
         E element;
         Node<E> left;
         Node<E> right;
-        Node<E> parent;
-        int height;
-
+       public Node<E> parent;
         public Node(E element, Node parent) {
             this.element = element;
             this.parent = parent;
