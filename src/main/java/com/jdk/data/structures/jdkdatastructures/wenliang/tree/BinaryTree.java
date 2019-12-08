@@ -255,11 +255,12 @@ public abstract class BinaryTree<E> {
      *
      * @param <E>
      */
-  protected static   class Node<E> {
+  protected static  class Node<E> {
         E element;
         Node<E> left;
         Node<E> right;
         Node<E> parent;
+        int height;
 
         public Node(E element, Node parent) {
             this.element = element;

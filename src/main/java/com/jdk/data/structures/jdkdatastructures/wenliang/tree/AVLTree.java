@@ -18,4 +18,15 @@ public class AVLTree<E> extends BST<E> {
     }
 
 
+
+
+
+    @Override
+    protected void afterAdd(Node<E> node){
+
+    }
+
+
+
+
 }

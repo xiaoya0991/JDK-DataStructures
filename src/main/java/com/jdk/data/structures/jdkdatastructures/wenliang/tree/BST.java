@@ -38,7 +38,8 @@ public class BST<E> extends BinaryTree<E>{
 
 
     /**
-     *删除node之后的调整
+     * 添加之后的调整
+     *
      * @param node
      */
     protected void afterAdd(Node<E> node){}
@@ -49,6 +50,7 @@ public class BST<E> extends BinaryTree<E>{
      * @param node
      */
     protected void afterRemove(Node<E> node){}
+
 
 
     /***
