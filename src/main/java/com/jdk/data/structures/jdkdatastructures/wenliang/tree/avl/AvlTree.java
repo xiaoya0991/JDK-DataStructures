@@ -113,7 +113,6 @@ public class AvlTree<E> extends BST<E> {
 
         updateHeight(grand);
         updateHeight(parent);
-
     }
 
     private void rotateRight(Node<E> node){
