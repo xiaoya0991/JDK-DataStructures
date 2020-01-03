@@ -91,7 +91,21 @@ public class AvlTree<E> extends BST<E> {
 
     }
 
-    private void rotateLeft(Node<E> node){
+    private void rotateLeft(Node<E> grand){
+        Node<E> parent = grand.right;
+        grand.right = parent.left;
+        parent.left = grand;
+
+        parent.parent = grand.parent;
+        if (grand.isLeftChild()){
+            grand.parent.left = parent;
+        }else if (grand.isRightChild()){
+            grand.parent.right = parent;
+        }else {
+            root = parent;
+        }
+
+
 
     }
 
