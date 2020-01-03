@@ -17,6 +17,11 @@ public class AvlTree<E> extends BST<E> {
     }
 
 
+
+    /**
+     *
+     * @param node
+     */
     @Override
     protected void afterAdd(Node<E> node){
         while ((node = node.parent) != null){
@@ -25,8 +30,8 @@ public class AvlTree<E> extends BST<E> {
                 updateHeight(node);
             }else {
                 //恢复平衡
-
-
+                rebalance(node);
+                break;
             }
 
         }
@@ -42,7 +47,6 @@ public class AvlTree<E> extends BST<E> {
 
     private boolean isBalanced(Node<E> node){
         return Math.abs(((AvlNode) node).banlanceFactor()) <= 1;
-
     }
 
 
@@ -121,8 +125,15 @@ public class AvlTree<E> extends BST<E> {
         public Node<E> tallerChild(){
             int leftHeight = left == null ? 0:((AvlNode) left).height;
             int rightHeight = right == null ? 0 : ((AvlNode) right).height;
-            if (leftHeight > rightHeight) return left;
-            if (leftHeight < rightHeight) return right;
+
+            if (leftHeight > rightHeight) {
+                return left;
+            }
+
+            if (leftHeight < rightHeight) {
+                return right;
+            }
+
             return isLeftChild() ? left : right;
 
         }
