@@ -105,7 +105,14 @@ public class AvlTree<E> extends BST<E> {
             root = parent;
         }
 
+        if (child != null){
+            child.parent = grand;
+        }
 
+        grand.parent = parent;
+
+        updateHeight(grand);
+        updateHeight(parent);
 
     }
 
