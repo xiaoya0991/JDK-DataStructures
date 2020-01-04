@@ -40,6 +40,21 @@ public class AvlTree<E> extends BST<E> {
 
 
     @Override
+    protected void afterRemove(Node<E> node) {
+        while ((node = node.parent) != null){
+            if (isBalanced(node)){
+                //更新高度
+                updateHeight(node);
+            }else {
+                //恢复平衡
+                rebalance(node);
+
+            }
+
+        }
+    }
+
+    @Override
     protected Node<E> createNode(E element,Node<E> parent){
         return new AvlNode<E>(element, parent);
     }

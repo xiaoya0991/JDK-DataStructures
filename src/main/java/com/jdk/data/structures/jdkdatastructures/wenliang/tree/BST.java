@@ -74,6 +74,8 @@ public class BST<E> extends BinaryTree<E>{
     protected void afterAdd(Node<E> node){}
 
 
+
+
     /**
      *
      * @param node
@@ -114,6 +116,7 @@ public class BST<E> extends BinaryTree<E>{
             }else {
                 node.parent.right = replacement;
             }
+            afterRemove(node);
 
         }else if (node.parent == null){
             root = null;
