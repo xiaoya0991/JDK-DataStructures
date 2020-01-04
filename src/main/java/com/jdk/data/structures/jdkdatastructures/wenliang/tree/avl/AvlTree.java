@@ -88,9 +88,34 @@ public class AvlTree<E> extends BST<E> {
             }
 
         }
-
     }
 
+
+    private void rotate(
+            Node<E> r,//根节点
+            Node<E> a,Node<E> b,Node<E> c,
+            Node<E> d,
+            Node<E> e,Node<E> f,Node<E> g ){
+
+        d.parent = r.parent;
+        if (r.isLeftChild()){
+            r.parent.left = d;
+        }else if (r.isRightChild()){
+            r.parent.right = d;
+        }else {
+            root = d;
+        }
+
+        b.left = a;
+        if (a != null){
+            a.parent = b;
+        }
+        b.right = c;
+        if (c != null){
+            c.parent = b;
+        }
+
+    }
     private void rotateLeft(Node<E> grand){
         Node<E> parent = grand.right;
         Node<E> child  = parent.left;
@@ -98,7 +123,6 @@ public class AvlTree<E> extends BST<E> {
         parent.parent = grand;
 
         afterRotate(grand,parent,child);
-
 
 
     }
