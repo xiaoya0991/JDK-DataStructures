@@ -22,6 +22,39 @@ public class RedBlackTree <E> extends BST<E> {
     }
 
 
+    /**
+     * add node
+     * @param node
+     */
+    @Override
+    protected void afterAdd(Node<E> node) {
+        Node<E> parent = node.parent;
+        //根节点
+        if (parent == null){
+            black(node);
+            return;
+        }
+
+        //如果父节点是黑色的不做处理
+        if (isBlack(parent)) return;
+
+        //uncle节点
+        Node<E> uncle = parent.sibling();
+
+        //祖父节点
+        Node<E> grand = this.red(parent.parent);
+        if (isRed(uncle)){
+            // 叔父节点是红色【B树节点上溢】
+            black(parent);
+            black(uncle);
+            afterAdd(grand);
+            return;
+        }
+
+
+
+    }
+
     private Node<E> color(Node<E> node,boolean color){
         if (node == null) return node;
 
