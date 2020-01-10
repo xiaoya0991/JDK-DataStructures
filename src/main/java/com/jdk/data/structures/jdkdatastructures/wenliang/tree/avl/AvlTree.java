@@ -1,11 +1,11 @@
 package com.jdk.data.structures.jdkdatastructures.wenliang.tree.avl;
-import com.jdk.data.structures.jdkdatastructures.wenliang.tree.BST;
+import com.jdk.data.structures.jdkdatastructures.wenliang.tree.BalanceBinaryTree;
 import com.jdk.data.structures.jdkdatastructures.wenliang.tree.Comparator;
 
 /**
  * @author wenliang
  */
-public class AvlTree<E> extends BST<E> {
+public class AvlTree<E> extends BalanceBinaryTree<E> {
 
 
     public AvlTree(){
@@ -15,7 +15,6 @@ public class AvlTree<E> extends BST<E> {
     public AvlTree(Comparator<E> comparator){
         super((Comparable<E>) comparator);
     }
-
 
 
     /**
@@ -105,78 +104,23 @@ public class AvlTree<E> extends BST<E> {
         }
     }
 
-
-    private void rotate(
-            Node<E> r,//根节点
-            Node<E> a,Node<E> b,Node<E> c,
-            Node<E> d,
-            Node<E> e,Node<E> f,Node<E> g ){
-
-        d.parent = r.parent;
-        if (r.isLeftChild()){
-            r.parent.left = d;
-        }else if (r.isRightChild()){
-            r.parent.right = d;
-        }else {
-            root = d;
-        }
-
-        b.left = a;
-        if (a != null){
-            a.parent = b;
-        }
-        b.right = c;
-        if (c != null){
-            c.parent = b;
-        }
-
-    }
-    private void rotateLeft(Node<E> grand){
-        Node<E> parent = grand.right;
-        Node<E> child  = parent.left;
-        parent.right = child;
-        parent.parent = grand;
-
-        afterRotate(grand,parent,child);
-
-
-    }
-
-    private void rotateRight(Node<E> grand){
-
-        Node<E> parent = grand.right;
-        Node<E> child  = parent.left;
-        parent.right = child;
-        parent.parent = grand;
-
-        afterRotate(grand,parent,child);
-
-    }
-
-    private void afterRotate(Node<E> grand,Node<E> parent,Node<E> child){
-
-        parent.parent = grand.parent;
-        if (grand.isLeftChild()){
-            grand.parent.left = parent;
-        }else if (grand.isRightChild()){
-            grand.parent.right = parent;
-        }else {
-            root = parent;
-        }
-
-        if (child != null){
-            child.parent = grand;
-        }
-
-
-        grand.parent = parent;
-
+    @Override
+    protected void afterRotate(Node<E> grand, Node<E> parent, Node<E> child) {
+        super.afterRotate(grand, parent, child);
+        // 更新高度
         updateHeight(grand);
         updateHeight(parent);
-
-
     }
 
+    @Override
+    protected void rotate(Node<E> r, Node<E> b, Node<E> c, Node<E> d, Node<E> e, Node<E> f) {
+        super.rotate(r, b, c, d, e, f);
+
+        // 更新高度
+        updateHeight(b);
+        updateHeight(f);
+        updateHeight(d);
+    }
 
     private static class AvlNode<E> extends Node<E> {
 

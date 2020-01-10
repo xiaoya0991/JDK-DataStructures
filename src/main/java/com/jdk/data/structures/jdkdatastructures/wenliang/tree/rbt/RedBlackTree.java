@@ -1,6 +1,6 @@
 package com.jdk.data.structures.jdkdatastructures.wenliang.tree.rbt;
 
-import com.jdk.data.structures.jdkdatastructures.wenliang.tree.BST;
+import com.jdk.data.structures.jdkdatastructures.wenliang.tree.BalanceBinaryTree;
 import com.jdk.data.structures.jdkdatastructures.wenliang.tree.Comparator;
 
 /**
@@ -8,7 +8,7 @@ import com.jdk.data.structures.jdkdatastructures.wenliang.tree.Comparator;
  *
  * @author wenliang
  */
-public class RedBlackTree <E> extends BST<E> {
+public class RedBlackTree <E> extends BalanceBinaryTree<E> {
     private static final boolean RED = false;
     private static final boolean BLACK = true;
 
