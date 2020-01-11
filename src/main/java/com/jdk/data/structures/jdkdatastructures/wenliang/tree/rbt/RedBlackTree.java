@@ -50,8 +50,16 @@ public class RedBlackTree <E> extends BalanceBinaryTree<E> {
             afterAdd(grand);
             return;
         }
+    }
 
+    @Override
+    protected void afterRemove(Node<E> node, Node<E> replacement) {
+        if (isRed(node)) return;
 
+        if (isRed(replacement)) {
+            black(replacement);
+            return;
+        }
 
     }
 

@@ -80,7 +80,7 @@ public class BST<E> extends BinaryTree<E>{
      *
      * @param node
      */
-    protected void afterRemove(Node<E> node){}
+    protected void afterRemove(Node<E> node,Node<E> replacement){}
 
 
 
