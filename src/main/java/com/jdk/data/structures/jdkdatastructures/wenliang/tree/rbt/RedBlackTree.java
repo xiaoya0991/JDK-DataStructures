@@ -30,6 +30,58 @@ public class RedBlackTree <E> extends BalanceBinaryTree<E> {
     protected void afterAdd(Node<E> node) {
         Node<E> parent = node.parent;
 
+
+        //没有根节点
+        if (parent == null){
+            black(node);
+            return;
+        }
+
+        //如果根节点是黑色不做处理
+        if (isBlack(parent)) return;
+
+        //叔父节点
+        Node<E> uncle = parent.sibling();
+
+        Node<E> garand = parent.parent;
+        if (isRed(uncle)) {
+            black(uncle);
+            black(parent);
+
+            afterAdd(red(garand));
+            return;
+        }
+
+
+
+        //叔父节点不是红色
+        //L
+        if (parent.isLeftChild()){
+            //LL
+            if (node.isLeftChild()){
+                black(parent);
+                red(garand);
+                rotateRight(garand);
+
+            }
+
+        }
+
+        //R
+        if (parent.isRightChild()){
+            //RL
+            if (node.isRightChild()){
+                black(parent);
+                red(garand);
+                rotateLeft(garand);
+
+            }
+
+        }
+
+
+
+
     }
 
     @Override
