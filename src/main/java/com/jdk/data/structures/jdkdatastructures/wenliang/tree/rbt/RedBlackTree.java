@@ -57,18 +57,17 @@ public class RedBlackTree <E> extends BalanceBinaryTree<E> {
         //L
         if (parent.isLeftChild()){
             //LL
+            red(garand);
             if (node.isLeftChild()){
                 black(parent);
-                red(garand);
-                rotateRight(garand);
+
 
             }else {
                 //LR
                 black(node);
-                red(garand);
                 rotateLeft(parent);
-                rotateRight(garand);
             }
+            rotateRight(garand);
 
         }
 
