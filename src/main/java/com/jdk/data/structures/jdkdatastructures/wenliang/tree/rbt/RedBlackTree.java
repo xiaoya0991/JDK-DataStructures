@@ -53,7 +53,6 @@ public class RedBlackTree <E> extends BalanceBinaryTree<E> {
         }
 
 
-
         //叔父节点不是红色
         //L
         if (parent.isLeftChild()){
@@ -63,6 +62,12 @@ public class RedBlackTree <E> extends BalanceBinaryTree<E> {
                 red(garand);
                 rotateRight(garand);
 
+            }else {
+                //LR
+                black(node);
+                red(garand);
+                rotateLeft(parent);
+                rotateRight(garand);
             }
 
         }
