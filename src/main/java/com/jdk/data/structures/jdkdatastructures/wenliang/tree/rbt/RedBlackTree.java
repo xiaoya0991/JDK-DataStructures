@@ -22,15 +22,15 @@ public class RedBlackTree<E> extends BalanceBinaryTree<E> {
         super((Comparable<E>) comparator);
     }
 
-
     /**
-     * add node
+     *
+     * @param node
      */
     @Override
     protected void afterAdd(Node<E> node) {
         Node<E> parent = node.parent;
 
-        //没有根节点
+        //没有根节点、上溢到跟节点
         if (parent == null) {
             black(node);
             return;
@@ -89,8 +89,15 @@ public class RedBlackTree<E> extends BalanceBinaryTree<E> {
 
     }
 
+    /**
+     *
+     * @param node
+     *
+     * @param replacement
+     */
     @Override
     protected void afterRemove(Node<E> node, Node<E> replacement) {
+        //如果删除的节点是红色
         if (isRed(node)) {
             return;
         }
@@ -99,6 +106,12 @@ public class RedBlackTree<E> extends BalanceBinaryTree<E> {
             black(replacement);
             return;
         }
+
+        Node<E> parent = node.parent;
+        //删除的是跟节点
+        if (parent == null) return;
+        //删除黑色的叶子节点
+
 
     }
 
