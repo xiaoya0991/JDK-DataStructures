@@ -110,7 +110,37 @@ public class RedBlackTree<E> extends BalanceBinaryTree<E> {
         Node<E> parent = node.parent;
         //删除的是跟节点
         if (parent == null) return;
+
         //删除黑色的叶子节点
+        boolean left = parent.left == null;
+        Node<E> sibling = left ? parent.right : parent.left;
+        //被删除的节点在左边，兄弟节点在右边
+        if (left) {
+
+            //被删除的节点在右边，兄弟节点 在左边
+        }else {
+
+            //兄弟节点是红色
+            if (isRed(sibling)){
+                black(sibling);
+                red(parent);
+                rotateRight(parent);
+                //更换兄弟
+                sibling = parent.left;
+            }
+
+            //兄弟节点必然是黑色的
+            if (isBlack(sibling.left) && isBlack(sibling.right)){
+                //兄弟节点没有一个红色子节点，父节点向下合并
+
+
+
+                //兄弟节点至少有1个红色的节点
+            }else {}
+
+
+        }
+
 
 
     }
