@@ -116,7 +116,7 @@ public class BST<E> extends BinaryTree<E>{
             }else {
                 node.parent.right = replacement;
             }
-            afterRemove(node);
+            //afterRemove(node);
 
         }else if (node.parent == null){
             root = null;

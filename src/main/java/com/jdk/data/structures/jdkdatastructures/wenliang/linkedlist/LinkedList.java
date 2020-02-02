@@ -60,8 +60,6 @@ public class LinkedList<E> extends AbstractList<E> {
      private  transient  Node<E> last;
 
 
-
-
     @Override
     public void clera() {
         size = 0;
@@ -144,8 +142,6 @@ public class LinkedList<E> extends AbstractList<E> {
         size++;
     }
 
-
-
     /**
      * Removes the element at the specified position in this list.  Shifts any
      * subsequent elements to the left (subtracts one from their indices).
@@ -159,7 +155,6 @@ public class LinkedList<E> extends AbstractList<E> {
         checkElementIndex(index);
         return unlink(node(index));
     }
-
 
     /**
      *
@@ -187,8 +182,6 @@ public class LinkedList<E> extends AbstractList<E> {
 
     }
 
-
-
     /**
      * Removes and returns the first element from this list.
      *
@@ -207,8 +200,6 @@ public class LinkedList<E> extends AbstractList<E> {
         return removeFirst();
     }
 
-
-
     /**
      * Retrieves, but does not remove, the last element of this list,
      * or returns {@code null} if this list is empty.
@@ -221,8 +212,6 @@ public class LinkedList<E> extends AbstractList<E> {
        final Node<E> l = this.last;
         return (l == null) ? null : l.element;
     }
-
-
 
     /**
      * Retrieves and removes the first element of this list,
@@ -253,7 +242,6 @@ public class LinkedList<E> extends AbstractList<E> {
 
     }
 
-
     /**
      *
      * @param f
@@ -274,7 +262,6 @@ public class LinkedList<E> extends AbstractList<E> {
         return element;
 
     }
-
 
     /**
      *
@@ -306,7 +293,6 @@ public class LinkedList<E> extends AbstractList<E> {
         size--;
         return element;
     }
-
 
     /**
      *
@@ -342,8 +328,6 @@ public class LinkedList<E> extends AbstractList<E> {
 
     }
 
-
-
     /**
      * Tells if the argument is the index of an existing element.
      */
@@ -351,9 +335,6 @@ public class LinkedList<E> extends AbstractList<E> {
      return   index >= 0 && index < size;
 
     }
-
-
-
 
     /***
      * 获取inde位置对应的对象
