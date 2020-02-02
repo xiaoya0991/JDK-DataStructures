@@ -2,13 +2,23 @@ package com.jdk.data.structures.jdkdatastructures.wenliang.set;
 
 import com.jdk.data.structures.jdkdatastructures.wenliang.set.tree.BinaryTree;
 import com.jdk.data.structures.jdkdatastructures.wenliang.set.tree.RBTree;
+import java.util.Comparator;
 
 /**
  * @author wenliang
  */
 public class TreeSet<E> implements Set<E> {
 
-    private RBTree<E> tree = new RBTree<>();
+    private RBTree<E> tree;
+
+    public TreeSet(){
+        this(null);
+    }
+
+    public TreeSet(Comparator<E> comparator){
+        tree = new RBTree<>();
+
+    }
 
     @Override
     public int size() {
