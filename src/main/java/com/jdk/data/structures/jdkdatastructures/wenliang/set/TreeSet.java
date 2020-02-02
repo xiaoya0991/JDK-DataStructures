@@ -36,7 +36,7 @@ public class TreeSet<E> implements Set<E> {
         this.tree.inorder(new BinaryTree.Visitor<E>() {
             @Override
             public boolean visit(E element) {
-                return false;
+                return visitor.visit(element);
             }
         });
 
