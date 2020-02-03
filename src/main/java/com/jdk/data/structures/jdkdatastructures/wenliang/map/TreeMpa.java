@@ -2,6 +2,13 @@ package com.jdk.data.structures.jdkdatastructures.wenliang.map;
 
 import java.util.Comparator;
 
+/**
+ * 用红黑树自研TreeMap
+ * @param <K>
+ *
+ * @param <V>
+ *
+ */
 public class TreeMpa<K,V> implements Map<K,V>{
     private static final boolean RED = false;
     private static final boolean BLACK= true;
@@ -108,11 +115,91 @@ public class TreeMpa<K,V> implements Map<K,V>{
 
     private void keyNotNullCheck(K key){
         if (key == null) {
-            throw new IllegalArgumentException("key must not be null")
+            throw new IllegalArgumentException("key must not be null");
         }
     }
 
     private void afterPut(Node<K,V> node){
+        Node<K, V> parent = node.parent;
+
+        //添加的根节点或者上溢到根节点
+        if (parent == null) {
+            black(node);
+            return;
+        }
+
+        //如果父节点是黑色的直接返回
+        if (isBlack(parent)) return;
+
+        //叔父节点
+        Node<K, V> uncle = parent.sibling();
+        //叔父节点
+        Node<K, V> grand = red(parent.parent);
+        //如果叔父节点是红色节点上溢
+        if (isRed(uncle)){
+            black(parent);
+            black(uncle);
+            afterPut(grand);
+            return;
+        }
+
+        //叔父节点不是红色
+        if (parent.isLeftChild()){
+            if (node.isLeftChild()){
+                black(parent);
+
+            }else {
+                black(node);
+                rotateLeft(parent);
+            }
+        }else {
+            if (node.isLeftChild()){
+                black(node);
+                rotateRight(parent);
+
+            }else {
+                black(parent);
+            }
+            rotateLeft(grand);
+
+        }
+
+    }
+
+    private void rotateLeft(Node<K,V> grand){
+        Node<K, V> parent = grand.right;
+        Node<K, V> child = parent.left;
+        grand.right = child;
+        parent.left = grand;
+        afterRotate(grand,parent,child);
+    }
+
+    private void rotateRight(Node<K,V> grand){
+        Node<K, V> parent = grand.left;
+        Node<K, V> child = parent.right;
+        grand.left = child;
+        parent.right = grand;
+        afterRotate(grand,parent,child);
+    }
+
+    private void afterRotate(Node<K,V> grand,Node<K,V> parent,Node<K,V> child){
+        parent.parent = grand.parent;
+        if (grand.isLeftChild()){
+            grand.parent.left = parent;
+        }else if (grand.isRingChild()){
+            grand.parent.right = parent;
+        }else {
+            //grand是root节点
+            root = parent;
+        }
+
+        //更新child的parent
+        if (child != null){
+            child.parent = grand;
+        }
+
+        //更新grand的parent
+        grand.parent = parent;
 
     }
 
@@ -121,6 +208,33 @@ public class TreeMpa<K,V> implements Map<K,V>{
             return this.comparator.compare(e1, e2);
         }
         return ((Comparable<K>) e1).compareTo(e2);
+    }
+
+    private Node<K,V> color(Node<K,V> node,boolean color){
+        if (node == null) return node;
+
+        node.color = color;
+        return node;
+    }
+
+    private Node<K,V> red(Node<K,V> node){
+        return color(node, RED);
+    }
+
+    private Node<K,V> black(Node<K,V> node){
+        return color(node, BLACK);
+    }
+
+    private boolean colorOf(Node<K,V> node){
+        return node == null? BLACK : node.color;
+    }
+
+    private boolean isBlack(Node<K,V> node){
+        return colorOf(node) == BLACK;
+    }
+
+    private boolean isRed(Node<K,V> node){
+        return colorOf(node) == RED;
     }
 
     private static class Node<K,V> {
@@ -146,6 +260,22 @@ public class TreeMpa<K,V> implements Map<K,V>{
 
         public boolean isLeftChild(){
             return parent != null && this == parent.left;
+        }
+
+        private boolean isRingChild(){
+            return parent != null && this == parent.right;
+        }
+
+        public Node<K,V> sibling(){
+            if (isLeftChild()){
+                return parent.right;
+            }
+
+            if (isRingChild()){
+                return parent.left;
+            }
+
+            return null;
         }
 
     }
