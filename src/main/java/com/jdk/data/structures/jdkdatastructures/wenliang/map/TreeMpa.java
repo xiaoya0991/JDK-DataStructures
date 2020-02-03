@@ -227,6 +227,68 @@ public class TreeMpa<K,V> implements Map<K,V>{
         return ((Comparable<K>) e1).compareTo(e2);
     }
 
+    private V remove(Node<K,V> node){
+        if (node == null) return null;
+
+        this.size--;
+
+        V oldValue = node.value;
+
+        //度为2的节点
+        if (node.hasTwoChildren()){
+            Node<K, V> s = successor(node);
+            node.key = s.key;
+            node.value = s.value;
+            //删除后继节点
+            node = s;
+        }
+
+        //删除node节点
+        Node<K, V> replacement = node.left != null ? node.left : node.right;
+
+        //node是度为1的节点
+        if (replacement != null){
+            //更改parent
+            replacement.parent = node.parent;
+            //更改parent的left、right的指向
+            if (node.parent == null) {
+                root = replacement;
+
+            }else if (node == node.parent.left){
+                node.parent.left = replacement;
+
+            }else {
+                node.parent.right = replacement;
+            }
+
+
+        }
+    }
+
+    private void afterRemove(Node<K,V> node){
+
+    }
+
+    private Node<K,V> successor(Node<K,V> node){
+        if (node == null) return null;
+
+        //前驱节点在左子树当中
+        Node<K,V> p = node.right;
+        if (p != null){
+            while (p.left != null){
+                p = p.left;
+            }
+            return p;
+        }
+
+        //从父节点、祖父节点中寻找前驱节点
+        while (node.parent != null && node == node.parent.right){
+            node = node.parent;
+        }
+
+        return node.parent;
+    }
+
     private Node<K,V> color(Node<K,V> node,boolean color){
         if (node == null) return node;
 
