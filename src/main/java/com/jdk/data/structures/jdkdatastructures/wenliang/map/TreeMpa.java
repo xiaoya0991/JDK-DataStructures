@@ -90,7 +90,8 @@ public class TreeMpa<K,V> implements Map<K,V>{
 
     @Override
     public V get(K key) {
-        return null;
+        Node<K, V> node = node(key);
+        return node != null ? node.value : null;
     }
 
     @Override
@@ -110,6 +111,22 @@ public class TreeMpa<K,V> implements Map<K,V>{
 
     @Override
     public void traversal(Visitor<K, V> visitor) {
+
+    }
+
+    private Node<K,V> node(K key){
+        Node<K, V> node = root;
+        while (node != null){
+            int cmp = compare(key,node.key){
+                if (cmp == 0) return node;
+                if (cmp > 0 ){
+                    node = node.right;
+                }else {
+                    node = node.left;
+                }
+            }
+        }
+        return null;
 
     }
 
