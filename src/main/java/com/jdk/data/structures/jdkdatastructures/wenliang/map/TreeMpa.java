@@ -117,7 +117,7 @@ public class TreeMpa<K,V> implements Map<K,V>{
     private Node<K,V> node(K key){
         Node<K, V> node = root;
         while (node != null){
-            int cmp = compare(key,node.key){
+            int cmp = compare(key,node.key);
                 if (cmp == 0) return node;
                 if (cmp > 0 ){
                     node = node.right;
@@ -125,10 +125,9 @@ public class TreeMpa<K,V> implements Map<K,V>{
                     node = node.left;
                 }
             }
-        }
         return null;
+        }
 
-    }
 
     private void keyNotNullCheck(K key){
         if (key == null) {
