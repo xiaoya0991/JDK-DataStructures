@@ -18,21 +18,29 @@ public class ArrayDemo<E>{
      * size of arrayList
      */
     private int size;
+    /**
+     * the constant of capacity
+     */
+    private static final int DEFAULT_CAPACITY = 10;
+    /**
+     * the constant of capacity exception
+     */
+    private static final int ELEMENT_NOT_FOUND = -1;
 
     /**
      * Construction with parameters
      * @param capacity 数组容量
      */
     public ArrayDemo(int capacity){
+        capacity = (capacity < DEFAULT_CAPACITY) ? DEFAULT_CAPACITY : capacity;
         this.data = (E[]) new Object[capacity];
-        this.size = 0;
     }
 
     /**
      * construction without parameters
      */
     public ArrayDemo(){
-        this(10);
+        this(DEFAULT_CAPACITY);
     }
 
     /**
@@ -114,7 +122,7 @@ public class ArrayDemo<E>{
      */
     public E get(int index){
         if(index < 0 || index >= size)
-            throw new IllegalArgumentException("传入的参数非法");
+            throw new IndexOutOfBoundsException("Index:"+ index + ", Size:" + size);
         return data[index];
     }
 
@@ -138,11 +146,22 @@ public class ArrayDemo<E>{
      * set an element
      * @param index index
      * @param e an element value
+     * @return old element
      */
-    public void set(int index, E e){
+    public E set(int index, E e){
         if(index < 0 || index >= size)
             throw new IllegalArgumentException("传入的参数非法");
+
+        E old = data[index];
         data[index] = e;
+        return old;
+    }
+
+    /**
+     * clear the array （guarantee the result is right just）
+     */
+    public void clear(){
+        size = 0;
     }
 
     /**
