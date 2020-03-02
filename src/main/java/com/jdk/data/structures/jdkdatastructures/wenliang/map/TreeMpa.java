@@ -91,6 +91,7 @@ public class TreeMpa<K, V> implements Map<K, V> {
         return null;
     }
 
+
     @Override
     public V get(K key) {
         Node<K, V> node = node(key);
@@ -99,7 +100,7 @@ public class TreeMpa<K, V> implements Map<K, V> {
 
     @Override
     public V remove(K key) {
-        return null;
+        return remove(node(key));
     }
 
     /**
@@ -125,11 +126,11 @@ public class TreeMpa<K, V> implements Map<K, V> {
                 return true;
             }
 
-            if (node.left != null){
+            if (node.left != null) {
                 queue.offer(node.left);
             }
 
-            if (node.right != null){
+            if (node.right != null) {
                 queue.offer(node.right);
             }
         }
@@ -146,6 +147,7 @@ public class TreeMpa<K, V> implements Map<K, V> {
     public void traversal(Visitor<K, V> visitor) {
 
     }
+
 
     private Node<K, V> node(K key) {
         Node<K, V> node = root;
@@ -298,9 +300,8 @@ public class TreeMpa<K, V> implements Map<K, V> {
             } else {
                 node.parent.right = replacement;
             }
-
-
         }
+        return oldValue;
     }
 
 
