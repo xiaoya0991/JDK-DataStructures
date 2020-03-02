@@ -143,9 +143,26 @@ public class TreeMpa<K, V> implements Map<K, V> {
         return v1 == null ? v2 == null : v1.equals(v2);
     }
 
+
     @Override
     public void traversal(Visitor<K, V> visitor) {
+        if (visitor == null) {
+            return;
+        }
+        traversal(root, visitor);
+    }
 
+
+    private void traversal(Node<K, V> node, Visitor<K, V> visitor) {
+        if (node == null || visitor.stop) {
+            return;
+        }
+
+        traversal(node.left, visitor);
+        if (visitor.stop) {
+            return;
+        }
+        traversal(node.right, visitor);
     }
 
 
