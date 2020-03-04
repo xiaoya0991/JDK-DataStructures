@@ -11,19 +11,23 @@ import java.util.Queue;
  * @param <V>
  * @author wenliang
  */
-public class TreeMpa<K, V> implements Map<K, V> {
+public class TreeMap<K, V> implements Map<K, V> {
 
     private static final boolean RED = false;
     private static final boolean BLACK = true;
     private Node<K, V> root;
-    private int size;
-    private Comparator<K> comparator;
 
-    public TreeMpa() {
+    /**
+     *
+     */
+    private transient int size;
+    private final Comparator<K> comparator;
+
+    public TreeMap() {
         this(null);
     }
 
-    public TreeMpa(Comparator<K> comparator) {
+    public TreeMap(Comparator<K> comparator) {
         this.comparator = comparator;
     }
 
@@ -275,12 +279,14 @@ public class TreeMpa<K, V> implements Map<K, V> {
 
     }
 
+
     private int compare(K e1, K e2) {
         if (this.comparator != null) {
             return this.comparator.compare(e1, e2);
         }
         return ((Comparable<K>) e1).compareTo(e2);
     }
+
 
     private V remove(Node<K, V> node) {
         if (node == null) {
@@ -325,6 +331,7 @@ public class TreeMpa<K, V> implements Map<K, V> {
     private void afterRemove(Node<K, V> node) {
 
     }
+
 
     private Node<K, V> successor(Node<K, V> node) {
         if (node == null) {
@@ -377,6 +384,7 @@ public class TreeMpa<K, V> implements Map<K, V> {
         return colorOf(node) == RED;
     }
 
+
     private static class Node<K, V> {
 
         K key;
@@ -419,6 +427,5 @@ public class TreeMpa<K, V> implements Map<K, V> {
 
             return null;
         }
-
     }
 }
