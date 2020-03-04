@@ -1,5 +1,7 @@
 package com.jdk.data.structures.jdkdatastructures.wenliang.map;
 
+import java.util.Objects;
+
 /**
  * 自研hashMap
  *
@@ -48,8 +50,37 @@ public class HashMap<K, V> implements Map<K, V> {
             table[index] = root;
             size++;
             return null;
-
         }
+        //添加的不是第一个节点
+        //找到父节点
+        HashMap.Node<K, V> parent = root;
+        HashMap.Node<K, V> node = root;
+        int cmp = 0;
+        int h1 = key == null ? 0 : key.hashCode();
+        do {
+            cmp = compare(key, node.key, h1, node.hash);
+            if (cmp > 0) {
+                node = node.right;
+            } else if (cmp < 0) {
+                node = node.left;
+            }
+            //相等,覆盖
+            node.key = key;
+            V oldValue = node.value;
+            node.value = value;
+            return oldValue;
+        } while (node != null);
+
+        //插入到父节点的那个位置
+        HashMap.Node<K, V> newNode = new Node<>(key, value, parent);
+        if (cmp > 0) {
+            parent.right = newNode;
+        } else {
+            parent.left = newNode;
+        }
+        this.size++;
+        afterPut(newNode);
+
         return null;
     }
 
@@ -88,6 +119,34 @@ public class HashMap<K, V> implements Map<K, V> {
     private int index(K key) {
         int hash;
         return (key == null) ? 0 : (hash = key.hashCode()) ^ (hash >>> 16);
+    }
+
+
+    private int compare(K k1, K k2, int h1, int h2) {
+        //比较哈希值
+        int result = h1 - h2;
+        if (result != 0) {
+            return result;
+        }
+        //比较equals
+        if (Objects.equals(k1, k2)) {
+            return 0;
+        }
+        //哈希值相等，但是不equals
+        if (k1 != null && k2 != null) {
+            String k1Class = k1.getClass().getName();
+            String k2Class = k2.getClass().getName();
+            result = k1Class.compareTo(k2Class);
+            if (result != 0) {
+                return result;
+            }
+            //同一种类型并且具备可比较性
+            if (k1 instanceof Comparable) {
+                return ((Comparable) k1).compareTo(k2);
+            }
+        }
+        //比较内存地址
+        return System.identityHashCode(k1) - System.identityHashCode(k2);
     }
 
 
@@ -200,7 +259,7 @@ public class HashMap<K, V> implements Map<K, V> {
             grand.parent.right = parent;
         } else {
             //grand是root节点
-            root = parent;
+            table[index(grand.key)] = parent;
         }
 
         //更新child的parent
@@ -216,6 +275,7 @@ public class HashMap<K, V> implements Map<K, V> {
 
     private static class Node<K, V> {
 
+        int hash;
         K key;
         V value;
         boolean color = RED;
@@ -227,6 +287,7 @@ public class HashMap<K, V> implements Map<K, V> {
             this.key = key;
             this.value = value;
             this.parent = parent;
+            this.hash = key == null ? 0 : key.hashCode();
         }
 
         public boolean isLeft() {

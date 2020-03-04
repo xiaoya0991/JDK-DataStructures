@@ -3,61 +3,50 @@ package com.jdk.data.structures.jdkdatastructures.wenliang.linkedlist;
 import java.util.Collections;
 
 /**
- * Doubly-linked list implementation of the {@code List} and {@code Deque}
- * interfaces.  Implements all optional list operations, and permits all
- * elements (including {@code null}).
+ * Doubly-linked list implementation of the {@code List} and {@code Deque} interfaces.  Implements all optional list
+ * operations, and permits all elements (including {@code null}).
  *
  * <p>All of the operations perform as could be expected for a doubly-linked
- * list.  Operations that index into the list will traverse the list from
- * the beginning or the end, whichever is closer to the specified index.
+ * list.  Operations that index into the list will traverse the list from the beginning or the end, whichever is closer
+ * to the specified index.
  *
  * <p><strong>Note that this implementation is not synchronized.</strong>
- * If multiple threads access a linked list concurrently, and at least
- * one of the threads modifies the list structurally, it <i>must</i> be
- * synchronized externally.  (A structural modification is any operation
- * that adds or deletes one or more elements; merely setting the value of
- * an element is not a structural modification.)  This is typically
- * accomplished by synchronizing on some object that naturally
- * encapsulates the list.
- *
- * If no such object exists, the list should be "wrapped" using the
- * {@link Collections#synchronizedList Collections.synchronizedList}
- * method.  This is best done at creation time, to prevent accidental
+ * If multiple threads access a linked list concurrently, and at least one of the threads modifies the list
+ * structurally, it <i>must</i> be synchronized externally.  (A structural modification is any operation that adds or
+ * deletes one or more elements; merely setting the value of an element is not a structural modification.)  This is
+ * typically accomplished by synchronizing on some object that naturally encapsulates the list.
+ * <p>
+ * If no such object exists, the list should be "wrapped" using the {@link Collections#synchronizedList
+ * Collections.synchronizedList} method.  This is best done at creation time, to prevent accidental
  * unsynchronized access to the list:<pre>
  *   List list = Collections.synchronizedList(new LinkedList(...));</pre>
  *
  * <p>The iterators returned by this class's {@code iterator} and
- * {@code listIterator} methods are <i>fail-fast</i>: if the list is
- * structurally modified at any time after the iterator is created, in
- * any way except through the Iterator's own {@code remove} or
- * {@code add} methods, the iterator will throw a {@link
- *  , in the face of concurrent
- * modification, the iterator fails quickly and cleanly, rather than
- * risking arbitrary, non-deterministic behavior at an undetermined
- * time in the future.
+ * {@code listIterator} methods are <i>fail-fast</i>: if the list is structurally modified at any time after the
+ * iterator is created, in any way except through the Iterator's own {@code remove} or {@code add} methods, the iterator
+ * will throw a {@link , in the face of concurrent modification, the iterator fails quickly and cleanly, rather than
+ * risking arbitrary, non-deterministic behavior at an undetermined time in the future.
  *
  * <p>Note that the fail-fast behavior of an iterator cannot be guaranteed
- * as it is, generally speaking, impossible to make any hard guarantees in the
- * presence of unsynchronized concurrent modification.  Fail-fast iterators
- * throw {@code ConcurrentModificationException} on a best-effort basis.
- * Therefore, it would be wrong to write a program that depended on this
- * exception for its correctness:   <i>the fail-fast behavior of iterators
- * should be used only to detect bugs.</i>
+ * as it is, generally speaking, impossible to make any hard guarantees in the presence of unsynchronized concurrent
+ * modification.  Fail-fast iterators throw {@code ConcurrentModificationException} on a best-effort basis. Therefore,
+ * it would be wrong to write a program that depended on this exception for its correctness:   <i>the fail-fast behavior
+ * of iterators should be used only to detect bugs.</i>
  *
  * <p>This class is a member of the
  * <a href="{@docRoot}/../technotes/guides/collections/index.html">
  * Java Collections Framework</a>.
  *
- * @author  文亮 双向链表
- * @see     List
- * @see     ArrayList
- * @since 1.2
  * @param <E> the type of elements held in this collection
+ * @author 文亮 双向链表
+ * @see List
+ * @see ArrayList
+ * @since 1.2
  */
 public class LinkedList<E> extends AbstractList<E> {
 
-     private  transient  Node<E> first;
-     private  transient  Node<E> last;
+    private transient Node<E> first;
+    private transient Node<E> last;
 
 
     @Override
@@ -101,26 +90,26 @@ public class LinkedList<E> extends AbstractList<E> {
      */
     @Override
     public void add(int index, E element) {
-        if (index == this.size){
+        if (index == this.size) {
             Node oldLast = this.last;
             last = new Node(oldLast, element, null);
-            if (oldLast == null){
+            if (oldLast == null) {
                 this.first = last;
 
-            }else {
+            } else {
                 oldLast.next = last;
             }
 
-        }else {
+        } else {
             Node<E> next = this.node(index);
             Node<E> prev = next.prev;
             Node<E> node = new Node<>(prev, element, next);
             next.prev = node;
 
-            if (prev== null){
+            if (prev == null) {
                 this.first = node;
 
-            }else {
+            } else {
                 prev.next = node;
             }
         }
@@ -129,26 +118,24 @@ public class LinkedList<E> extends AbstractList<E> {
 
     /**
      * links e as last element
+     *
      * @param e
      */
-    void linkLast(E e){
+    void linkLast(E e) {
         Node<E> l = this.last;
         Node<E> newNode = new Node<>(l, e, null);
         last = newNode;
-        if (l == null)
+        if (l == null) {
             first = newNode;
-        else
+        } else {
             l.next = newNode;
+        }
         size++;
     }
 
     /**
-     * Removes the element at the specified position in this list.  Shifts any
-     * subsequent elements to the left (subtracts one from their indices).
-     * Returns the element that was removed from the list.
-     *
-     *
-     *
+     * Removes the element at the specified position in this list.  Shifts any subsequent elements to the left
+     * (subtracts one from their indices). Returns the element that was removed from the list.
      */
     @Override
     public E remove(int index) {
@@ -157,25 +144,24 @@ public class LinkedList<E> extends AbstractList<E> {
     }
 
     /**
-     *
      * @param o
      * @return
      */
-    public boolean remove(Object o){
-        if (o == null){
-            for (Node<E> x = first;x != null;x=x.next){
-                if (x.element == null){
+    public boolean remove(Object o) {
+        if (o == null) {
+            for (Node<E> x = first; x != null; x = x.next) {
+                if (x.element == null) {
                     unlink(x);
                     return true;
                 }
             }
-        }else {
-                for (Node<E> x =first;x !=null; x= x.next){
-                    if (o.equals(x.element)){
-                        unlink(x);
-                        return true;
-                    }
+        } else {
+            for (Node<E> x = first; x != null; x = x.next) {
+                if (o.equals(x.element)) {
+                    unlink(x);
+                    return true;
                 }
+            }
 
         }
         return false;
@@ -186,12 +172,12 @@ public class LinkedList<E> extends AbstractList<E> {
      * Removes and returns the first element from this list.
      *
      * @return the first element from this list
-     *
      */
-    public E removeFirst(){
+    public E removeFirst() {
         final Node<E> f = first;
-        if (f == null)
+        if (f == null) {
             return null;
+        }
         return unlinkFirst(f);
 
     }
@@ -201,29 +187,26 @@ public class LinkedList<E> extends AbstractList<E> {
     }
 
     /**
-     * Retrieves, but does not remove, the last element of this list,
-     * or returns {@code null} if this list is empty.
+     * Retrieves, but does not remove, the last element of this list, or returns {@code null} if this list is empty.
      *
-     * @return the last element of this list, or {@code null}
-     *         if this list is empty
+     * @return the last element of this list, or {@code null} if this list is empty
      * @since 1.6
      */
-    public E peekLast(){
-       final Node<E> l = this.last;
+    public E peekLast() {
+        final Node<E> l = this.last;
         return (l == null) ? null : l.element;
     }
 
     /**
      * Retrieves and removes the first element of this list,
-     *
      */
-    public E pollFirst(){
+    public E pollFirst() {
         return (first == null) ? null : unlinkFirst(first);
 
     }
 
     public boolean offer(E e) {
-       add(e);
+        add(e);
         return true;
     }
 
@@ -232,30 +215,30 @@ public class LinkedList<E> extends AbstractList<E> {
      * Returns the last element in this list.
      *
      * @return the last element in this list
-     *
      */
-    public E getLast(){
-       final Node<E> l = this.last;
-       if (l == null)
-           return null;
+    public E getLast() {
+        final Node<E> l = this.last;
+        if (l == null) {
+            return null;
+        }
         return l.element;
 
     }
 
     /**
-     *
      * @param f
      * @return
      */
-    private E unlinkFirst(Node<E> f){
-      final  E element = f.element;
+    private E unlinkFirst(Node<E> f) {
+        final E element = f.element;
         Node<E> next = f.next;
         f.element = null;
         f.next = null;
 
         first = next;
-        if (next ==null)
+        if (next == null) {
             last = null;
+        }
 
         next.prev = null;
         size--;
@@ -264,27 +247,26 @@ public class LinkedList<E> extends AbstractList<E> {
     }
 
     /**
-     *
      * @param x
      * @return
      */
-    E unlink(Node<E> x){
-       final E element = x.element;
-       final Node<E> next = x.next;
+    E unlink(Node<E> x) {
+        final E element = x.element;
+        final Node<E> next = x.next;
         final Node<E> prev = x.prev;
 
-        if (prev == null){
+        if (prev == null) {
             first = next;
 
-        }else {
+        } else {
             prev.next = next;
             x.prev = null;
         }
 
-        if (next == null){
+        if (next == null) {
             last = prev;
 
-        }else {
+        } else {
             next.prev = prev;
             x.next = null;
         }
@@ -295,24 +277,29 @@ public class LinkedList<E> extends AbstractList<E> {
     }
 
     /**
-     *
      * @param element
      * @return
      */
     @Override
     public int indexOf(E element) {
-        if (element == null){
+        if (element == null) {
             Node node = this.first;
 
-            for (int i = 0; i < this.size; i++)
-                if (node.element == null) return i;
-                node = node.next;
+            for (int i = 0; i < this.size; i++) {
+                if (node.element == null) {
+                    return i;
+                }
+            }
+            node = node.next;
 
-        }else {
+        } else {
             Node node = this.first;
-            for (int i = 0; i < this.size; i++)
-                if (element.equals(node.element)) return i;
-                node = node.next;
+            for (int i = 0; i < this.size; i++) {
+                if (element.equals(node.element)) {
+                    return i;
+                }
+            }
+            node = node.next;
 
         }
         return ELEMENT_NOT_FOUND;
@@ -320,9 +307,8 @@ public class LinkedList<E> extends AbstractList<E> {
     }
 
 
-
-    private void checkElementIndex(int index){
-        if (!isElementIndex(index)){
+    private void checkElementIndex(int index) {
+        if (!isElementIndex(index)) {
             return;
         }
 
@@ -331,8 +317,8 @@ public class LinkedList<E> extends AbstractList<E> {
     /**
      * Tells if the argument is the index of an existing element.
      */
-    private boolean isElementIndex(int index){
-     return   index >= 0 && index < size;
+    private boolean isElementIndex(int index) {
+        return index >= 0 && index < size;
 
     }
 
@@ -341,18 +327,20 @@ public class LinkedList<E> extends AbstractList<E> {
      * @param index
      * @return
      */
-    private Node<E> node(int index){
-        if (index < (this.size >> 1)){
+    private Node<E> node(int index) {
+        if (index < (this.size >> 1)) {
             Node node = this.first;
-            for (int i = 0; i < index; i++)
+            for (int i = 0; i < index; i++) {
                 node = node.next;
+            }
             return node;
         }
-            Node node = this.last;
-            for (int i=this.size -1;i>index;i--)
-                node = node.prev;
+        Node node = this.last;
+        for (int i = this.size - 1; i > index; i--) {
+            node = node.prev;
+        }
 
-            return node;
+        return node;
     }
 
 
@@ -361,11 +349,12 @@ public class LinkedList<E> extends AbstractList<E> {
      * @param <E>
      */
     private static class Node<E> {
+
         E element;
         Node<E> prev;
         Node<E> next;
 
-        public Node(Node prev,E element,Node next){
+        public Node(Node prev, E element, Node next) {
             this.prev = prev;
             this.element = element;
             this.next = next;
