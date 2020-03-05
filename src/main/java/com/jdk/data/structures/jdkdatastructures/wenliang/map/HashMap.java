@@ -92,7 +92,7 @@ public class HashMap<K, V> implements Map<K, V> {
 
     @Override
     public V remove(K key) {
-        return null;
+        return remove(getNode(key));
     }
 
 
@@ -224,7 +224,67 @@ public class HashMap<K, V> implements Map<K, V> {
             }
         }
         return null;
+    }
 
+
+    private V remove(Node<K, V> node) {
+        if (node == null) {
+            return null;
+        }
+        this.size--;
+        V oldValue = node.value;
+        //度为2的节点
+        if (node.hasTwoChildren()) {
+            HashMap.Node<K, V> s = successor(node);
+            node.key = s.key;
+            node.value = s.value;
+            //删除后继节点
+            node = s;
+        }
+        //删除node节点
+        HashMap.Node<K, V> replacement = node.left != null ? node.left : node.right;
+        int index = index(node.key);
+        //node是度为1的节点
+        if (replacement != null) {
+            //更改parent
+            replacement.parent = node.parent;
+            //更改parent的left、right的指向
+            if (node.parent == null) {
+                table[index] = replacement;
+            } else if (node == node.parent.left) {
+                node.parent.left = replacement;
+
+            } else {
+                node.parent.right = replacement;
+            }
+        }
+        return oldValue;
+    }
+
+
+    /**
+     * 后继节点
+     *
+     * @param node
+     * @return
+     */
+    private HashMap.Node<K, V> successor(HashMap.Node<K, V> node) {
+        if (node == null) {
+            return null;
+        }
+        //前驱节点在左子树当中
+        HashMap.Node<K, V> p = node.right;
+        if (p != null) {
+            while (p.left != null) {
+                p = p.left;
+            }
+            return p;
+        }
+        //从父节点、祖父节点中寻找前驱节点
+        while (node.parent != null && node == node.parent.right) {
+            node = node.parent;
+        }
+        return node.parent;
     }
 
 
