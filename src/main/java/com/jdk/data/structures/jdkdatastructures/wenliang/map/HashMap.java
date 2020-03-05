@@ -69,10 +69,11 @@ public class HashMap<K, V> implements Map<K, V> {
             V oldValue = node.value;
             node.value = value;
             return oldValue;
+
         } while (node != null);
 
         //插入到父节点的那个位置
-        HashMap.Node<K, V> newNode = new Node<>(key, value, parent);
+        Node<K, V> newNode = new Node<>(key, value, parent);
         if (cmp > 0) {
             parent.right = newNode;
         } else {
@@ -80,13 +81,13 @@ public class HashMap<K, V> implements Map<K, V> {
         }
         this.size++;
         afterPut(newNode);
-
         return null;
     }
 
     @Override
     public V get(K key) {
-        return null;
+        Node<K, V> node = getNode(key);
+        return node != null ? node.value : null;
     }
 
     @Override
@@ -94,9 +95,10 @@ public class HashMap<K, V> implements Map<K, V> {
         return null;
     }
 
+
     @Override
     public boolean containsKey(K key) {
-        return false;
+        return getNode(key) != null;
     }
 
     @Override
@@ -196,6 +198,32 @@ public class HashMap<K, V> implements Map<K, V> {
             rotateLeft(grand);
 
         }
+
+    }
+
+
+    /**
+     * 根据key获取vaule
+     *
+     * @param key
+     * @return
+     */
+    private Node<K, V> getNode(K key) {
+        Node<K, V> node = table[index(key)];
+        int h1 = key == null ? 0 : key.hashCode();
+        while (node != null) {
+            int cmp = compare(key, node.key, h1, node.hash);
+            if (cmp == 0) {
+                return node;
+            }
+            if (cmp > 0) {
+                node = node.right;
+            }
+            if (cmp < 0) {
+                node = node.left;
+            }
+        }
+        return null;
 
     }
 

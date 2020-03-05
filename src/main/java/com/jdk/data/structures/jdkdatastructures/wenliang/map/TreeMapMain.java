@@ -1,6 +1,5 @@
 package com.jdk.data.structures.jdkdatastructures.wenliang.map;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -12,7 +11,6 @@ public class TreeMapMain {
 
         System.out.println(1 << 5);
         HashMap map = new HashMap<>();
-        new ArrayList<>()
 
 
     }
