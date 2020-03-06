@@ -43,6 +43,7 @@ public class HashMap<K, V> implements Map<K, V> {
         size = 0;
     }
 
+
     @Override
     public V put(K key, V value) {
         int index = index(key);
@@ -58,32 +59,32 @@ public class HashMap<K, V> implements Map<K, V> {
         HashMap.Node<K, V> parent = root;
         HashMap.Node<K, V> node = root;
         int cmp = 0;
-        int h1 = key == null ? 0 : key.hashCode();
+        K k1 = key;
+        int h1 = k1 == null ? 0 : key.hashCode();
+        Node<K, V> result = null;
+        boolean searched = false;
         do {
-            cmp = compare(key, node.key, h1, node.hash);
-            if (cmp > 0) {
-                node = node.right;
-            } else if (cmp < 0) {
-                node = node.left;
+            parent = node;
+            K k2 = node.key;
+            int h2 = node.hash;
+            if (h1 > h2) {
+                cmp = 1;
+            } else if (h1 < h2) {
+                cmp = -1;
+            } else if (Objects.equals(k1, k2)) {
+                cmp = 0;
+            } else if (k1 != null && k2 != null
+                    && k1.getClass() == k2.getClass()
+                    && k1 instanceof Comparable && (cmp = ((Comparable) k1).compareTo(k2)) != 0) {
+            } else if (searched) {
+                cmp = System.identityHashCode(k1) - System.identityHashCode(k2);
+            } else {
+                if (node.left != null && (result = node(node.left, k1)))
             }
-            //相等,覆盖
-            node.key = key;
-            V oldValue = node.value;
-            node.value = value;
-            return oldValue;
 
-        } while (node != null);
-
-        //插入到父节点的那个位置
-        Node<K, V> newNode = new Node<>(key, value, parent);
-        if (cmp > 0) {
-            parent.right = newNode;
-        } else {
-            parent.left = newNode;
         }
-        this.size++;
-        afterPut(newNode);
-        return null;
+
+
     }
 
     @Override
@@ -156,7 +157,6 @@ public class HashMap<K, V> implements Map<K, V> {
             }
         }
         return;
-
     }
 
 
@@ -286,6 +286,7 @@ public class HashMap<K, V> implements Map<K, V> {
             HashMap.Node<K, V> s = successor(node);
             node.key = s.key;
             node.value = s.value;
+            node.hash = s.hash;
             //删除后继节点
             node = s;
         }
