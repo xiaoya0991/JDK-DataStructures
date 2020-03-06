@@ -103,6 +103,7 @@ public class HashMap<K, V> implements Map<K, V> {
         return getNode(key) != null;
     }
 
+
     @Override
     public boolean containsValue(V value) {
         if (size == 0) {
@@ -132,6 +133,29 @@ public class HashMap<K, V> implements Map<K, V> {
 
     @Override
     public void traversal(Visitor<K, V> visitor) {
+        if (size == 0 || visitor == null) {
+            return;
+        }
+        Queue<Node<K, V>> queue = new LinkedList<>();
+        for (int i = 0; i < table.length; i++) {
+            if (table[i] == null) {
+                continue;
+            }
+            queue.offer(table[i]);
+            while (!queue.isEmpty()) {
+                Node<K, V> node = queue.poll();
+                if (visitor.visit(node.key, node.value)) {
+                    return;
+                }
+                if (node.left != null) {
+                    queue.offer(node.left);
+                }
+                if (node.right != null) {
+                    queue.offer(node.right);
+                }
+            }
+        }
+        return;
 
     }
 
