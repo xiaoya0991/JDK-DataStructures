@@ -16,6 +16,7 @@ public class HashMap<K, V> implements Map<K, V> {
     private int size;
     private Node<K, V>[] table;
     private static final int DEFATLT_CAPACIIY = 1 << 4;
+    private static final float DEFATLT_FACTOR = 0.75f;
 
     public HashMap() {
         table = new Node[DEFATLT_CAPACIIY];
@@ -79,11 +80,37 @@ public class HashMap<K, V> implements Map<K, V> {
             } else if (searched) {
                 cmp = System.identityHashCode(k1) - System.identityHashCode(k2);
             } else {
-                if (node.left != null && (result = node(node.left, k1)))
+                if (node.left != null && (result = node(node.left, k1))) {
+                    ;
+                }
             }
-
         }
+    }
 
+
+    private void resize() {
+        if (size / table.length <= DEFATLT_FACTOR) {
+            return;
+        }
+        Node<K, V>[] oldTable = table;
+        table = new Node[oldTable.length << 1];
+
+        Queue<Node<K, V>> queue = new LinkedList<>();
+        for (int i = 0; i < oldTable.length; i++) {
+            if (oldTable[i] == null) {
+                return;
+            }
+            queue.offer(oldTable[i]);
+            while (!queue.isEmpty()) {
+                Node<K, V> node = queue.poll();
+                if (node.left != null) {
+                    queue.offer(node.left);
+                }
+                if (node.right != null) {
+                    queue.offer(node.right);
+                }
+            }
+        }
 
     }
 
