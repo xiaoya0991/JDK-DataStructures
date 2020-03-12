@@ -50,7 +50,7 @@ public class HashMap<K, V> implements Map<K, V> {
         int index = index(key);
         Node<K, V> root = table[index];
         if (root == null) {
-            root = new Node<>(key, value, null);
+            root = createNode(key, value, null);
             table[index] = root;
             size++;
             return null;
@@ -88,6 +88,19 @@ public class HashMap<K, V> implements Map<K, V> {
     }
 
 
+    /**
+     * 创建节点
+     *
+     * @param key
+     * @param value
+     * @param parent
+     * @return
+     */
+    protected Node<K, V> createNode(K key, V value, Node<K, V> parent) {
+        return new Node<>(key, value, parent);
+    }
+
+
     private void resize() {
         if (size / table.length <= DEFATLT_FACTOR) {
             return;
@@ -111,7 +124,6 @@ public class HashMap<K, V> implements Map<K, V> {
                 }
             }
         }
-
     }
 
     @Override
@@ -437,7 +449,7 @@ public class HashMap<K, V> implements Map<K, V> {
     }
 
 
-    private static class Node<K, V> {
+    protected static class Node<K, V> {
 
         int hash;
         K key;
