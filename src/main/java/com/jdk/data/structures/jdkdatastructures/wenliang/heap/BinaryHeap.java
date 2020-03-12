@@ -46,12 +46,15 @@ public class BinaryHeap<E> implements Heap<E> {
 
     @Override
     public void add(E element) {
+        elemeentNotNullCheck(element);
+        ensureCapacity(size + 1);
 
     }
 
     @Override
     public E get() {
-        return null;
+        emptyCheck();
+        return elements[0];
     }
 
     @Override
@@ -64,10 +67,52 @@ public class BinaryHeap<E> implements Heap<E> {
         return null;
     }
 
+    private void ensureCapacity(int capacity) {
+        int oldCapacity = elements.length;
+        if (oldCapacity >= capacity) {
+            return;
+        }
+        //新容量为旧容量的1.5倍
+        int newCapacity = oldCapacity + (oldCapacity >> 1);
+        E[] newElements = (E[]) new Object[newCapacity];
+        for (int i = 0; i < this.size; i++) {
+            newElements[i] = this.elements[i];
+        }
+        this.elements = newElements;
+    }
+
+
     private int compare(E e1, E e2) {
         return comparator != null ? comparator.compare(e1, e2) :
                 ((Comparable<E>) e1).compareTo(e2);
     }
 
+    private void siftUp(int index) {
+        E e = elements[index];
+        while (index > 0) {
+            int pindex = (index - 1) >> 1;
+            E p = elements[pindex];
+            if (compare(e, p) <= 0) {
+                return;
+            }
+            E tmp = elements[index];
+            elements[index] = elements[pindex];
+            elements[pindex] = tmp;
+
+
+        }
+    }
+
+    private void emptyCheck() {
+        if (size == 0) {
+            throw new IndexOutOfBoundsException("heap is empty");
+        }
+    }
+
+    private void elemeentNotNullCheck(E element) {
+        if (element == null) {
+            throw new IllegalArgumentException("element must not be empty");
+        }
+    }
 
 }
