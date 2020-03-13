@@ -48,6 +48,7 @@ public class BinaryHeap<E> implements Heap<E> {
     public void add(E element) {
         elemeentNotNullCheck(element);
         ensureCapacity(size + 1);
+        siftUp(size - 1);
 
     }
 
@@ -87,6 +88,7 @@ public class BinaryHeap<E> implements Heap<E> {
                 ((Comparable<E>) e1).compareTo(e2);
     }
 
+
     private void siftUp(int index) {
         E e = elements[index];
         while (index > 0) {
@@ -98,8 +100,7 @@ public class BinaryHeap<E> implements Heap<E> {
             E tmp = elements[index];
             elements[index] = elements[pindex];
             elements[pindex] = tmp;
-
-
+            index = pindex;
         }
     }
 
