@@ -1,27 +1,42 @@
 package com.jdk.data.structures.jdkdatastructures.wenliang.heap;
 
 import java.util.Comparator;
+import org.omg.CORBA.Object;
 
 /**
  * 二叉堆
  *
  * @author wenliang
  */
-public class BinaryHeap<E> implements Heap<E> {
+public class BinaryHeap<E> extends AbstractHeap<E> {
 
     private E[] elements;
-    private int size;
-    private Comparator<E> comparator;
     private static final int DEFAULT_CAPACITY = 10;
 
 
+    public BinaryHeap(E[] elements, Comparator<E> comparator) {
+        super(comparator);
+        if (elements == null || elements.length == 0) {
+            this.elements = (E[]) new Object[DEFAULT_CAPACITY];
+        }
+        size = elements.length;
+        int capacity = Math.max(elements.length, DEFAULT_CAPACITY);
+        elements = (E[]) new Object[capacity];
+        for (int i = 0; i < elements.length; i++) {
+            this.elements[i] = elements[i];
+        }
+    }
+
+    public BinaryHeap(E[] elements) {
+        this(elements, null);
+    }
+
     public BinaryHeap(Comparator<E> comparator) {
-        this.comparator = comparator;
-        this.elements = (E[]) new Object[DEFAULT_CAPACITY];
+        this(null, comparator);
     }
 
     public BinaryHeap() {
-        this(null);
+        this(null, null);
     }
 
 
@@ -80,12 +95,6 @@ public class BinaryHeap<E> implements Heap<E> {
             newElements[i] = this.elements[i];
         }
         this.elements = newElements;
-    }
-
-
-    private int compare(E e1, E e2) {
-        return comparator != null ? comparator.compare(e1, e2) :
-                ((Comparable<E>) e1).compareTo(e2);
     }
 
 
