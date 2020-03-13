@@ -31,11 +31,6 @@ public class LinkedList<E> extends AbstractList<E> {
         public Node(E e){ this(e,null); }
 
         /**
-         * construction without parameter
-         */
-        public Node(){ this(null,null); }
-
-        /**
          * override toString method
          */
         @Override
@@ -327,6 +322,7 @@ public class LinkedList<E> extends AbstractList<E> {
      * @return
      */
     public boolean isLoopLinkedList(){
+
         slow = fast = dummyHead;
         for (int i = 0; i < size - 1; i ++){
             slow = slow.next;
@@ -355,6 +351,25 @@ public class LinkedList<E> extends AbstractList<E> {
 
         linkedList.add(3,2);
         System.out.println(linkedList);
+    }
+
+    /**
+     * 链表反转,leetcode24
+     * @param head
+     * @return
+     */
+    public Node reverseList(Node head) {
+        if(head == null && head.next == null) return head;
+
+        Node newHead = null;
+        while (head != null) {
+            Node tmp = head.next;
+            head.next = newHead;
+            newHead = head;
+            head = tmp;
+        }
+
+        return newHead;
     }
 
 }
