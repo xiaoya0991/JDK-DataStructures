@@ -15,9 +15,14 @@ public class Trie<V> {
         root = new Node<>();
     }
 
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
 
     public void clear() {
         size = 0;
+        root = null;
     }
 
     public V get(String key) {
@@ -27,6 +32,19 @@ public class Trie<V> {
 
     public boolean contains(String key) {
         return node(key) != null;
+    }
+
+
+    public boolean startsWith(String prefix) {
+        keyCheck(prefix);
+        Node<V> node = this.root;
+        for (int i = 0; i < prefix.length(); i++) {
+            char c = prefix.charAt(i);
+            if (node.getChildren().get(c) == null) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public V add(String key, V value) {
@@ -39,6 +57,7 @@ public class Trie<V> {
                 childNode = new Node<>();
                 node.getChildren().put(c, childNode);
             }
+            node = childNode;
         }
         if (!node.word) {
             node.word = true;
