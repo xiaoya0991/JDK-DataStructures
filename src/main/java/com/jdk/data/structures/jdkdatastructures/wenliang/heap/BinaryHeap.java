@@ -97,7 +97,6 @@ public class BinaryHeap<E> extends AbstractHeap<E> {
         this.elements = newElements;
     }
 
-
     private void siftUp(int index) {
         E e = elements[index];
         while (index > 0) {
