@@ -31,7 +31,23 @@ public class Trie<V> {
 
     public V add(String key, V value) {
         keyCheck(key);
-
+        Node<V> node = this.root;
+        for (int i = 0; i < key.length(); i++) {
+            char c = key.charAt(i);
+            Node<V> childNode = node.getChildren().get(c);
+            if (childNode == null) {
+                childNode = new Node<>();
+                node.getChildren().put(c, childNode);
+            }
+        }
+        if (!node.word) {
+            node.word = true;
+            node.value = value;
+            size++;
+        }
+        V oldValue = node.value;
+        node.value = value;
+        return oldValue;
     }
 
     private Node<V> node(String key) {
