@@ -15,6 +15,21 @@ public class Trie<V> {
         root = new Node<>();
     }
 
+    public V remove(String key) {
+        Node<V> node = node(key);
+        if (node == null || !node.word) {
+            return null;
+        }
+        size--;
+        if (node.children != null && !node.children.isEmpty()) {
+            V oldValue = node.value;
+            node.word = false;
+            node.value = null;
+            return oldValue;
+        }
+        return null;
+    }
+
     public boolean isEmpty() {
         return size == 0;
     }
@@ -39,10 +54,10 @@ public class Trie<V> {
         keyCheck(prefix);
         Node<V> node = this.root;
         for (int i = 0; i < prefix.length(); i++) {
-            char c = prefix.charAt(i);
-            if (node.getChildren().get(c) == null) {
+            if (node == null || node.children == null) {
                 return false;
             }
+            char c = prefix.charAt(i);
         }
         return true;
     }
@@ -73,11 +88,11 @@ public class Trie<V> {
         keyCheck(key);
         Node<V> node = this.root;
         for (int i = 0; i < key.length(); i++) {
+            if (node == null || node.children == null) {
+                return null;
+            }
             char c = key.charAt(i);
             node = node.getChildren().get(c);
-            if (node == null) {
-                return node;
-            }
         }
         return node.word ? node : null;
     }
