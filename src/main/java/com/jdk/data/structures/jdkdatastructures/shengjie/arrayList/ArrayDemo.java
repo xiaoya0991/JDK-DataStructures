@@ -191,14 +191,20 @@ public class ArrayDemo<E>{
         return -1;
     }
 
-//    public int[] findAll(E e){
-//        ArrayDemo<Integer> results = new ArrayDemo<>(size);
-//        for(int i = 0; i < size; i ++){
-//            if(data[i] == e){
-//                results.add(i,e);
-//            }
-//        }
-//    }
+    /**
+     * find the values of elements are e
+     * @param e
+     * @return
+     */
+    public ArrayDemo<E> findAll(E e){
+        ArrayDemo<E> results = new ArrayDemo<>(size);
+        for(int i = 0; i < size; i ++){
+            if(data[i] == e){
+                results.add(e,i);
+            }
+        }
+        return results;
+    }
 
     /**
      * remove an element at a location
@@ -270,7 +276,7 @@ public class ArrayDemo<E>{
     @Override
     public String toString(){
         StringBuilder stringBuilder = new StringBuilder();
-//        stringBuilder.append(String.format("Array: size = %d, capacity = %d\n",size,data));
+        stringBuilder.append(String.format("Array: size = %d, capacity = %d\n",size,data));
         stringBuilder.append("[");
         for (int i = 0; i < size; i ++){
             stringBuilder.append(data[i]);

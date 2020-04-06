@@ -1,4 +1,4 @@
-package com.jdk.data.structures.jdkdatastructures.shengjie.linkedList.map;
+package com.jdk.data.structures.jdkdatastructures.shengjie.map;
 
 public class LinkedListMap<K,V> implements Map<K,V> {
     private class Node{

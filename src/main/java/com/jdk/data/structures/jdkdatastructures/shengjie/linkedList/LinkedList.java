@@ -1,33 +1,17 @@
 package com.jdk.data.structures.jdkdatastructures.shengjie.linkedList;
 
-/**
- * write a LinkedList
- */
 public class LinkedList<E> extends AbstractList<E> {
     private class Node{
-        /**
-         * define an element
-         */
+
         public E e;
-        /**
-         * define a node
-         */
+        public Node prev;
         public Node next;
 
-        /**
-         * construction with parameters
-         * @param e
-         * @param next
-         */
         public Node(E e, Node next){
             this.e = e;
             this.next = next;
         }
 
-        /**
-         * construction with parameter
-         * @param e
-         */
         public Node(E e){ this(e,null); }
 
         /**
@@ -371,5 +355,9 @@ public class LinkedList<E> extends AbstractList<E> {
 
         return newHead;
     }
+
+    private void ensureCapcity(){}
+    private void trim(){}
+
 
 }

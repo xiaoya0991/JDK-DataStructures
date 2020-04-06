@@ -1,4 +1,4 @@
-package com.jdk.data.structures.jdkdatastructures.shengjie.linkedList.map;
+package com.jdk.data.structures.jdkdatastructures.shengjie.map;
 
 public interface Map<K,V> {
     void add(K key, V value);
