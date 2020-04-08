@@ -65,6 +65,20 @@ public class LinkedList<E> extends AbstractList<E> {
     @Override
     public int size(){return this.size; }
 
+    @Override
+    public int find(E e){
+        if(e == null){
+            for (int i = 0; i < size; i ++){
+                if(node(i) == null) return i;
+            }
+        }else {
+            for (int i = 0; i < size; i ++){
+                if(e.equals(node(i))) return i;
+            }
+        }
+        return ELEMENT_NOT_FOUND;
+    }
+
     /**
      * get the node of the current location
      * @param index
@@ -83,6 +97,7 @@ public class LinkedList<E> extends AbstractList<E> {
      * @param e
      * @param index
      */
+    @Override
     public void add(int index, E e){
         rangeCheckForAdd(index);
 

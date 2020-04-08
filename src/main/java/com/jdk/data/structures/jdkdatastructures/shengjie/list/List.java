@@ -5,6 +5,8 @@ package com.jdk.data.structures.jdkdatastructures.shengjie.list;
  * @author holy
  */
 public interface List<E> {
+    static final int ELEMENT_NOT_FOUND = -1;
+
     /**
      * Removes all of the elements from this list.
      * The list will be empty after this call returns.
@@ -26,4 +28,6 @@ public interface List<E> {
     void add(int index, E element);
 
     E remove(int index);
+
+    int find(E element);
 }

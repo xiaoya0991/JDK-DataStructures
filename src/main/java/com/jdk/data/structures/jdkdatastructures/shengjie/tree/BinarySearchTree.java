@@ -1,8 +1,5 @@
 package com.jdk.data.structures.jdkdatastructures.shengjie.tree;
 
-import com.jdk.data.structures.jdkdatastructures.shengjie.arrayList.queue.ArrayQueueDemo;
-import com.jdk.data.structures.jdkdatastructures.shengjie.arrayList.stack.ArrayStackDemo;
-
 /**
  * binary search tree without same element
  */
@@ -125,22 +122,22 @@ public class BinarySearchTree<E extends Comparable<E>>{
         preOrder(node.right);
     }
 
-    /**
-     * preorder travalsal by stack method
-     */
-    public void preOrderByStack(){
-        ArrayStackDemo<Node> stack = new ArrayStackDemo<>();
-        stack.push(root);
-        while (!stack.isEmpty()){
-            Node current = stack.pop();
-            System.out.println(current.e);
-
-            if(current.right != null)
-                stack.push(current.right);
-            if(current.left != null)
-                stack.push(current.left);
-        }
-    }
+//    /**
+//     * preorder travalsal by stack method
+//     */
+//    public void preOrderByStack(){
+//        ArrayStackDemo<Node> stack = new ArrayStackDemo<>();
+//        stack.push(root);
+//        while (!stack.isEmpty()){
+//            Node current = stack.pop();
+//            System.out.println(current.e);
+//
+//            if(current.right != null)
+//                stack.push(current.right);
+//            if(current.left != null)
+//                stack.push(current.left);
+//        }
+//    }
 
     /**
      * inorder travalsal--中序遍历(左根右)
@@ -223,19 +220,19 @@ public class BinarySearchTree<E extends Comparable<E>>{
     /**
      * levelorder tarvalsal -- 层序遍历
      */
-    public void levelOrder(){
-        ArrayQueueDemo<Node> queue = new ArrayQueueDemo<>();
-        queue.enqueue(root);
-        while (!queue.isEmpty()){
-            Node current = queue.dequeue();
-            System.out.println(current.e);
-
-            if(current.left != null)
-                queue.enqueue(current.left);
-            if(current.right != null)
-                queue.enqueue(current.right);
-        }
-    }
+//    public void levelOrder(){
+//        ArrayQueueDemo<Node> queue = new ArrayQueueDemo<>();
+//        queue.enqueue(root);
+//        while (!queue.isEmpty()){
+//            Node current = queue.dequeue();
+//            System.out.println(current.e);
+//
+//            if(current.left != null)
+//                queue.enqueue(current.left);
+//            if(current.right != null)
+//                queue.enqueue(current.right);
+//        }
+//    }
 
     /**
      * obtain the min number of a binary search tree by recursion

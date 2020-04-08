@@ -2,41 +2,28 @@ package com.jdk.data.structures.jdkdatastructures.shengjie.list;
 
 public class Main {
     public static void main(String[] args) {
-        ArrayList<Integer> arr = new ArrayList<>(6);
-        arr.addFirst(5);
-        for(int i = 0; i < 3; i ++) {
-            arr.addLast(i);
-        }
+        testList(new SingleCircleLinkedList<>());
+    }
 
-        System.out.println(arr);
+    static void testList(List<Integer> list){
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(4);
 
-        arr.add(3,2);
-        System.out.println(arr);
+        list.add(0,5);
+        list.add(2,6);
+        list.add(list.size() , 7);
 
-        arr.add(111,2);
-        System.out.println(arr);
+        list.remove(0);
+        list.remove(2);
+        list.remove(list.size() - 1);
 
-        arr.remove(1);
-        System.out.println(arr);
-
-        arr.removeFirst();
-        System.out.println(arr);
-
-        arr.removeLast();
-        System.out.println(arr);
-
-        System.out.println(arr.removeElement(1));
-        System.out.println(arr.size());
-
-
-        LinkedList<Integer> linkedList = new LinkedList<>();
-        for(int i = 0; i < 5; i ++){
-            linkedList.addFirst(i);
-            System.out.println(linkedList);
-        }
-
-        linkedList.add(3,2);
-        System.out.println(linkedList);
-
+        System.out.println(list.find(4) == 3);
+        System.out.println(list.find(2) == list.ELEMENT_NOT_FOUND);
+        System.out.println(list.contains(3));
+        System.out.println(list.get(0) == 1);
+        System.out.println(list.get(1) == 6);
+        System.out.println(list.get(list.size() - 1) == 4);
     }
 }
