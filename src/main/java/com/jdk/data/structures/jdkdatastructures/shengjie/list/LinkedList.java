@@ -54,6 +54,7 @@ public class LinkedList<E> extends AbstractList<E> {
 
     @Override
     public void clear(){
+        dummyHead = last = null;
         size = 0;
     }
 
