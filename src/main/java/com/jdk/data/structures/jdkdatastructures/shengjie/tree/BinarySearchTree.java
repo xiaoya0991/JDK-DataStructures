@@ -445,7 +445,7 @@ public class BinarySearchTree<E extends Comparable<E>>{
 //        for(int i = 0; i < n; i ++)
 //            bst.add(random.nextInt(10000));
 //
-//        ArrayDemo<Integer> nums = new ArrayDemo<>();
+//        ArrayList<Integer> nums = new ArrayList<>();
 //        while (!bst.isEmpty())
 //            nums.addLast(bst.removeMin());
 //

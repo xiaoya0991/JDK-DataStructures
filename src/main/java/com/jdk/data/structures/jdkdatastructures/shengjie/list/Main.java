@@ -1,8 +1,8 @@
-package com.jdk.data.structures.jdkdatastructures.shengjie.arrayList;
+package com.jdk.data.structures.jdkdatastructures.shengjie.list;
 
 public class Main {
     public static void main(String[] args) {
-        ArrayDemo<Integer> arr = new ArrayDemo<>(6);
+        ArrayList<Integer> arr = new ArrayList<>(6);
         arr.addFirst(5);
         for(int i = 0; i < 3; i ++) {
             arr.addLast(i);
@@ -26,7 +26,17 @@ public class Main {
         System.out.println(arr);
 
         System.out.println(arr.removeElement(1));
-        System.out.println(arr.getSize());
+        System.out.println(arr.size());
+
+
+        LinkedList<Integer> linkedList = new LinkedList<>();
+        for(int i = 0; i < 5; i ++){
+            linkedList.addFirst(i);
+            System.out.println(linkedList);
+        }
+
+        linkedList.add(3,2);
+        System.out.println(linkedList);
 
     }
 }

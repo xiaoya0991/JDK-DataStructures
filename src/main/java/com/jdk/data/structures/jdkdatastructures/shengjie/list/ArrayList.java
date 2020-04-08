@@ -1,4 +1,4 @@
-package com.jdk.data.structures.jdkdatastructures.shengjie.arrayList;
+package com.jdk.data.structures.jdkdatastructures.shengjie.list;
 
 /**
  * Array underlying package
@@ -9,7 +9,7 @@ package com.jdk.data.structures.jdkdatastructures.shengjie.arrayList;
  * find--known:O(1);unknown:O(n)
  * @author shengjie
  */
-public class ArrayDemo<E>{
+public class ArrayList<E> extends AbstractList<E>{
     /**
      * define an arrayList
      */
@@ -22,16 +22,14 @@ public class ArrayDemo<E>{
      * the constant of capacity
      */
     private static final int DEFAULT_CAPACITY = 10;
-    /**
-     * the constant of capacity exception
-     */
+
     private static final int ELEMENT_NOT_FOUND = -1;
 
     /**
      * Construction with parameters
      * @param capacity 数组容量
      */
-    public ArrayDemo(int capacity){
+    public ArrayList(int capacity){
         capacity = (capacity < DEFAULT_CAPACITY) ? DEFAULT_CAPACITY : capacity;
         this.data = (E[]) new Object[capacity];
     }
@@ -39,15 +37,20 @@ public class ArrayDemo<E>{
     /**
      * construction without parameters
      */
-    public ArrayDemo(){
+    public ArrayList(){
         this(DEFAULT_CAPACITY);
     }
 
     /**
-     * get the size
-     * @return the size value
+     * clear the array （guarantee the result is right just）
      */
-    public int getSize(){
+    @Override
+    public void clear(){
+        size = 0;
+    }
+
+    @Override
+    public int size() {
         return this.size;
     }
 
@@ -63,6 +66,7 @@ public class ArrayDemo<E>{
      * empty handle
      * @return
      */
+    @Override
     public boolean isEmpty(){
         return this.size == 0;
     }
@@ -72,9 +76,9 @@ public class ArrayDemo<E>{
      * @param e an element value
      * @param index index
      */
-    public void add(E e, int index){
-        if(index < 0 && index > this.size)
-            throw new IllegalArgumentException("添加数据元素位置不合法，应该在0～size质检");
+    @Override
+    public void add(int index, E e){
+        rangeCheckForAdd(index);
 
         if(size == this.data.length)
             resize(2 * data.length);
@@ -104,7 +108,7 @@ public class ArrayDemo<E>{
      * @param e an element value
      */
     public void addLast(E e){
-        add(e,size);
+        add(size, e);
     }
 
     /**
@@ -112,7 +116,7 @@ public class ArrayDemo<E>{
      * @param e an element value
      */
     public void addFirst(E e){
-        add(e,0);
+        add(0, e);
     }
 
     /**
@@ -120,9 +124,10 @@ public class ArrayDemo<E>{
      * @param index index
      * @return an element value
      */
+    @Override
     public E get(int index){
-        if(index < 0 || index >= size)
-            throw new IndexOutOfBoundsException("Index:"+ index + ", Size:" + size);
+        rangeCheck(index);
+
         return data[index];
     }
 
@@ -148,9 +153,9 @@ public class ArrayDemo<E>{
      * @param e an element value
      * @return old element
      */
+    @Override
     public E set(int index, E e){
-        if(index < 0 || index >= size)
-            throw new IllegalArgumentException("传入的参数非法");
+        rangeCheck(index);
 
         E old = data[index];
         data[index] = e;
@@ -158,17 +163,11 @@ public class ArrayDemo<E>{
     }
 
     /**
-     * clear the array （guarantee the result is right just）
-     */
-    public void clear(){
-        size = 0;
-    }
-
-    /**
      * if contains an element
      * @param e an element value
      * @return boolean value
      */
+    @Override
     public boolean contains(E e){
         for(int i = 0; i < size; i ++){
             if(data[i] == e)
@@ -177,18 +176,27 @@ public class ArrayDemo<E>{
         return false;
     }
 
+    @Override
+    public void add(E element) {
+        add(size, element);
+    }
+
     /**
-     * find index of an element,if not existed,return -1
+     * get the position of this element
      * @param e an element value
      * @return the index of the element
      */
     public int find(E e){
-        for(int i = 0; i < size; i ++){
-            if(data[i] == e)
-                return i;
-            continue;
+        if(e == null){
+            for (int i = 0; i < size; i ++){
+                if(data[i] == null) return i;
+            }
+        }else {
+            for (int i = 0; i < size; i ++){
+                if(e.equals(data[i])) return i;
+            }
         }
-        return -1;
+        return ELEMENT_NOT_FOUND;
     }
 
     /**
@@ -196,11 +204,17 @@ public class ArrayDemo<E>{
      * @param e
      * @return
      */
-    public ArrayDemo<E> findAll(E e){
-        ArrayDemo<E> results = new ArrayDemo<>(size);
-        for(int i = 0; i < size; i ++){
-            if(data[i] == e){
-                results.add(e,i);
+    public ArrayList<E> findAll(E e){
+        ArrayList<E> results = new ArrayList<>(size);
+        if(e == null){
+            for(int i = 0; i < size; i ++){
+                if(data[i] == null)
+                    results.add(i, null);
+            }
+        }else {
+            for (int i = 0; i < size; i++) {
+                if (e.equals(data[i]))
+                    results.add(i, e);
             }
         }
         return results;
@@ -211,9 +225,9 @@ public class ArrayDemo<E>{
      * @param index index
      * @return removed element value
      */
+    @Override
     public E remove(int index){
-        if(index < 0 || index >= size)
-            throw new IllegalArgumentException("传入的参数非法");
+        rangeCheck(index);
 
         Object result = data[index];
 
@@ -259,15 +273,6 @@ public class ArrayDemo<E>{
         }
         return false;
     }
-
-//    /**
-//     * remove all repeated element
-//     * @param e
-//     * @return
-//     */
-//    public boolean removeAllElement(E e){
-//
-//    }
 
     /**
      * override method of toString

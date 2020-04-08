@@ -1,6 +1,9 @@
-package com.jdk.data.structures.jdkdatastructures.shengjie.linkedList;
+package com.jdk.data.structures.jdkdatastructures.shengjie.list;
 
 public class LinkedList<E> extends AbstractList<E> {
+
+    private static final int ELEMENT_NOT_FOUND = -1;
+
     private class Node{
 
         public E e;
@@ -12,13 +15,22 @@ public class LinkedList<E> extends AbstractList<E> {
             this.next = next;
         }
 
-        public Node(E e){ this(e,null); }
+        public Node(E e,Node prev, Node next){
+            this.e = e;
+            this.prev = prev;
+            this.next = next;
+        }
 
-        /**
-         * override toString method
-         */
         @Override
         public String toString(){
+            StringBuilder stringBuilder = new StringBuilder();
+
+            stringBuilder.append(prev != null ? prev.e : null);
+
+            stringBuilder.append("_").append(e).append("_");
+
+            stringBuilder.append(next != null ? next.e : null);
+
             return e.toString();
         }
     }
@@ -28,13 +40,20 @@ public class LinkedList<E> extends AbstractList<E> {
      * define the only dummy head node
      */
     private Node dummyHead;
+    private Node last;
+
     /**
      * define size of LinkedList
      */
     private int size;
 
     public LinkedList(){
-        dummyHead = new Node(null,null);
+        dummyHead = last = new Node(null,null,null);
+        size = 0;
+    }
+
+    @Override
+    public void clear(){
         size = 0;
     }
 
@@ -42,7 +61,21 @@ public class LinkedList<E> extends AbstractList<E> {
      * get the size
      * @return
      */
-    public int getSize(){return this.size; }
+    @Override
+    public int size(){return this.size; }
+
+    /**
+     * get the node of the current location
+     * @param index
+     * @return
+     */
+    private Node node(int index){
+        Node current = dummyHead.next;
+        for(int i = 0 ;i < index; i ++){
+            current = current.next;
+        }
+        return current;
+    }
 
     /**
      * add an element at a position
@@ -50,18 +83,20 @@ public class LinkedList<E> extends AbstractList<E> {
      * @param index
      */
     public void add(int index, E e){
-        if(index < 0 || index > size)
-            throw new IllegalArgumentException("add failed, illegal index");
+        rangeCheckForAdd(index);
 
-        Node prev = dummyHead;
-        for(int i = 0; i < index; i ++)
-            prev = prev.next;
+        Node prev = index == 0 ? dummyHead.next : node(index - 1);
+        prev.next = new Node(e,prev.next);
 
-//                prev.next = new Node(e,prev.next);//转化以下三行作为理解
-
-        Node node = new Node(e);
-        node.next = prev.next;
-        prev.next = node;
+//        Node prev = dummyHead;
+//        for(int i = 0; i < index; i ++)
+//            prev = prev.next;
+//
+////                prev.next = new Node(e,prev.next);//转化以下三行作为理解
+//
+//        Node node = new Node(e);
+//        node.next = prev.next;
+//        prev.next = node;
 
         size ++;
     }
@@ -82,9 +117,9 @@ public class LinkedList<E> extends AbstractList<E> {
      * @param index
      * @return
      */
+    @Override
     public E get(int index){
-        if(index < 0 || index > size)
-            throw new IllegalArgumentException("get failed, illegal index");
+        rangeCheck(index);
 
         Node current = dummyHead.next;
         for(int i = 0; i < index; i ++)
@@ -111,9 +146,9 @@ public class LinkedList<E> extends AbstractList<E> {
      * @param index
      * @param e
      */
+    @Override
     public E set(int index, E e){
-        if(index < 0 || index > 0)
-            throw new IllegalArgumentException("set failed, illegal index");
+        rangeCheck(index);
 
         Node current = dummyHead.next;
         for(int i = 0; i < index; i ++)
@@ -129,6 +164,7 @@ public class LinkedList<E> extends AbstractList<E> {
      * @param e
      * @return
      */
+    @Override
     public boolean contains(E e){
         Node current = dummyHead.next;
         while (current != null){
@@ -140,25 +176,8 @@ public class LinkedList<E> extends AbstractList<E> {
     }
 
     @Override
-    public void add(E element) {
-
-    }
-
-    @Override
-    public String toString(){
-        StringBuilder stringBuilder = new StringBuilder();
-
-//        Node current = dummyHead.next;
-//        while (current != null){
-//            stringBuilder.append(current + "->");
-//            current = current.next;
-//        }
-        //上边while循环也可以换成for循环
-        for(Node current = dummyHead.next; current != null; current = current.next)
-            stringBuilder.append(current + "->");
-
-        stringBuilder.append("NULL");
-        return stringBuilder.toString();
+    public void add(E e) {
+        add(size , e);
     }
 
     /**
@@ -166,21 +185,37 @@ public class LinkedList<E> extends AbstractList<E> {
      * @param index
      * @return
      */
+    @Override
     public E remove(int index){
-        if(index < 0 || index > size)
-            throw new IllegalArgumentException("remove failed, index illegal");
+        rangeCheck(index);
 
-        Node prev = dummyHead;
+        Node node = node(index);
+        Node prev = node.prev;
+        Node next = node.next;
 
-        for(int i = 0; i < index; i ++)
-            prev = prev.next;
+        if(prev == null){//index=0
+            dummyHead = next;
+        }else {
+            prev.next = next;
+        }
 
-        Node result = prev.next;
-        prev.next = result.next;
-        result.next = null;
+        if(next == null){
+            last = prev;
+        }else {
+            next.prev = prev;
+        }
+//        Node result = dummyHead;
+//
+//        if(index == 0){
+//            dummyHead = dummyHead.next;
+//        }else {
+//            Node prev = node(index - 1);
+//            result = prev.next;
+//            prev.next = result.next;
+//        }
         size --;
 
-        return result.e;
+        return node.e;
     }
 
     /**
@@ -246,8 +281,7 @@ public class LinkedList<E> extends AbstractList<E> {
      * @return
      */
     public E findPositiveNode(int index){
-        if(index < 0 || index > size)
-            throw new IllegalArgumentException("get failed, illegal index");
+        rangeCheck(index);
 
         Node current = dummyHead.next;
         for(int i = 0; i < index; i ++)
@@ -261,8 +295,7 @@ public class LinkedList<E> extends AbstractList<E> {
      * @return
      */
     public E findCountdownNode(int index){
-        if(index < 0 || index > size)
-            throw new IllegalArgumentException("get failed, illegal index");
+        rangeCheck(index);
 
         Node current = dummyHead.next;
         for(int i = 0; i < size - index; i ++)
@@ -305,10 +338,11 @@ public class LinkedList<E> extends AbstractList<E> {
      * judge LinkedList has loop
      * @return
      */
-    public boolean isLoopLinkedList(){
+    public boolean hasCircle(){
 
-        slow = fast = dummyHead;
-        for (int i = 0; i < size - 1; i ++){
+        slow = dummyHead;
+        fast = dummyHead.next;
+        while (fast != null && fast.next != null){
             slow = slow.next;
             fast = fast.next.next;
 
@@ -324,17 +358,6 @@ public class LinkedList<E> extends AbstractList<E> {
      */
     public E removeLast(){
         return remove(size - 1);
-    }
-
-    public static void main(String[] args) {
-        LinkedList<Integer> linkedList = new LinkedList<>();
-        for(int i = 0; i < 5; i ++){
-            linkedList.addFirst(i);
-            System.out.println(linkedList);
-        }
-
-        linkedList.add(3,2);
-        System.out.println(linkedList);
     }
 
     /**
@@ -355,9 +378,5 @@ public class LinkedList<E> extends AbstractList<E> {
 
         return newHead;
     }
-
-    private void ensureCapcity(){}
-    private void trim(){}
-
 
 }
