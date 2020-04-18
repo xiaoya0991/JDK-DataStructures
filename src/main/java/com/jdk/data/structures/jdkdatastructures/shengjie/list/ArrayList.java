@@ -81,7 +81,7 @@ public class ArrayList<E> extends AbstractList<E>{
         rangeCheckForAdd(index);
 
         if(size == this.data.length)
-            resize(2 * data.length);
+            resize(data.length << 1);
 
         //插入数据数据，插入位置以后的数据依次向后挪动一位
         for(int i = this.size-1;i >= index;i--){
@@ -240,7 +240,7 @@ public class ArrayList<E> extends AbstractList<E>{
         data[size] = null;//loitering objects != memory leak
 
         if(size == data.length / 2 && data.length / 2 != 0)//prevent shake of data
-            resize(data.length / 2);
+            resize(data.length >> 1);
 
         return (E) result;
     }
