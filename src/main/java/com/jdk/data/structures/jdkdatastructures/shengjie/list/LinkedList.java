@@ -4,16 +4,11 @@ public class LinkedList<E> extends AbstractList<E> {
 
     private static final int ELEMENT_NOT_FOUND = -1;
 
-    private class Node{
+    private class Node<E>{
 
         public E e;
         public Node prev;
         public Node next;
-
-        public Node(E e, Node next){
-            this.e = e;
-            this.next = next;
-        }
 
         public Node(E e,Node prev, Node next){
             this.e = e;
@@ -39,22 +34,17 @@ public class LinkedList<E> extends AbstractList<E> {
     /**
      * define the only dummy head node
      */
-    private Node dummyHead;
-    private Node last;
+    transient Node<E> first;
+    transient Node<E> last;
 
     /**
      * define size of LinkedList
      */
-    private int size;
-
-    public LinkedList(){
-        dummyHead = last = new Node(null,null,null);
-        size = 0;
-    }
+    transient int size;
 
     @Override
     public void clear(){
-        dummyHead = last = null;
+        first = last = null;
         size = 0;
     }
 
@@ -84,8 +74,8 @@ public class LinkedList<E> extends AbstractList<E> {
      * @param index
      * @return
      */
-    private Node node(int index){
-        Node current = dummyHead.next;
+    private Node<E> node(int index){
+        Node<E> current = first;
         for(int i = 0 ;i < index; i ++){
             current = current.next;
         }
@@ -101,18 +91,8 @@ public class LinkedList<E> extends AbstractList<E> {
     public void add(int index, E e){
         rangeCheckForAdd(index);
 
-        Node prev = index == 0 ? dummyHead.next : node(index - 1);
-        prev.next = new Node(e,prev.next);
-
-//        Node prev = dummyHead;
-//        for(int i = 0; i < index; i ++)
-//            prev = prev.next;
-//
-////                prev.next = new Node(e,prev.next);//转化以下三行作为理解
-//
-//        Node node = new Node(e);
-//        node.next = prev.next;
-//        prev.next = node;
+        Node<E> prev = index == 0 ? first : node(index - 1);
+        prev.next = new Node<E>(e,prev,prev.next);
 
         size ++;
     }
@@ -137,7 +117,7 @@ public class LinkedList<E> extends AbstractList<E> {
     public E get(int index){
         rangeCheck(index);
 
-        Node current = dummyHead.next;
+        Node<E> current = first;
         for(int i = 0; i < index; i ++)
             current = current.next;
         return current.e;
@@ -166,7 +146,7 @@ public class LinkedList<E> extends AbstractList<E> {
     public E set(int index, E e){
         rangeCheck(index);
 
-        Node current = dummyHead.next;
+        Node current = first;
         for(int i = 0; i < index; i ++)
             current = current.next;
 
@@ -182,7 +162,7 @@ public class LinkedList<E> extends AbstractList<E> {
      */
     @Override
     public boolean contains(E e){
-        Node current = dummyHead.next;
+        Node<E> current = first;
         while (current != null){
             if(current.e.equals(e))
                 return true;
@@ -205,12 +185,12 @@ public class LinkedList<E> extends AbstractList<E> {
     public E remove(int index){
         rangeCheck(index);
 
-        Node node = node(index);
-        Node prev = node.prev;
-        Node next = node.next;
+        Node<E> node = node(index);
+        Node<E> prev = node.prev;
+        Node<E> next = node.next;
 
         if(prev == null){//index=0
-            dummyHead = next;
+            first = next;
         }else {
             prev.next = next;
         }
@@ -220,15 +200,7 @@ public class LinkedList<E> extends AbstractList<E> {
         }else {
             next.prev = prev;
         }
-//        Node result = dummyHead;
-//
-//        if(index == 0){
-//            dummyHead = dummyHead.next;
-//        }else {
-//            Node prev = node(index - 1);
-//            result = prev.next;
-//            prev.next = result.next;
-//        }
+
         size --;
 
         return node.e;
@@ -242,25 +214,23 @@ public class LinkedList<E> extends AbstractList<E> {
         return remove(0);
     }
 
-    private Node head;
     /**
      * remove repeated element in LinkedList
      */
-    public Node removeSameElement(Node node,E e){
+    public Node<E> removeSameElement(Node node,E e){
 
-        //method1
         if(node == null)
             return null;
-        while (node != null && node.e == e){
-            Node delNode = head;
-            node = node.next;
+        while (node.e == e){
+            Node<E> delNode = first;
+            node = delNode.next;
             delNode = null;
         }
 
-        Node prev = node;
+        Node<E> prev = node;
         while(prev.next != null){
             if(prev.next.e == e){
-                Node delNode = prev;
+                Node<E> delNode = prev;
                 prev.next = node.next;
                 delNode = null;
             }else
@@ -268,16 +238,6 @@ public class LinkedList<E> extends AbstractList<E> {
         }
         return node;
 
-//        //method 2
-//        dummyHead.next = node;
-//        Node prev = dummyHead;
-//        while(prev.next != null){
-//            if(prev.next.e == e){
-//                prev.next = prev.next.next;
-//            }else
-//                prev = prev.next;
-//        }
-//        return dummyHead.next;
     }
 
     /**
@@ -288,7 +248,7 @@ public class LinkedList<E> extends AbstractList<E> {
         if(!contains(e))
             throw new IllegalArgumentException("the element is not existed!!!");
 
-        dummyHead = removeSameElement(dummyHead,e);
+        first = removeSameElement(first,e);
     }
 
     /**
@@ -299,7 +259,7 @@ public class LinkedList<E> extends AbstractList<E> {
     public E findPositiveNode(int index){
         rangeCheck(index);
 
-        Node current = dummyHead.next;
+        Node<E> current = first;
         for(int i = 0; i < index; i ++)
             current = current.next;
         return current.e;
@@ -313,7 +273,7 @@ public class LinkedList<E> extends AbstractList<E> {
     public E findCountdownNode(int index){
         rangeCheck(index);
 
-        Node current = dummyHead.next;
+        Node<E> current = first;
         for(int i = 0; i < size - index; i ++)
             current = current.next;
         return current.e;
@@ -356,8 +316,8 @@ public class LinkedList<E> extends AbstractList<E> {
      */
     public boolean hasCircle(){
 
-        slow = dummyHead;
-        fast = dummyHead.next;
+        slow = first;
+        fast = first.next;
         while (fast != null && fast.next != null){
             slow = slow.next;
             fast = fast.next.next;
@@ -381,12 +341,12 @@ public class LinkedList<E> extends AbstractList<E> {
      * @param head
      * @return
      */
-    public Node reverseList(Node head) {
+    public Node<E> reverseList(Node head) {
         if(head == null && head.next == null) return head;
 
-        Node newHead = null;
+        Node<E> newHead = null;
         while (head != null) {
-            Node tmp = head.next;
+            Node<E> tmp = head.next;
             head.next = newHead;
             newHead = head;
             head = tmp;

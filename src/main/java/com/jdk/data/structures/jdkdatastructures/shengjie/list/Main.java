@@ -5,6 +5,25 @@ public class Main {
         testList(new SingleCircleLinkedList<>());
     }
 
+    /**
+     * 约瑟夫问题
+     */
+    static void josephus(int n){
+        CircleLinkedList<Integer> list = new CircleLinkedList<>();
+        for(int i = 1; i <= 8; i ++){
+            list.add(i);
+        }
+
+        list.reset();
+
+        while (!list.isEmpty()){
+            while (n -- > 0) {
+                list.next();
+            }
+            System.out.println(list.remove());
+        }
+    }
+
     static void testList(List<Integer> list){
         list.add(1);
         list.add(2);
@@ -25,5 +44,7 @@ public class Main {
         System.out.println(list.get(0) == 1);
         System.out.println(list.get(1) == 6);
         System.out.println(list.get(list.size() - 1) == 4);
+
+        System.out.println(list);
     }
 }
