@@ -1,5 +1,8 @@
 package com.jdk.data.structures.jdkdatastructures.shengjie.tree;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 /**
  * binary search tree without same element
  */
@@ -18,6 +21,11 @@ public class BinarySearchTree<E extends Comparable<E>>{
     private Node root;
     private int size;
     private int depth;//深度
+    private Comparable<E> comparable;
+
+    public BinarySearchTree(Comparable<E> comparable){
+        this.comparable = comparable;
+    }
 
     public BinarySearchTree(){
         this.root = null;
@@ -34,37 +42,6 @@ public class BinarySearchTree<E extends Comparable<E>>{
     public boolean isEmpty(){
         return size == 0;
     }
-
-//    /**
-//     * add new element
-//     * @param e
-//     */
-//    public void add(E e){
-//        if(root == null){
-//            root = new Node(e);
-//            size ++;
-//        }else
-//            add(root,e);
-//    }
-//    //add new element to the binary search tree that the root node with root
-//    private void add(Node node, E e){
-//        if(e.equals(node.e))
-//            return;
-//        else if(e.compareTo(node.e) < 0 && node.left == null){
-//            node.left = new Node(e);
-//            size ++;
-//            return;
-//        } else if(e.compareTo(node.e) > 0 && node.right == null){
-//            node.right = new Node(e);
-//            size ++;
-//            return;
-//        }
-//
-//        if(e.compareTo(node.e) < 0)
-//            add(node.left, e);
-//        else
-//            add(node.right, e);
-//    }
 
     /**
      * add new element to the binary search tree that the root node with root by recursion method
@@ -122,23 +99,6 @@ public class BinarySearchTree<E extends Comparable<E>>{
         preOrder(node.right);
     }
 
-//    /**
-//     * preorder travalsal by stack method
-//     */
-//    public void preOrderByStack(){
-//        ArrayStackDemo<Node> stack = new ArrayStackDemo<>();
-//        stack.push(root);
-//        while (!stack.isEmpty()){
-//            Node current = stack.pop();
-//            System.out.println(current.e);
-//
-//            if(current.right != null)
-//                stack.push(current.right);
-//            if(current.left != null)
-//                stack.push(current.left);
-//        }
-//    }
-
     /**
      * inorder travalsal--中序遍历(左根右)
      */
@@ -154,25 +114,6 @@ public class BinarySearchTree<E extends Comparable<E>>{
         System.out.println(node.e);
         inOrder(node.right);
     }
-
-//    /**
-//     * inorder travalsal by stack method(仅做练习，暂时还未解决)
-//     */
-//    public void inOrderByStack(){
-//        ArrayStackDemo<Node> stack = new ArrayStackDemo<>();
-//        if(size == 0)
-//            throw new IllegalArgumentException("BST is empty");
-//        stack.push(removeMin(root));
-//
-//        while (!stack.isEmpty()){
-//            Node current = stack.pop();
-//            System.out.println(current);
-//
-//            if(current.right == null)
-//                stack.push(removeMin(root));
-//            stack.push(current.right);
-//        }
-//    }
 
     /**
      * postorder travalsal--后序遍历(左右根)
@@ -220,19 +161,22 @@ public class BinarySearchTree<E extends Comparable<E>>{
     /**
      * levelorder tarvalsal -- 层序遍历
      */
-//    public void levelOrder(){
-//        ArrayQueueDemo<Node> queue = new ArrayQueueDemo<>();
-//        queue.enqueue(root);
-//        while (!queue.isEmpty()){
-//            Node current = queue.dequeue();
-//            System.out.println(current.e);
-//
-//            if(current.left != null)
-//                queue.enqueue(current.left);
-//            if(current.right != null)
-//                queue.enqueue(current.right);
-//        }
-//    }
+    public void levelOrder(){
+        if(root == null) return;
+
+        Queue<Node> queue = new LinkedList<>();
+        queue.offer(root);
+
+        while (!queue.isEmpty()){
+            Node current = queue.poll();
+            System.out.println(current.e);
+
+            if(current.left != null)
+                queue.offer(current.left);
+            if(current.right != null)
+                queue.offer(current.right);
+        }
+    }
 
     /**
      * obtain the min number of a binary search tree by recursion
@@ -419,7 +363,6 @@ public class BinarySearchTree<E extends Comparable<E>>{
         }
         return node;
     }
-
 
     public static void main(String[] args) {
         BinarySearchTree<Integer> bst = new BinarySearchTree();
