@@ -7,18 +7,26 @@ import java.util.Queue;
  * binary search tree without same element
  */
 public class BinarySearchTree<E extends Comparable<E>>{
-    private class Node{
+    private class Node<E>{
         public E e;
-        public Node left,right;
+        public Node<E> left,right;
+        public Node<E> parent;
 
         public Node(E e){
             this.e = e;
             this.left = null;
             this.right = null;
         }
+
+        public Node(E e, Node parent){
+            this.e = e;
+            this.parent = parent;
+            this.left = null;
+            this.right = null;
+        }
     }
 
-    private Node root;
+    private Node<E> root;
     private int size;
     private int depth;//深度
     private Comparable<E> comparable;
@@ -27,10 +35,14 @@ public class BinarySearchTree<E extends Comparable<E>>{
         this.comparable = comparable;
     }
 
+    public BinarySearchTree(Node<E> root, int size, int depth){
+        this.root = root;
+        this.size = size;
+        this.depth = depth;
+    }
+
     public BinarySearchTree(){
-        this.root = null;
-        this.size = 0;
-        this.depth = 0;
+
     }
 
     public int getSize(){
@@ -43,24 +55,76 @@ public class BinarySearchTree<E extends Comparable<E>>{
         return size == 0;
     }
 
+    public void clear(){
+        root = null;
+        size = 0;
+    }
+
     /**
      * add new element to the binary search tree that the root node with root by recursion method
      */
+//    public void add(E e){
+////        root = add(root,e);
+////    }
+////    private Node add(Node<E> node, E e){
+////        if(node == null){
+////            size ++;
+////            return new Node(e);
+////        }
+////
+////        if(e.compareTo(node.e) < 0)
+////            node.left = add(node.left, e);
+////        else if(e.compareTo(node.e) > 0)
+////            node.right = add(node.right, e);
+////
+////        return node;
+////    }
+
     public void add(E e){
-        root = add(root,e);
-    }
-    private Node add(Node node, E e){
-        if(node == null){
+        elementNotNullCheck(e);
+
+        //添加第一个节点
+        if(root == null){
+            root = new Node<>(e, null);
             size ++;
-            return new Node(e);
+            return;
         }
 
-        if(e.compareTo(node.e) < 0)
-            node.left = add(node.left, e);
-        else if(e.compareTo(node.e) > 0)
-            node.right = add(node.right, e);
+        //添加的不是第一个节点
+        Node<E> parent = root;
+        Node<E> node = root;
+        int cmp = 0;
+        while(node != null){
+            cmp = compare(e, node.e);
+            parent = node;
+            if(cmp > 0){
+                node = node.right;
+            }else if(cmp < 0){
+                node = node.left;
+            }else {
+                return;
+            }
+        }
 
-        return node;
+        //查看插入到父节点的那个位置
+        Node<E> newNode = new Node<>(e, parent);
+        if(cmp > 0){
+            parent.right = newNode;
+        }else {
+            parent.left = newNode;
+        }
+
+        size ++;
+    }
+
+    private int compare(E e, E e1) {
+        return e.compareTo(e1);
+    }
+
+    private void elementNotNullCheck(E e) {
+        if(e == null){
+            throw new IllegalArgumentException("element must not be null");
+        }
     }
 
     /**
@@ -69,7 +133,7 @@ public class BinarySearchTree<E extends Comparable<E>>{
     public boolean contains(E e){
         return contains(root, e);
     }
-    private boolean contains(Node node, E e){
+    private boolean contains(Node<E> node, E e){
         if(node == null)
             return false;
 
@@ -86,49 +150,76 @@ public class BinarySearchTree<E extends Comparable<E>>{
     /**
      * preorder travalsal--前序遍历(根左右)
      */
-    public void preOrder() {
-        preOrder(root);
+    private void preOrder(Visitor<E> visitor){
+        if(visitor == null) return;
+        preOrder(root, visitor);
     }
 
-    private void preOrder(Node node){
-        if(node == null)
-            return;
-
-        System.out.println(node.e);
-        preOrder(node.left);
-        preOrder(node.right);
+    public void preOrder(Node<E> node, Visitor<E> visitor) {
+        if(node == null || visitor.stop) return;
+        visitor.stop = visitor.visit(node.e);
+        preOrder(node.left, visitor);
+        preOrder(node.right, visitor);
     }
 
     /**
      * inorder travalsal--中序遍历(左根右)
      */
-    public void inOrder(){
-        inOrder(root);
+    public void inOrder(Visitor<E> visitor){
+        if(visitor == null) return;
+        inOrder(root,visitor);
     }
 
-    private void inOrder(Node node){
-        if(node == null)
+    private void inOrder(Node<E> node, Visitor<E> visitor){
+        if(node == null || visitor.stop)
             return;
 
-        inOrder(node.left);
-        System.out.println(node.e);
-        inOrder(node.right);
+        inOrder(node.left, visitor);
+        if(visitor.stop) return;
+        visitor.stop = visitor.visit(node.e);
+        inOrder(node.right, visitor);
     }
 
     /**
      * postorder travalsal--后序遍历(左右根)
      */
-    public void postOrder(){
-        postOrder(root);
+    public void postOrder(Visitor<E> visitor){
+        if(visitor == null) return;
+
+        postOrder(root, visitor);
     }
 
-    private void postOrder(Node node){
-        if(node == null)
+    private void postOrder(Node<E> node, Visitor<E> visitor){
+        if(node == null || visitor.stop)
             return;
 
-        postOrder(node.left);
-        postOrder(node.right);
-        System.out.println(node.e);
+        postOrder(node.left, visitor);
+        postOrder(node.right, visitor);
+        if(visitor.stop) return;
+        visitor.stop = visitor.visit(node.e);
+    }
+
+    /**
+     * 层序遍历
+     * @param visitor
+     */
+    public void levelOrder(Visitor<E> visitor){
+        if(root == null || visitor == null) return;
+
+        Queue<Node<E>> queue = new LinkedList<>();
+        queue.offer(root);
+
+        while (!queue.isEmpty()){
+            Node<E> node = queue.poll();
+            if(visitor.visit(node.e)) return;
+
+            if(node.left != null)
+                queue.offer(node.left);
+
+            if(node.right != null){
+                queue.offer(node.right);
+            }
+        }
     }
 
     @Override
@@ -185,7 +276,7 @@ public class BinarySearchTree<E extends Comparable<E>>{
     public E min(){
         if(size == 0)
             throw new IllegalArgumentException("BST is empty");
-        return min(root).e;
+        return (E) min(root).e;
     }
 
     private Node min(Node node){
@@ -223,7 +314,7 @@ public class BinarySearchTree<E extends Comparable<E>>{
     public E max(){
         if(size == 0)
             throw new IllegalArgumentException("BST is empty");
-        return max(root).e;
+        return (E) max(root).e;
     }
 
     private Node max(Node node){
@@ -262,7 +353,7 @@ public class BinarySearchTree<E extends Comparable<E>>{
         root = remove(root, e);
     }
 
-    private Node remove(Node node, E e){
+    private Node remove(Node<E> node, E e){
         if(node == null)
             return null;
         if(e.compareTo(node.e) < 0){
@@ -312,7 +403,7 @@ public class BinarySearchTree<E extends Comparable<E>>{
         return floor(root, e).e;
     }
 
-    private Node floor(Node node, E e){
+    private Node<E> floor(Node<E> node, E e){
         if(node == null)
             return null;
 
@@ -343,7 +434,7 @@ public class BinarySearchTree<E extends Comparable<E>>{
         return ceil(root, e).e;
     }
 
-    private Node ceil(Node node, E e){
+    private Node<E> ceil(Node<E> node, E e){
         if(node == null)
             return null;
 
@@ -362,6 +453,16 @@ public class BinarySearchTree<E extends Comparable<E>>{
             node.left = ceil(node.left, e);
         }
         return node;
+    }
+
+    public static abstract class Visitor<E>{
+        boolean stop;
+
+        /**
+         * @param e
+         * @return 返回为true， 就代表停止遍历
+         */
+        abstract boolean visit(E e);
     }
 
     public static void main(String[] args) {
