@@ -24,6 +24,14 @@ public class BinarySearchTree<E extends Comparable<E>>{
             this.left = null;
             this.right = null;
         }
+
+        public boolean isLeaf(){
+            return left == null && right == null;
+        }
+
+        public boolean hasTwoChildren(){
+            return left != null && right != null;
+        }
     }
 
     private Node<E> root;
@@ -455,6 +463,33 @@ public class BinarySearchTree<E extends Comparable<E>>{
         return node;
     }
 
+    public boolean isComplete(){
+        if(root == null) return false;
+
+        Queue<Node<E>> queue = new LinkedList<>();
+        queue.offer(root);
+
+        boolean leaf = false;
+        while (!queue.isEmpty()){
+            Node<E> node = queue.poll();
+
+            if(leaf && !node.isLeaf()) return false;
+
+            if(node.hasTwoChildren()){
+                queue.offer(node.left);
+                queue.offer(node.right);
+            }else if(node.left == null && node.right != null){
+                return false;
+            }else {
+                leaf = true;
+                if(node.left != null){
+                    queue.offer(node.left);
+                }
+            }
+        }
+        return true;
+    }
+
     public static abstract class Visitor<E>{
         boolean stop;
 
@@ -477,23 +512,9 @@ public class BinarySearchTree<E extends Comparable<E>>{
         //1         3       7
 
 //        bst.preOrder();
-        System.out.println("\n" + bst.ceil(6));
-        System.out.println("\n" + bst);
+//        System.out.println("\n" + bst.ceil(6));
+//        System.out.println("\n" + bst);
+        bst.isComplete();
 
-
-//        Random random = new Random();
-//        int n = 1000;
-//        for(int i = 0; i < n; i ++)
-//            bst.add(random.nextInt(10000));
-//
-//        ArrayList<Integer> nums = new ArrayList<>();
-//        while (!bst.isEmpty())
-//            nums.addLast(bst.removeMin());
-//
-//        System.out.println(nums);
-//        for(int i = 1; i < nums.getSize(); i ++)
-//            if(nums.get(i-1) > nums.get(i))
-//                throw new IllegalArgumentException("Error");
-//        System.out.println("removeMin test completed");
     }
 }
