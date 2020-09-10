@@ -1,92 +1,22 @@
 package com.jdk.data.structures.jdkdatastructures.shengjie.tree;
 
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.Queue;
 
 /**
  * binary search tree without same element
  */
-public class BinarySearchTree<E extends Comparable<E>>{
-    private class Node<E>{
-        public E e;
-        public Node<E> left,right;
-        public Node<E> parent;
+public class BST<E> extends BinaryTree<E>{
+    private Comparator<E> comparator;
 
-        public Node(E e){
-            this.e = e;
-            this.left = null;
-            this.right = null;
-        }
-
-        public Node(E e, Node parent){
-            this.e = e;
-            this.parent = parent;
-            this.left = null;
-            this.right = null;
-        }
-
-        public boolean isLeaf(){
-            return left == null && right == null;
-        }
-
-        public boolean hasTwoChildren(){
-            return left != null && right != null;
-        }
+    public BST(){
+        this(null);
     }
 
-    private Node<E> root;
-    private int size;
-    private int depth;//深度
-    private Comparable<E> comparable;
-
-    public BinarySearchTree(Comparable<E> comparable){
-        this.comparable = comparable;
+    public BST(Comparator<E> comparetor){
+        this.comparator = comparetor;
     }
-
-    public BinarySearchTree(Node<E> root, int size, int depth){
-        this.root = root;
-        this.size = size;
-        this.depth = depth;
-    }
-
-    public BinarySearchTree(){
-
-    }
-
-    public int getSize(){
-        return size;
-    }
-
-    public int getDepth() { return depth; }
-
-    public boolean isEmpty(){
-        return size == 0;
-    }
-
-    public void clear(){
-        root = null;
-        size = 0;
-    }
-
-    /**
-     * add new element to the binary search tree that the root node with root by recursion method
-     */
-//    public void add(E e){
-////        root = add(root,e);
-////    }
-////    private Node add(Node<E> node, E e){
-////        if(node == null){
-////            size ++;
-////            return new Node(e);
-////        }
-////
-////        if(e.compareTo(node.e) < 0)
-////            node.left = add(node.left, e);
-////        else if(e.compareTo(node.e) > 0)
-////            node.right = add(node.right, e);
-////
-////        return node;
-////    }
 
     public void add(E e){
         elementNotNullCheck(e);
@@ -103,7 +33,7 @@ public class BinarySearchTree<E extends Comparable<E>>{
         Node<E> node = root;
         int cmp = 0;
         while(node != null){
-            cmp = compare(e, node.e);
+            cmp = compare(e, node.element);
             parent = node;
             if(cmp > 0){
                 node = node.right;
@@ -126,7 +56,10 @@ public class BinarySearchTree<E extends Comparable<E>>{
     }
 
     private int compare(E e, E e1) {
-        return e.compareTo(e1);
+        if(comparator != null){
+            return comparator.compare(e, e1);
+        }
+        return ((Comparable<E>)e).compareTo(e1);
     }
 
     private void elementNotNullCheck(E e) {
@@ -145,11 +78,11 @@ public class BinarySearchTree<E extends Comparable<E>>{
         if(node == null)
             return false;
 
-        if(e.compareTo(node.e) == 0)
+        if(comparator.compare(e, node.element) == 0)
             return true;
-        else if(e.compareTo(node.e) < 0)
+        else if(comparator.compare(e, node.element) < 0)
             return contains(node.left, e);
-        else if(e.compareTo(node.e) > 0)
+        else if(comparator.compare(e, node.element) > 0)
             return contains(node.right, e);
 
         return false;
@@ -165,7 +98,7 @@ public class BinarySearchTree<E extends Comparable<E>>{
 
     public void preOrder(Node<E> node, Visitor<E> visitor) {
         if(node == null || visitor.stop) return;
-        visitor.stop = visitor.visit(node.e);
+        visitor.stop = visitor.visit(node.element);
         preOrder(node.left, visitor);
         preOrder(node.right, visitor);
     }
@@ -184,7 +117,7 @@ public class BinarySearchTree<E extends Comparable<E>>{
 
         inOrder(node.left, visitor);
         if(visitor.stop) return;
-        visitor.stop = visitor.visit(node.e);
+        visitor.stop = visitor.visit(node.element);
         inOrder(node.right, visitor);
     }
 
@@ -204,7 +137,7 @@ public class BinarySearchTree<E extends Comparable<E>>{
         postOrder(node.left, visitor);
         postOrder(node.right, visitor);
         if(visitor.stop) return;
-        visitor.stop = visitor.visit(node.e);
+        visitor.stop = visitor.visit(node.element);
     }
 
     /**
@@ -219,7 +152,7 @@ public class BinarySearchTree<E extends Comparable<E>>{
 
         while (!queue.isEmpty()){
             Node<E> node = queue.poll();
-            if(visitor.visit(node.e)) return;
+            if(visitor.visit(node.element)) return;
 
             if(node.left != null)
                 queue.offer(node.left);
@@ -244,7 +177,7 @@ public class BinarySearchTree<E extends Comparable<E>>{
             return;
         }
 
-        stringBuilder.append(generateDepthBSTToString(depth) + node.e + "\n");
+        stringBuilder.append(generateDepthBSTToString(depth) + node.element + "\n");
         generateBSTToString(node.left, depth + 1, stringBuilder);
         generateBSTToString(node.right, depth + 1, stringBuilder);
     }
@@ -268,7 +201,7 @@ public class BinarySearchTree<E extends Comparable<E>>{
 
         while (!queue.isEmpty()){
             Node current = queue.poll();
-            System.out.println(current.e);
+            System.out.println(current.element);
 
             if(current.left != null)
                 queue.offer(current.left);
@@ -284,7 +217,7 @@ public class BinarySearchTree<E extends Comparable<E>>{
     public E min(){
         if(size == 0)
             throw new IllegalArgumentException("BST is empty");
-        return (E) min(root).e;
+        return (E) min(root).element;
     }
 
     private Node min(Node node){
@@ -322,7 +255,7 @@ public class BinarySearchTree<E extends Comparable<E>>{
     public E max(){
         if(size == 0)
             throw new IllegalArgumentException("BST is empty");
-        return (E) max(root).e;
+        return (E) max(root).element;
     }
 
     private Node max(Node node){
@@ -364,10 +297,10 @@ public class BinarySearchTree<E extends Comparable<E>>{
     private Node remove(Node<E> node, E e){
         if(node == null)
             return null;
-        if(e.compareTo(node.e) < 0){
+        if(comparator.compare(e, node.element) < 0){
             node.left = remove(node.left, e);
             return node;
-        }else if(e.compareTo(node.e) > 0){
+        }else if(comparator.compare(e, node.element) > 0){
             node.right = remove(node.right, e);
             return node;
         }else {
@@ -408,7 +341,7 @@ public class BinarySearchTree<E extends Comparable<E>>{
      * @return
      */
     public E floor(E e){
-        return floor(root, e).e;
+        return floor(root, e).element;
     }
 
     private Node<E> floor(Node<E> node, E e){
@@ -416,17 +349,17 @@ public class BinarySearchTree<E extends Comparable<E>>{
             return null;
 
         //an element is the node of the binary search tree
-        if(node.e.compareTo(e) == 0) {
+        if(comparator.compare(e, node.element) == 0) {
             if(node.left == null)//this is the min node now
                 return node;
             return node.left;
         }
         //an element is not at this binary search tree
-        else if(node.e.compareTo(e) < 0){
+        else if(comparator.compare(e, node.element) < 0){
             if(node.left == null)
                 return node;
             node.right = floor(node.right, e);
-        }else if(node.e.compareTo(e) > 0){
+        }else if(comparator.compare(e, node.element) > 0){
             node.left = floor(node.left,e);
         }
         return node;
@@ -439,7 +372,7 @@ public class BinarySearchTree<E extends Comparable<E>>{
      * @return
      */
     public E ceil(E e){
-        return ceil(root, e).e;
+        return ceil(root, e).element;
     }
 
     private Node<E> ceil(Node<E> node, E e){
@@ -447,15 +380,15 @@ public class BinarySearchTree<E extends Comparable<E>>{
             return null;
 
         //an element is the node of the binary search tree
-        if(node.e == e) {
+        if(node.element == e) {
             if(node.right == null)//this is the max node now
                 return node;
             return node.right;
         }
         //an element is not at this binary search tree
-        else if(node.e.compareTo(e) < 0){
+        else if(comparator.compare(e, node.element) > 0){
             node.right = ceil(node.right, e);
-        }else if(node.e.compareTo(e) > 0){
+        }else if(comparator.compare(e, node.element) < 0){
             if(node.right == null)
                 return node;
             node.left = ceil(node.left, e);
@@ -501,7 +434,7 @@ public class BinarySearchTree<E extends Comparable<E>>{
     }
 
     public static void main(String[] args) {
-        BinarySearchTree<Integer> bst = new BinarySearchTree();
+        BST<Integer> bst = new BST();
 
         int[] nums = {4,2,5,1,3,7};
         for (int num : nums)
