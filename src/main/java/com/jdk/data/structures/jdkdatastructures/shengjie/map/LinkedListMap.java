@@ -1,6 +1,6 @@
 package com.jdk.data.structures.jdkdatastructures.shengjie.map;
 
-public class LinkedListMap<K,V> implements Map<K,V> {
+public abstract class LinkedListMap<K,V> implements Map<K,V> {
     private class Node{
         public K key;
         public V value;
@@ -35,7 +35,7 @@ public class LinkedListMap<K,V> implements Map<K,V> {
     }
 
     @Override
-    public int getSize() {
+    public int size() {
         return size;
     }
 
@@ -55,17 +55,15 @@ public class LinkedListMap<K,V> implements Map<K,V> {
     }
 
     @Override
-    public boolean contains(K key) {
+    public boolean containsKey(K key) {
         return getNode(key) != null;
     }
 
-    @Override
     public V getValue(K key) {
         Node node = getNode(key);
         return node == null ? null : node.value;
     }
 
-    @Override
     public void setValue(K key, V newValue) {
         Node node = getNode(key);
         if(node == null)
@@ -74,13 +72,15 @@ public class LinkedListMap<K,V> implements Map<K,V> {
     }
 
     @Override
-    public void add(K key, V value){
+    public V put(K key, V value){
         Node node = getNode(key);
         if(node == null){
             dummyHead.next = new Node(key,value,dummyHead.next);
             size ++;
         }else
             node.value = value;
+
+        return node.value;
     }
 
     @Override
