@@ -1,17 +1,26 @@
 package com.jdk.data.structures.jdkdatastructures.shengjie.map;
 
 public interface Map<K,V> {
-    void add(K key, V value);
+    int size();
+
+    boolean isEmpty();
+
+    void clear();
+
+    V put(K key, V value);
+
+    V get(K key);
 
     V remove(K key);
 
-    boolean contains(K key);
+    boolean containsKey(K key);
 
-    V getValue(K key);
+    boolean containsValue(V value);
 
-    void setValue(K key, V newValue);
+    void traversal(Visitor<K, V> visitor);
 
-    int getSize();
-
-    boolean isEmpty();
+    public static abstract class Visitor<K, V>{
+        boolean stop;
+        public abstract boolean visit(K key, V value);
+    }
 }
